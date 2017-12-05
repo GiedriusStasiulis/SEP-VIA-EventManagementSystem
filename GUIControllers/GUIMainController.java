@@ -258,25 +258,12 @@ public class GUIMainController
     
     public void openEditSelectedEventPanel()
     {
-    	
+    	//
     }
     
     public void openDeleteSelectedEventPanel()
     {
-    	
-    }
-    
-    
-    
-    
-    
-    public void searchEvents()
-    {
     	//
     }
     
-    public void browseEvents()
-    {
-    	//
-    }    
 }
