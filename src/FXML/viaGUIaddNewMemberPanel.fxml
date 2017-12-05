@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label text="Add member" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnAddMember" mnemonicParsing="false" onAction="#addMember" prefHeight="40.0" prefWidth="180.0" text="Add member " translateX="50.0" translateY="15.0" />
+            <Button fx:id="btnClearAddMemberTextFields" mnemonicParsing="false" onAction="#clearAddMemberTextFields" prefHeight="40.0" prefWidth="180.0" text="Clear all fields" translateX="80.0" translateY="15.0" />
+            <Button fx:id="btnCancelAddMemberPanel" mnemonicParsing="false" onAction="#cancelAddMemberPanel" prefHeight="40.0" prefWidth="180.0" text="Cancel" translateX="110.0" translateY="15.0" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Name:" translateY="20.0" />
+            <TextField fx:id="tfEnterMemberName" translateY="20.0" />
+            <Label text="E-mail:" translateY="25.0" />
+            <TextField fx:id="tfEnterMemberEmail" translateY="25.0" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label text="Create new event" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Enter event title:" translateY="20.0" />
+            <TextField fx:id="tfEnterEventTitle" translateY="20.0" />
+            <Label text="Select event type:" translateY="25.0" />
+            <ComboBox fx:id="cbSelectType" prefHeight="31.0" prefWidth="600.0" translateY="25.0" />
+            <Label text="Select event category:" translateY="30.0" />
+            <ComboBox fx:id="cbSelectCategory" prefHeight="31.0" prefWidth="600.0" translateY="30.0" />
+            <Label text="Select lecturer for the event:" translateY="35.0" />
+            <ComboBox fx:id="cbSelectLecturer" prefHeight="31.0" prefWidth="600.0" translateY="35.0" />
+            <Label text="Select event start-date:" translateY="40.0" />
+            <DatePicker fx:id="dpSelectEventStartDate" prefHeight="31.0" prefWidth="600.0" translateY="40.0" />
+            <Label text="Select event end-date:" translateY="45.0" />
+            <DatePicker fx:id="dpSelectEventEndDate" prefHeight="31.0" prefWidth="600.0" translateY="45.0" />
+            <Label text="Enter event start-time (hh:mm): " translateY="50.0" />
+            <TextField fx:id="tfEnterEventStartTime" translateY="50.0" />
+            <Label text="Enter event end-time (hh:mm):" translateY="55.0" />
+            <TextField fx:id="tfEnterEventEndTime" translateY="55.0" />
+            <Label text="Enter a number of available tickets:" translateY="60.0" />
+            <TextField fx:id="tfEnterEventTicketNumber" translateY="60.0" />
+            <Label text="Enter event price:" translateY="65.0" />
+            <TextField fx:id="tfEnterEventPrice" translateY="65.0" />
+            <Label text="Enter event discount:" translateY="70.0" />
+            <TextField fx:id="tfEnterEventDiscount" translateY="70.0" />
+            <RadioButton fx:id="rbFinalizeEvent" mnemonicParsing="false" onAction="#setEventStatus" text="Finalize event" translateY="90.0" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnCreateNewEvent" mnemonicParsing="false" onAction="#createNewEvent" prefHeight="40.0" prefWidth="180.0" text="Create new event" translateX="50.0" translateY="15.0" />
+            <Button fx:id="btnClearCreateEventPanelTextFields" mnemonicParsing="false" onAction="#clearCreateEventPanelTextFields" prefHeight="40.0" prefWidth="180.0" text="Clear all fields" translateX="80.0" translateY="15.0" />
+            <Button fx:id="btnCancelCreateEventPanel" mnemonicParsing="false" onAction="#cancelCreateEventPanel" prefHeight="40.0" prefWidth="180.0" text="Cancel" translateX="110.0" translateY="15.0" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
