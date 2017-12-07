@@ -24,7 +24,7 @@
                      <center>
                         <ToolBar prefHeight="40.0" translateY="-2.0" BorderPane.alignment="CENTER">
                           <items>
-                            <Button fx:id="btnOpenCreateEventPanel" mnemonicParsing="false" onAction="#openCreateEventPanel" prefWidth="200.0" text="Create event"/>
+                            <Button fx:id="btnOpenCreateEventPanel" mnemonicParsing="false" onAction="#openCreateEventPanel" prefWidth="200.0" text="Create event" />
                               <Button fx:id="btnOpenSearchEventsPanel" mnemonicParsing="false" onAction="#openSearchEventsPanel" prefWidth="200.0" text="Search events" />
                               <Button fx:id="btnOpenEditSelectedEventPanel" layoutX="100.0" mnemonicParsing="false" prefWidth="200.0" text="Edit event" />
                               <Button fx:id="btnOpenDeleteSelectedEventPanel" mnemonicParsing="false" prefWidth="200.0" text="Delete event" />

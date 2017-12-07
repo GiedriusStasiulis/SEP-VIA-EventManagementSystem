@@ -24,7 +24,7 @@
                      <center>
                         <ToolBar prefHeight="40.0" translateY="-2.0" BorderPane.alignment="CENTER">
                           <items>
-                            <Button fx:id="btnOpenCreateEventPanel" mnemonicParsing="false" onAction="#openCreateEventPanel" prefWidth="200.0" text="Create event" />
+                            <Button fx:id="btnOpenCreateEventPanel" mnemonicParsing="false" onAction="#openCreateEventPanel" prefWidth="200.0" text="Create event"/>
                               <Button fx:id="btnOpenSearchEventsPanel" mnemonicParsing="false" onAction="#openSearchEventsPanel" prefWidth="200.0" text="Search events" />
                               <Button fx:id="btnOpenEditSelectedEventPanel" layoutX="100.0" mnemonicParsing="false" prefWidth="200.0" text="Edit event" />
                               <Button fx:id="btnOpenDeleteSelectedEventPanel" mnemonicParsing="false" prefWidth="200.0" text="Delete event" />
@@ -343,12 +343,9 @@
                                              <center>
                                                 <TableView fx:id="tableMembers" prefHeight="1000.0" prefWidth="1650.0" BorderPane.alignment="CENTER">
                                                    <columns>
-                                                      <TableColumn maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" text="#" />
-                                                      <TableColumn maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
-                                                      <TableColumn maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
-                                                      <TableColumn maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Payment status" />
-                                                   </columns>
-                                                </TableView>
+                                                      <TableColumn fx:id="tcMemberName" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
+                                                      <TableColumn fx:id="tcMemberEmail" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                                                   </columns></TableView>
                                              </center>
                                           </BorderPane>
                                        </children>
@@ -373,11 +370,11 @@
                               <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Label text="Name:" translateY="20.0" />
-                                    <TextField translateY="20.0" />
+                                    <TextField fx:id="tfShowMemberName" editable="false" translateY="20.0" />
                                     <Label text="E-mail:" translateY="25.0" />
-                                    <TextField translateY="25.0" />
+                                    <TextField editable="false" translateY="25.0" />
                                     <Label text="Payment status:" translateY="30.0" />
-                                    <TextField translateY="30.0" />
+                                    <TextField editable="false" translateY="30.0" />
                                  </children>
                               </VBox>
                            </center>
