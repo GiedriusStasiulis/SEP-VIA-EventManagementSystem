@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="memberPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUImembersController">
+   <center>
+      <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
+         <content>
+            <TableView fx:id="memberTable" prefHeight="1100.0" prefWidth="1375.0">
+              <columns>
+                <TableColumn fx:id="tcMemberName" minWidth="50.0" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="tcMemberEmail" minWidth="50.0" prefWidth="150.0" text="Email" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </center>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="280.0" BorderPane.alignment="CENTER">
+         <children>
+            <TitledPane animated="false" text="Add member">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="15.0" layoutY="14.0" text="Name:" />
+                        <TextField fx:id="tfEnterMemberName" layoutX="15.0" layoutY="33.0" prefWidth="248.0" />
+                        <Label layoutX="15.0" layoutY="65.0" text="Email:" />
+                        <TextField fx:id="tfEnterMemberEmail" layoutX="15.0" layoutY="85.0" prefWidth="248.0" />
+                        <Button fx:id="btnAddMember" layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#addMember" prefWidth="100.0" text="Add" />
+                        <Button fx:id="btnClearTextFields" layoutX="163.0" layoutY="311.0" mnemonicParsing="false" onAction="#clearTextFields" prefWidth="100.0" text="Clear fields" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="280.0" BorderPane.alignment="CENTER">
+         <children>
+            <TitledPane animated="false" text="Search members">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Show information">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </TitledPane>
+         </children>
+      </VBox>
+   </right>
+   <top>
+      <ToolBar prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
