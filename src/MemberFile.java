@@ -10,8 +10,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MemberFile {
-	private int sw=0;
+public class MemberFile 
+{
 	private File file;
 	private String filename = "MemberList.txt";
 
@@ -19,27 +19,31 @@ public class MemberFile {
 	private MemberList currentMembers = new MemberList();;
 	private MemberList memberList = new MemberList();
 
-	public MemberFile(String filename) {
+	public MemberFile(String filename) 
+	{
 		setFile(filename);
 	}
 
-	public void setFile(String filename) {
+	public void setFile(String filename) 
+	{
 		file = new File(filename);
 	}
 
-	public File getFile() {
+	public File getFile() 
+	{
 		return this.file;
 	}
 
-	public MemberList readMemberTextFile() throws FileNotFoundException, ParseException {
+	public MemberList readMemberTextFile() throws FileNotFoundException, ParseException 
+	{
 		Scanner input = null;
-
-		currentMemberList.clearMemberList();
 		
-		try {
+		try 
+		{
 			input = new Scanner(file);
 			int lineNumber = 0;
-			while (input.hasNext()) {
+			while (input.hasNext()) 
+			{
 				String line = input.nextLine();
 				String[] lineToken = line.split(",");
 				lineNumber++;
@@ -53,44 +57,28 @@ public class MemberFile {
 			return currentMemberList;
 		}
 
-		finally {
+		finally 
+		{
 			input.close();
 		}
 	}
 
-	public void writeMemberTextFile(MemberList memberList)
-			throws ParseException, FileNotFoundException, CloneNotSupportedException {
-
-		PrintWriter output = null;
-
-		switch (sw) {
-		case 0:
-			System.out.println("Reading from file");
-			currentMembers = readMemberTextFile();
-
-			for (int i = 0; i < currentMembers.size(); i++) {
-				memberList.addMemberToList(currentMembers.getMember(i));
-			}
-
-			currentMembers.clearMemberList();
-			System.out.println(memberList.size());
-
-			sw = 1;
-			break;
-
-		case 1:
-			System.out.println("Writing to file");
-			System.out.println(memberList.size());
-
-			output = new PrintWriter(file);
-
-			for (int i = 0; i < memberList.size(); i++) {
-				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getEmail());
-			}
-			output.flush();
-			output.close();
-
-			break;
-		}
-	}
+	public void writeTextFile(MemberList memberList) throws FileNotFoundException
+	   {
+	      PrintWriter output = null;
+	      try
+	      {
+	    	 output = new PrintWriter(file);
+	         
+	    	 for (int i = 0; i < memberList.size(); i++) 
+	         {
+					output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getEmail());
+			 }
+	         output.flush();
+	      }
+	      finally
+	      {
+	    	  output.close();
+	      }
+	   }
 }

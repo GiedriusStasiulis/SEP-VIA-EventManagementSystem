@@ -16,18 +16,15 @@ public class MemberList implements Serializable
 	{
 		return memberList.size();
 	}
-	
+
 	public void addMemberToList(Member member)
 	{
 		memberList.add(member);
 	}
 	
-	public void clearMemberList()
+	public void replaceMember(int index, Member member)
 	{
-		for(int i = 0; i < memberList.size(); i ++)
-		{
-			memberList.clear();
-		}
+		memberList.set(index, member);
 	}
 	
 	public Member getMember(int index)
@@ -35,7 +32,12 @@ public class MemberList implements Serializable
 		return memberList.get(index);
 	}
 	
-	public void removeMember(int index)
+	public int getMemberIndex(Member member)
+	{
+		return memberList.indexOf(member);
+	}
+	
+	public void deleteMember(int index)
 	{
 		memberList.remove(index);
 	}
