@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="820.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIeventsController">
+   <content>
+      <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
+         <center>
+            <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
+               <content>
+                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2052.0">
+                    <columns>
+                      <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="250.0" text="Title" />
+                      <TableColumn fx:id="tcEventType" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Type" />
+                        <TableColumn fx:id="tcEventCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
+                        <TableColumn fx:id="tcEventLecturer" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Lecturer" />
+                        <TableColumn fx:id="tcEventStartDate" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Start-date:" />
+                        <TableColumn fx:id="tcEventEndDate" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="End-date:" />
+                        <TableColumn fx:id="tcEventStartTime" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Start-time" />
+                        <TableColumn fx:id="tcEventEndTime" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="End-time" />
+                        <TableColumn fx:id="tcEventDuration" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Duration" />
+                        <TableColumn fx:id="tcEventNumberOfTickets" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Number of tickets" />
+                        <TableColumn fx:id="tcTicketsRemaining" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Tickets remaining" />
+                        <TableColumn fx:id="tcEventPrice" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Price" />
+                        <TableColumn fx:id="tcEventDiscount" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Discount" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </center>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Accordion prefHeight="690.0">
+                    <panes>
+                      <TitledPane text="Create event">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Title:" />
+                                    <TextField fx:id="tfEnterEventTitle" layoutX="10.0" layoutY="35.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="Type:" />
+                                    <Button fx:id="btnCreateEvent" layoutX="10.0" layoutY="600.0" mnemonicParsing="false" onAction="#createEvent" prefWidth="120.0" text="Create" />
+                                    <Button fx:id="btnClearEditEventTextFields" layoutX="145.0" layoutY="600.0" mnemonicParsing="false" onAction="#clearEditEventTextFields" prefWidth="120.0" text="Clear fields" />
+                                    <ComboBox fx:id="cbEventType" layoutX="10.0" layoutY="85.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="115.0" text="Category:" />
+                                    <ComboBox fx:id="cbEventCategory" layoutX="10.0" layoutY="135.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="165.0" text="Lecturer:" />
+                                    <ComboBox fx:id="cbEventLecturer" layoutX="10.0" layoutY="185.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="215.0" text="Start-date:" />
+                                    <DatePicker fx:id="dpEventStartDate" layoutX="10.0" layoutY="235.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="265.0" text="End-date:" />
+                                    <DatePicker fx:id="dpEventEndDate" layoutX="10.0" layoutY="285.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="315.0" text="Start-time (hh:mm AM/PM):" />
+                                    <TextField fx:id="tfEventStartTime" layoutX="10.0" layoutY="335.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="365.0" text="End-time (hh:mm AM/PM):" />
+                                    <TextField fx:id="tfEventEndTime" layoutX="10.0" layoutY="385.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="415.0" text="Number of tickets:" />
+                                    <TextField fx:id="tfEventNumberOfTickets" layoutX="10.0" layoutY="435.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="465.0" text="Price:" />
+                                    <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="485.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="515.0" text="Discount:" />
+                                    <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="535.0" prefWidth="260.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane expanded="false" text="Search events">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Select search criteria:" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="Enter search key-words:" />
+                                    <TextField fx:id="tfEnterSearchKeywords" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
+                                    <Button fx:id="btnSearchEvents" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchEvents" prefWidth="255.0" text="Search" />
+                                    <ListView fx:id="lvEventSearchResults" layoutX="10.0" layoutY="155.0" prefHeight="470.0" prefWidth="255.0" />
+                                    <ComboBox fx:id="cbEventSearchCriteria" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="820.0" prefWidth="295.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Accordion prefHeight="815.0" prefWidth="295.0">
+                    <panes>
+                      <TitledPane prefHeight="765.0" prefWidth="295.0" text="Show event details">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="765.0" prefWidth="280.0">
+                                       <children>
+                                          <Label text="Title:" translateX="10.0" translateY="30.0" />
+                                          <TextField fx:id="tfShowEventTitle" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="35.0" />
+                                          <Label text="Type:" translateX="10.0" translateY="40.0" />
+                                          <ComboBox fx:id="cbShowEventType" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="45.0" />
+                                          <Label text="Category:" translateX="10.0" translateY="50.0" />
+                                          <ComboBox fx:id="cbShowEventCategory" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="55.0" />
+                                          <Label text="Lecturer:" translateX="10.0" translateY="60.0" />
+                                          <ComboBox fx:id="cbSHowEventLecturer" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="65.0" />
+                                          <Label text="Start-date:" translateX="10.0" translateY="70.0" />
+                                          <DatePicker fx:id="dpShowEventStartDate" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="75.0" />
+                                          <Label text="End-date:" translateX="10.0" translateY="80.0" />
+                                          <DatePicker fx:id="dpShowEventEndDate" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="85.0" />
+                                          <Label text="Start-time:" translateX="10.0" translateY="90.0" />
+                                          <TextField fx:id="tfShowEventStartTime" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="95.0" />
+                                          <Label text="End-time:" translateX="10.0" translateY="100.0" />
+                                          <TextField fx:id="tfShowEventEndTime" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="105.0" />
+                                          <Label text="Number of tickets:" translateX="10.0" translateY="110.0" />
+                                          <TextField fx:id="tfShowEventNumberOfTickets" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="115.0" />
+                                          <Label text="Tickets remaining:" translateX="10.0" translateY="120.0" />
+                                          <TextField fx:id="tfShowEventTicketsRemaining" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="125.0" />
+                                          <Label text="Price:" translateX="10.0" translateY="130.0" />
+                                          <TextField fx:id="tfShowEventPrice" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="135.0" />
+                                          <Label text="Discount:" translateX="10.0" translateY="140.0" />
+                                          <TextField fx:id="tfShowEventDiscount" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="145.0" />
+                                          <HBox fx:id="hboxEventEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="160.0">
+                                             <children>
+                                                <Button fx:id="btnSaveEventEditChanges" mnemonicParsing="false" onAction="#saveEditEventChanges" prefWidth="80.0" text="Save" translateX="10.0" />
+                                                <Button fx:id="btnClearEditEventTextFields" mnemonicParsing="false" onAction="#clearEditEventTextFields" prefWidth="80.0" text="Clear fields" translateX="20.0" />
+                                                <Button fx:id="btnCancelEditEvent" mnemonicParsing="false" onAction="#cancelEditEvent" prefWidth="80.0" text="Cancel" translateX="30.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="25.0" prefWidth="200.0" translateY="175.0">
+                                             <children>
+                                                <Button fx:id="btnEditEvent" mnemonicParsing="false" onAction="#editEvent" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
+                                                <Button fx:id="btnDeleteEvent" mnemonicParsing="false" onAction="#deleteEvent" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane prefWidth="295.0" text="Add members to event">
+                        <content>
+                          <AnchorPane maxHeight="1500.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="293.0">
+                                 <children>
+                                    <VBox prefHeight="800.0" prefWidth="280.0">
+                                       <children>
+                                          <Label text="Selected event:" translateX="10.0" translateY="10.0" />
+                                          <TextField fx:id="tfSelectedEvent" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
+                                          <Label text="Add members to event:" translateX="10.0" translateY="20.0" />
+                                          <ListView fx:id="lvMemberList" maxWidth="260.0" prefHeight="282.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
+                                          <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
+                                             <children>
+                                                <CheckBox fx:id="cbSelectAllMembersToAdd" mnemonicParsing="false" text="Select all" translateX="10.0" translateY="4.0" />
+                                                <Button fx:id="btnAddMemberToEvent" mnemonicParsing="false" onAction="#addMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
+                                             </children>
+                                          </HBox>
+                                          <Label text="Members already added:" translateX="10.0" translateY="45.0" />
+                                          <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="282.0" prefWidth="200.0" translateX="10.0" translateY="50.0" />
+                                          <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
+                                             <children>
+                                                <CheckBox fx:id="cbSelectAllMembersToRemove" mnemonicParsing="false" text="Select all" translateX="10.0" translateY="4.0" />
+                                                <Button fx:id="btnRemoveMemberFromEvent" mnemonicParsing="false" onAction="#removeMemberFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </VBox>
+         </right>
+         <top>
+            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <items>
+                  <Label fx:id="lblEventCount" text="Event count:" translateX="80.0" />
+               </items></ToolBar>
+         </top>
+      </BorderPane>
+   </content>
+</ScrollPane>

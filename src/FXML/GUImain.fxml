@@ -16,29 +16,28 @@
     </Tab>
     <Tab fx:id="eventsTab" text="Events">
          <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" />
-         </content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+        	  <center>
+		    	<fx:include fx:id="eventsPage" source="GUIevents.fxml"/>
+           	  </center>
+            </BorderPane>
+        </content>
     </Tab>
       <Tab fx:id="sponsorsTab" closable="false" text="Sponsors">
          <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" />
-         </content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+        	  <center>
+		    	<fx:include fx:id="sponsorPage" source="GUIsponsors.fxml"/>
+           	  </center>
+            </BorderPane>
+        </content>
       </Tab>
       <Tab fx:id="lecturersTab" closable="false" text="Lecturers">
          <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <center>
-                        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                          </columns>
-                        </TableView>
-                     </center>
-                  </BorderPane>
-               </center>
+			<BorderPane prefHeight="200.0" prefWidth="200.0">
+        	  <center>
+		    	<fx:include fx:id="lecturerPage" source="GUIlecturers.fxml"/>
+           	  </center>
             </BorderPane>
          </content>
       </Tab>

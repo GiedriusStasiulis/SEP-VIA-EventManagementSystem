@@ -49,7 +49,7 @@ public class GUImembersController implements Initializable
 
 	@FXML private BorderPane memberPage = new BorderPane();
 
-	@FXML private Button btnAddMember,btnClearTextFields,btnSearchMembers,btnEditMember,btnDeleteMember,
+	@FXML private Button btnAddMember,btnClearAddMemberTextFields,btnSearchMembers,btnEditMember,btnDeleteMember,
 							btnSaveMemberEditChanges,btnClearEditMemberTextFields,btnCancelEditMember,
 							btnGenerateMemberEmailList,btnSelectAllMemberEmails,btnSendNewsletter;
 
@@ -168,13 +168,13 @@ public class GUImembersController implements Initializable
 			memberList.addMemberToList(member);		
 			memberFile.writeTextFile(memberList);		
 			memberTable.getItems().add(member);
-			clearTextFields(event);
+			clearAddMemberTextFields(event);
 			
 			lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 	}
 	
 	@FXML
-	void clearTextFields(ActionEvent event) 
+	void clearAddMemberTextFields(ActionEvent event) 
 	{
 		tfEnterMemberName.setText("");
 		tfEnterMemberEmail.setText("");
