@@ -101,6 +101,15 @@ public class GUIeventsController implements Initializable
     	System.out.println("Edit event");
     	hboxEventEditOptions.setVisible(true);
 
+		tfShowEventTitle.setEditable(true);		
+		dpShowEventStartDate.setEditable(true);
+		dpShowEventEndDate.setEditable(true);
+		tfShowEventStartTime.setEditable(true);
+		tfShowEventEndTime.setEditable(true);
+		tfShowEventNumberOfTickets.setEditable(true);
+		tfShowEventTicketsRemaining.setEditable(true);
+		tfShowEventDiscount.setEditable(true);
+
     }
     
     @FXML
@@ -108,6 +117,15 @@ public class GUIeventsController implements Initializable
     {
     	System.out.println("Cancel edit event");
     	hboxEventEditOptions.setVisible(false);
+    	
+		tfShowEventTitle.setEditable(false);		
+		dpShowEventStartDate.setEditable(false);
+		dpShowEventEndDate.setEditable(false);
+		tfShowEventStartTime.setEditable(false);
+		tfShowEventEndTime.setEditable(false);
+		tfShowEventNumberOfTickets.setEditable(false);
+		tfShowEventTicketsRemaining.setEditable(false);
+		tfShowEventDiscount.setEditable(false);
     }
 
     @FXML
