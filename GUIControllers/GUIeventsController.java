@@ -1,5 +1,13 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,32 +20,34 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-/**
- * Controller class for GUIevents.fxml. Handles all ActionEvent and MouseEvents
- * that occur on the events page in the application. * 
- * @author Group#2 *
- */
-
 public class GUIeventsController implements Initializable
 {
-	@FXML private BorderPane eventsPage = new BorderPane();
+	private Event eventToAdd;
+	private EventList eventList = new EventList();
+	private String filename = "EventList.txt";
+	private EventFile eventFile = new EventFile(filename);
+	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture","Seminar","Workshop","Journey");
+   private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
+   private ObservableList<Event>  events = FXCollections.observableArrayList();
+   @FXML private BorderPane eventsPage = new BorderPane();
 	
 	@FXML private Button btnCreateEvent,btnDeleteEvent,btnCancelEditEvent,btnEditEvent,btnClearTextFields,
-							btnSearchEvents,btnSaveEventEditChanges,btnClearCreateEventTextFields,btnAddMemberToEvent,
+							btnSearchEvents,btnSaveEventEditChanges,btnClearEditEventTextFields,btnAddMemberToEvent,
 							btnRemoveMemberFromEvent;
 	
 	@FXML private TextField tfEnterSearchKeywords,tfEventEndTime,tfShowEventPrice,tfShowEventNumberOfTickets,tfShowEventEndTime,
 							tfEventNumberOfTickets,tfEventPrice,tfShowEventDiscount,tfEnterEventTitle,tfEventStartTime,
 							tfEventDiscount,tfShowEventTicketsRemaining,tfShowEventStartTime,tfSelectedEvent,tfShowEventTitle;
 
-	@FXML private ComboBox<?> cbEventSearchCriteria,cbShowEventCategory,cbEventType,cbShowEventLecturer,cbShowEventType,cbEventCategory,cbEventLecturer;
+	@FXML private ComboBox<String> cbEventCategory,cbEventSearchCriteria,cbShowEventCategory,cbEventType,cbShowEventLecturer,cbShowEventType;
 	
-	@FXML private TableView<?> eventsTable;
+	@FXML private TableView<Event> eventsTable;
 	
-	@FXML private TableColumn<?, ?> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
+	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
 									tcEventStartTime,tcEventEndTime,tcEventDuration,tcEventPrice,tcEventDiscount,tcEventNumberOfTickets,
 									tcTicketsRemaining,tcEventLecturer;
 	
@@ -59,75 +69,87 @@ public class GUIeventsController implements Initializable
 		eventsPage.setMaxWidth(Double.MAX_VALUE);	
 		
 		hboxEventEditOptions.setVisible(false);
-		
-		tcEventTitle.setStyle("-fx-alignment: CENTER;");
-		tcEventType.setStyle("-fx-alignment: CENTER;");
-		tcEventCategory.setStyle("-fx-alignment: CENTER;");
-		tcEventStartDate.setStyle("-fx-alignment: CENTER;");
-		tcEventEndDate.setStyle("-fx-alignment: CENTER;");
-		tcEventStartTime.setStyle("-fx-alignment: CENTER;");
-		tcEventEndTime.setStyle("-fx-alignment: CENTER;");
-		tcEventDuration.setStyle("-fx-alignment: CENTER;");
-		tcEventPrice.setStyle("-fx-alignment: CENTER;");
-		tcEventDiscount.setStyle("-fx-alignment: CENTER;");
-		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");
-		tcTicketsRemaining.setStyle("-fx-alignment: CENTER;");
-		tcEventLecturer.setStyle("-fx-alignment: CENTER;");
-				
-		cbShowEventType.setDisable(true);
-		cbShowEventCategory.setDisable(true);
-		cbShowEventLecturer.setDisable(true);
-		
-		dpShowEventStartDate.setDisable(true);		
-		dpShowEventEndDate.setDisable(true);
-		
 		tfShowEventTitle.setEditable(false);
+		
+		dpShowEventStartDate.setEditable(false);
+
+		dpShowEventEndDate.setEditable(false);
 		tfShowEventStartTime.setEditable(false);
 		tfShowEventEndTime.setEditable(false);
 		tfShowEventNumberOfTickets.setEditable(false);
 		tfShowEventTicketsRemaining.setEditable(false);
-		tfShowEventPrice.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
 		
-		//btnEditEvent.setDisable(true);
-		btnDeleteEvent.setDisable(true);		
-	}	
-	
-	public void showEventDetailsFromTable() 
-	{
-
-	}
-	
-	public void showEventDetailsFromListView() 
-	{
-
+		//initialize combobox
+		
+		cbEventType.setItems(typeChoices);
+		cbEventType.getSelectionModel().select(0);
+		cbEventCategory.setItems(categoryChoices);
+		cbEventCategory.getSelectionModel().select(0);
+		
+		//initialize table
+		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event, String>("Name"));
+		tcEventType.setCellValueFactory(new PropertyValueFactory<Event, String>("Type"));
+		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("Category"));
+		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,String>("Start date"));
+		tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,String>("End date"));
+		
+		try
+		{
+		   eventsTable.setItems(getEventList());
+		}
+		catch (FileNotFoundException e)
+		{
+		   e.printStackTrace();
+		}
+		catch (ParseException e)
+		{
+		   e.printStackTrace();
+		}
+		
+		
 	}	
 	
     @FXML
-    void createEvent(ActionEvent event) 
+    void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException
     {
-    	System.out.println("Create event");
+    	String eventName = tfEnterEventTitle.getText();
+    	//DatePicker datePicker = new DatePicker();
+    	LocalDate localStartDate = dpEventStartDate.getValue();
+    	LocalDate localEndDate = dpEventEndDate.getValue();
+    	//int year = localDate.getYear();
+    	//int month = localDate.getMonthValue();
+    	//int day = localDate.getDayOfMonth();
+    	String startTime = tfEventStartTime.getText();
+    	String endTime = tfEventEndTime.getText();
+    	double price = Double.parseDouble(tfEventPrice.getText());
+    	double discount = Double.parseDouble(tfEventDiscount.getText());
+    	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
+      
+    	
+    	
+    	Event eventNew = new Event(eventName, localStartDate,localEndDate, startTime, endTime,maxMembers,price,discount);
+    	eventList.addEventToList(eventNew);
+    	eventFile.writeEventFile(eventList);
+    	eventsTable.getItems().add(eventNew);
+    	
+    	
     }
-
+    
+    public ObservableList<Event> getEventList() throws FileNotFoundException, ParseException
+    {
+       eventList = eventFile.readEventsTextFile();
+       
+       for ( int i=0; i<eventList.size(); i++)
+       {
+          events.add(new Event(eventList.getEvent(i).getName(),eventList.getEvent(i).getStartDate(),eventList.getEvent(i).getEndDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
+       }
+       return events;
+    }
     @FXML
-    void clearCreateEventTextFields(ActionEvent event) 
+    void clearTextFields(ActionEvent event) 
     {
     	System.out.println("Clear text fields");
-    	tfEnterEventTitle.setText("");
-    	tfEventStartTime.setText("");
-    	tfEventEndTime.setText("");
-    	tfEventNumberOfTickets.setText("");
-    	tfEventPrice.setText("");
-    	tfEventDiscount.setText("");
-    	
-    	cbEventType.getSelectionModel().select(0);
-    	cbEventCategory.getSelectionModel().select(0);
-    	cbEventLecturer.getSelectionModel().select(0);
-    	
-    	dpEventStartDate.getEditor().clear();
-    	dpEventStartDate.setValue(null);    	
-    	dpEventEndDate.getEditor().clear();
-    	dpEventEndDate.setValue(null);
     }
 
     @FXML
@@ -137,133 +159,48 @@ public class GUIeventsController implements Initializable
     }
 
     @FXML
-    void editEvent(ActionEvent event) 
-    {
-    	hboxEventEditOptions.setVisible(true);
-		
-		cbShowEventType.setDisable(false);
-		cbShowEventCategory.setDisable(false);
-		cbShowEventLecturer.setDisable(false);
-		
-		dpShowEventStartDate.setDisable(false);		
-		dpShowEventEndDate.setDisable(false);
-		
-		tfShowEventTitle.setEditable(true);
-		tfShowEventStartTime.setEditable(true);
-		tfShowEventEndTime.setEditable(true);
-		tfShowEventNumberOfTickets.setEditable(true);
-		tfShowEventTicketsRemaining.setEditable(true);
-		tfShowEventPrice.setEditable(true);
-		tfShowEventDiscount.setEditable(true);
-		
-		tfShowEventTitle.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventStartTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventEndTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventNumberOfTickets.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventTicketsRemaining.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventPrice.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		tfShowEventDiscount.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		
-		cbShowEventType.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		cbShowEventCategory.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		cbShowEventLecturer.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		
-		dpShowEventStartDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");	
-		dpShowEventEndDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-    }
-    
-    @FXML
     void saveEditEventChanges(ActionEvent event) 
     {
-    	hboxEventEditOptions.setVisible(false);
-    	
-    	cbShowEventType.setDisable(true);
-		cbShowEventCategory.setDisable(true);
-		cbShowEventLecturer.setDisable(true);
-		
-		dpShowEventStartDate.setDisable(true);		
-		dpShowEventEndDate.setDisable(true);
-		
-		tfShowEventTitle.setEditable(false);
-		tfShowEventStartTime.setEditable(false);
-		tfShowEventEndTime.setEditable(false);
-		tfShowEventNumberOfTickets.setEditable(false);
-		tfShowEventTicketsRemaining.setEditable(false);
-		tfShowEventPrice.setEditable(false);
-		tfShowEventDiscount.setEditable(false);
-		
-		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
-		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
-		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
-		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
-		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;");
-		tfShowEventPrice.setStyle("-fx-border-width: 0px ;");
-		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;");
-		
-		cbShowEventType.setStyle("-fx-border-width: 0px ;");
-		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
-		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
-		
-		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");	
-		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+    	System.out.println("Save edit changes");
     }
 
     @FXML
     void clearEditEventTextFields(ActionEvent event) 
     {
-    	tfShowEventTitle.setText("");
-    	tfShowEventStartTime.setText("");
-		tfShowEventEndTime.setText("");
-		tfShowEventNumberOfTickets.setText("");
-		tfShowEventTicketsRemaining.setText("");
-		tfShowEventPrice.setText("");
-		tfShowEventDiscount.setText("");
-		
-		dpShowEventStartDate.getEditor().clear();
-    	dpShowEventStartDate.setValue(null);    	
-    	dpShowEventEndDate.getEditor().clear();
-    	dpShowEventEndDate.setValue(null);
-    	
-    	cbShowEventType.getSelectionModel().select(0);
-    	cbShowEventCategory.getSelectionModel().select(0);
-    	cbShowEventLecturer.getSelectionModel().select(0);
+    	System.out.println("Clear edit event text fields");
+    }
+
+    @FXML
+    void editEvent(ActionEvent event) 
+    {
+    	System.out.println("Edit event");
+    	hboxEventEditOptions.setVisible(true);
+
+		tfShowEventTitle.setEditable(true);		
+		dpShowEventStartDate.setEditable(true);
+		dpShowEventEndDate.setEditable(true);
+		tfShowEventStartTime.setEditable(true);
+		tfShowEventEndTime.setEditable(true);
+		tfShowEventNumberOfTickets.setEditable(true);
+		tfShowEventTicketsRemaining.setEditable(true);
+		tfShowEventDiscount.setEditable(true);
+
     }
     
     @FXML
     void cancelEditEvent(ActionEvent event) 
     {
     	System.out.println("Cancel edit event");
-    	hboxEventEditOptions.setVisible(false);    	
-			
-    	cbShowEventType.setDisable(true);
-		cbShowEventCategory.setDisable(true);
-		cbShowEventLecturer.setDisable(true);
+    	hboxEventEditOptions.setVisible(false);
     	
-		dpShowEventStartDate.setDisable(true);
-		dpShowEventEndDate.setDisable(true);
-		
-		tfShowEventTitle.setEditable(false);	
+		tfShowEventTitle.setEditable(false);		
+		dpShowEventStartDate.setEditable(false);
+		dpShowEventEndDate.setEditable(false);
 		tfShowEventStartTime.setEditable(false);
 		tfShowEventEndTime.setEditable(false);
 		tfShowEventNumberOfTickets.setEditable(false);
 		tfShowEventTicketsRemaining.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
-		tfShowEventPrice.setEditable(false);
-		
-		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
-		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
-		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
-		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
-		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;");
-		tfShowEventPrice.setStyle("-fx-border-width: 0px ;");
-		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;");
-		
-		cbShowEventType.setStyle("-fx-border-width: 0px ;");
-		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
-		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
-		
-		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");	
-		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
