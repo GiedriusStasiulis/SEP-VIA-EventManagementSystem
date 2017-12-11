@@ -79,6 +79,10 @@ public class GUIsponsorsController implements Initializable
       
       btnEditSponsor.setDisable(true);
       btnDeleteSponsor.setDisable(true);
+      
+      tfShowSponsorName.setEditable(false);
+      tfShowSponsorEmail.setEditable(false);
+      tfShowSponsorPhoneNumber.setEditable(false);
 
       try
       {

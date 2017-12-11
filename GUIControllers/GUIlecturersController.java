@@ -72,6 +72,12 @@ public class GUIlecturersController implements Initializable
 		cbSelectLecturerCategory.setItems(lecturerCategory);
 		cbShowLecturerCategory.setItems(lecturerCategory);
 		cbSelectLecturerCategory.getSelectionModel().select(0);
+		
+		cbShowLecturerCategory.setDisable(true);
+		
+		tfShowLecturerName.setEditable(false);
+		tfShowLecturerEmail.setEditable(false);
+		tfShowLecturerPhoneNumber.setEditable(false);
 
 		tcLecturerName.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("name"));
 		tcLecturerCategory.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("category"));
@@ -330,6 +336,26 @@ public class GUIlecturersController implements Initializable
 
 		lvLecturerSearchResults.setItems(searchResults);
 	}
+	
+	@FXML
+	void editLecturer(ActionEvent event) 
+	{
+		if (lecturerTable.getSelectionModel() != null) 
+		{
+			System.out.println(lecturerTable.getSelectionModel());
+			hboxLecturerEditOptions.setVisible(true);
+
+			cbShowLecturerCategory.setDisable(false);
+			
+			tfShowLecturerName.setEditable(true);
+			tfShowLecturerEmail.setEditable(true);
+			tfShowLecturerPhoneNumber.setEditable(true);
+
+			tfShowLecturerName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowLecturerEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowLecturerPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		}
+	}
 
 	@FXML
 	void saveEditLecturerChanges(ActionEvent event) throws FileNotFoundException, ParseException 
@@ -369,6 +395,9 @@ public class GUIlecturersController implements Initializable
 			lecturerTable.getItems().set(index, selectedLecturer);
 	
 			hboxLecturerEditOptions.setVisible(false);
+			
+			cbShowLecturerCategory.setDisable(true);
+			
 			tfShowLecturerName.setEditable(false);
 			tfShowLecturerEmail.setEditable(false);
 			tfShowLecturerPhoneNumber.setEditable(false);
@@ -397,6 +426,8 @@ public class GUIlecturersController implements Initializable
 	{
 		hboxLecturerEditOptions.setVisible(false);
 
+		cbShowLecturerCategory.setDisable(true);
+		
 		tfShowLecturerName.setEditable(false);
 		tfShowLecturerEmail.setEditable(false);
 		tfShowLecturerPhoneNumber.setEditable(false);
@@ -404,25 +435,7 @@ public class GUIlecturersController implements Initializable
 		tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
-	}
-
-	@FXML
-	void editLecturer(ActionEvent event) 
-	{
-		if (lecturerTable.getSelectionModel() != null) 
-		{
-			System.out.println(lecturerTable.getSelectionModel());
-			hboxLecturerEditOptions.setVisible(true);
-
-			tfShowLecturerName.setEditable(true);
-			tfShowLecturerEmail.setEditable(true);
-			tfShowLecturerPhoneNumber.setEditable(true);
-
-			tfShowLecturerName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowLecturerEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowLecturerPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-		}
-	}
+	}	
 
 	@FXML
 	void deleteLecturer(ActionEvent event) throws FileNotFoundException 

@@ -1,2 +1,2 @@
 Jerry Smith,Astrology,53447789,jsmith@ght.dk
-Rick Sanchez,Alternative Health-Care,53996587,ricksan@rnm.com
+Rick Sanchez,Healing,53996587,ricksan@rnm.com
