@@ -5,11 +5,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="820.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIeventsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" minWidth="200.0" prefHeight="820.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIeventsController">
    <content>
       <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
          <center>
-            <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
+            <ScrollPane minHeight="200.0" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
                   <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2052.0">
                     <columns>

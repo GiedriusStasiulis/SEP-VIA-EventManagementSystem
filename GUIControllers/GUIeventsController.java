@@ -47,9 +47,11 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private TableView<Event> eventsTable;
 	
-	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
+	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,
 									tcEventStartTime,tcEventEndTime,tcEventDuration,tcEventPrice,tcEventDiscount,tcEventNumberOfTickets,
 									tcTicketsRemaining,tcEventLecturer;
+	
+	@FXML private TableColumn<Event, LocalDate> tcEventStartDate,tcEventEndDate;
 	
 	@FXML private Label lblEventCount;
 	
@@ -91,7 +93,7 @@ public class GUIeventsController implements Initializable
 		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,String>("eventName"));
 		//tcEventType.setCellValueFactory(new PropertyValueFactory<Event,?>("eventType"));
 		//tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,?>("eventCategory"));
-		//tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
+		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
 		//tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
 		
 		try
@@ -115,7 +117,7 @@ public class GUIeventsController implements Initializable
     {
     	String eventName = tfEnterEventTitle.getText();
     	//DatePicker datePicker = new DatePicker();
-    	//LocalDate localStartDate = dpEventStartDate.getValue();
+    	LocalDate localStartDate = dpEventStartDate.getValue();
     	//LocalDate localEndDate = dpEventEndDate.getValue();
     	//int year = localDate.getYear();
     	//int month = localDate.getMonthValue();
@@ -126,28 +128,28 @@ public class GUIeventsController implements Initializable
     	//double discount = Double.parseDouble(tfEventDiscount.getText());
     	//int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
          	
-    	Event eventNew = new Event(eventName);
+    	Event eventNew = new Event(eventName,localStartDate);
     	eventList.addEventToList(eventNew);
-    	System.out.println(eventList);
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
     	
+    	clearCreateEventTextFields(event);
     }
     
     public ObservableList<Event> getEventList() throws FileNotFoundException, ParseException
     {
        eventList = eventFile.readEventsTextFile();
-       System.out.println(eventList);
+       
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getName()));
+          events.add(new Event(eventList.getEvent(i).getEventName(),eventList.getEvent(i).getEventStartDate()));
        }
        return events;
     }
     @FXML
     void clearCreateEventTextFields(ActionEvent event) 
     {
-    	System.out.println("Clear text fields");
+    	tfEnterEventTitle.setText("");
     }
 
     @FXML
