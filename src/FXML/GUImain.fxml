@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -10,15 +11,35 @@
 <TabPane fx:id="TabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab fx:id="homeTab" closable="false" text="Home">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <ToolBar prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="800.0" translateY="200.0">
+                           <children>
+                              <Label text="Welcome to VIA Event Management System" textAlignment="CENTER" translateY="50.0">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label text="© 2017 Vipassanā - Insight Awareness. All right reserved. Powered by VIA ICT group #2 Solutions" translateY="150.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </TextFlow>
+               </center>
+            </BorderPane>
+         </content>
     </Tab>
     <Tab fx:id="eventsTab" text="Events">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
         	  <center>
-		    	<fx:include fx:id="eventsPage" source="GUIevents.fxml"/>
+		    	<fx:include fx:id="eventsPage" source="GUIevents.fxml" />
            	  </center>
             </BorderPane>
         </content>
@@ -27,7 +48,7 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
         	  <center>
-		    	<fx:include fx:id="sponsorPage" source="GUIsponsors.fxml"/>
+		    	<fx:include fx:id="sponsorPage" source="GUIsponsors.fxml" />
            	  </center>
             </BorderPane>
         </content>
@@ -36,7 +57,7 @@
          <content>
 			<BorderPane prefHeight="200.0" prefWidth="200.0">
         	  <center>
-		    	<fx:include fx:id="lecturerPage" source="GUIlecturers.fxml"/>
+		    	<fx:include fx:id="lecturerPage" source="GUIlecturers.fxml" />
            	  </center>
             </BorderPane>
          </content>
@@ -45,7 +66,7 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
         	  <center>
-		    	<fx:include fx:id="memberPage" source="GUImembers.fxml"/>
+		    	<fx:include fx:id="memberPage" source="GUImembers.fxml" />
            	  </center>
             </BorderPane>
         </content>

@@ -79,6 +79,7 @@ public class GUImembersController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
+		
 		memberPage.setMaxHeight(Double.MAX_VALUE);
 		memberPage.setMaxWidth(Double.MAX_VALUE);
 
@@ -128,6 +129,20 @@ public class GUImembersController implements Initializable
 		lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 	}
 	
+	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
+	{
+		memberList = memberFile.readMemberTextFile();
+		
+		System.out.println(memberList.toString());
+
+		for (int i = 0; i < memberList.size(); i++) 
+		{
+			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail()));
+		}
+
+		return members;
+	}
+	
 	public void showMemberDetailsFromTable() 
 	{
 	    if (memberTable.getSelectionModel().getSelectedItem() != null) {
@@ -144,19 +159,7 @@ public class GUImembersController implements Initializable
 	        tfShowMemberName.setText(selectedMember.getName());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
 	    }
-	}
-
-	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
-	{
-		memberList = memberFile.readMemberTextFile();
-
-		for (int i = 0; i < memberList.size(); i++) 
-		{
-			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail()));
-		}
-
-		return members;
-	}
+	}	
 
 	@FXML
 	void addMember(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
@@ -195,7 +198,7 @@ public class GUImembersController implements Initializable
 			else
 			{
 				memberList.addMemberToList(member);		
-				memberFile.writeTextFile(memberList);		
+				memberFile.writeMemberTextFile(memberList);		
 				memberTable.getItems().add(member);
 				clearAddMemberTextFields(event);
 					
@@ -319,7 +322,7 @@ public class GUImembersController implements Initializable
     	selectedMember.setEmail(newMemberEmail);
 
     	memberList.replaceMember(index,selectedMember);    	
-    	memberFile.writeTextFile(memberList);
+    	memberFile.writeMemberTextFile(memberList);
 
     	memberTable.getItems().set(index, selectedMember);
 
@@ -362,7 +365,7 @@ public class GUImembersController implements Initializable
 	    				int index = memberList.getMemberIndex(selectedMember);
 	    				
 				    	memberList.deleteMember(index);
-				    	memberFile.writeTextFile(memberList);
+				    	memberFile.writeMemberTextFile(memberList);
 				    	memberTable.getItems().remove(index);
 				    	
 				    	tfShowMemberName.setText("");

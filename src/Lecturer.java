@@ -1,81 +1,65 @@
-import java.io.Serializable;
-
-/** This class represents a lecturer.
- * 
- * @author alin
- * 
- * @param name
- *          the name
- * @param email
- *          the email
- * @param category
- *          the category
- * @param phoneNumber
- *           the phone number as an integer
- */
-public class Lecturer implements Serializable
-{
- /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-private String name;
- private String email;
- private String category;
- private int phoneNumber;
- 
-public Lecturer()
-{
-   name="";
-   email="";
-   category="";
-   phoneNumber=0;
-}
-public Lecturer(String name,String category ,int phoneNumber,String email)
-{
-   this.name=name;
-   this.email=email;
-   this.category=category;
-   this.phoneNumber=phoneNumber;
-}
-public String getName()
-{
-   return name;
-}
-public void setName(String name)
-{
-   this.name = name;
-}
-public String getEmail()
-{
-   return email;
-}
-public void setEmail(String email)
-{
-   this.email = email;
-}
-public String getCategory()
-{
-   return category;
-}
-public void setCategory(String category)
-{
-   this.category = category;
-}
-public int getPhoneNumber()
-{
-   return phoneNumber;
-}
-public void setPhoneNumber(int phoneNumber)
-{
-   this.phoneNumber = phoneNumber;
-}
-@Override
-public String toString()
-{
-   return  "Name: "+name.toUpperCase() +", PhoneNumber: "+phoneNumber+", Category: "+ category+", E-mail: "+email;
-}
 
 
+public class Lecturer 
+{
+	private String name;
+	private String category;
+	private String phoneNumber;
+	private String email;
+	
+	public Lecturer(String name, String category, String phoneNumber, String email)
+	{
+		this.name = name;
+		this.category = category;
+		this.phoneNumber = phoneNumber;
+		this.email = email;		
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public boolean equals(Object obj) 
+	{
+		if (!(obj instanceof Lecturer)) {
+			return false;
+		}
+
+		Lecturer other = (Lecturer) obj;
+		return name.equals(other.name) && email.equals(other.email);
+	}
+
+	public String toString() 
+	{
+		String s = String.format("%s,%s,%s,%s", getName(), getCategory(),getPhoneNumber(),getEmail());
+		return s;
+	}
 }

@@ -4,10 +4,10 @@
 /GUImainController.class
 /GUImembersController.class
 /GUIsponsorsController.class
+/Lecturer.class
+/LecturerFile.class
+/LecturerList.class
 /MainClass.class
 /Member.class
 /MemberFile.class
 /MemberList.class
-/Lecturer.class
-/LecturerList.class
-/LecturerFile.class

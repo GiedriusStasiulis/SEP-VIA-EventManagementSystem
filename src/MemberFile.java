@@ -69,7 +69,7 @@ public class MemberFile
 		}
 	}
 
-	public void writeTextFile(MemberList memberList) throws FileNotFoundException
+	public void writeMemberTextFile(MemberList memberList) throws FileNotFoundException
 	   {
 	      PrintWriter output = null;
 	      try

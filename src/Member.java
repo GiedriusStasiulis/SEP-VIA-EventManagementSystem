@@ -1,5 +1,3 @@
-import java.io.Serializable;
-
 /**
  *The Member class represents an object, which holds two String values: name, email. 
  *Example:

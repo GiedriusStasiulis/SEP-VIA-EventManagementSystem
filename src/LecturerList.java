@@ -1,51 +1,60 @@
-
-
-import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-
-
-public class LecturerList implements Serializable  
+public class LecturerList 
 {
-   private static final long serialVersionUID = 1L;
-   public ArrayList<Lecturer>lecturerList;
-   public LecturerList()
-   {
-      lecturerList=new ArrayList<>();
-   }
-   public void addLecturer(Lecturer lecturer)
-   {
-      lecturerList.add(lecturer);
-   }
-   
-   public Lecturer getByName(String name)
-   {
-      for(int i=0;i<lecturerList.size();i++)
-      {
-         if(lecturerList.get(i).getName().equalsIgnoreCase(name))
-         {
-           return lecturerList.get(i); 
-         }
-      }
-      return null;
-   }
-   public String toString()
-   {
-      String temp="";
-      for(int i=0;i<lecturerList.size();i++)
-      {
-         temp+=lecturerList.get(i).toString();
-      }
-      return temp;
-   }
-   public Lecturer getLecturer(int index)
-   {
-      return lecturerList.get(index);
-   }
-   public int size()
-   {
-     return lecturerList.size();
-   }
-  
+	private ArrayList<Lecturer> lecturerList;
+	
+	public LecturerList()
+	{
+		lecturerList = new ArrayList<Lecturer>();
+	}
+	
+	public int size()
+	{
+		return lecturerList.size();
+	}
+	
+	public void addLecturerToList(Lecturer lecturer)
+	{
+		lecturerList.add(lecturer);
+	}
+	
+	public void replaceLecturer(int index, Lecturer lecturer)
+	{
+		lecturerList.set(index, lecturer);
+	}
+	
+	public Lecturer getLecturer(int index)
+	{
+		return lecturerList.get(index);
+	}
+	
+	public int getLecturerIndex(Lecturer lecturer)
+	{
+		return lecturerList.indexOf(lecturer);
+	}
+	
+	public void deleteLecturer(int index)
+	{
+		lecturerList.remove(index);
+	}
+	
+	public boolean checkForDuplicates(LecturerList lecturerList, Lecturer lecturer)
+	{
+		boolean status = false;
+		
+		for(int i = 0; i < lecturerList.size(); i++)
+		{
+			if(lecturer.equals(lecturerList.getLecturer(i)))
+				return true;
+		}
+		
+		return status;
+	}
+	
+	public String toString()
+	{
+		String s = String.format("%s", lecturerList);
+		return s;
+	}
 }

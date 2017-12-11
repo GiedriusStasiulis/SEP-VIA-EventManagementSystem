@@ -11,7 +11,7 @@
          <center>
             <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
-                  <TableView fx:id="sponsorTable" prefHeight="1100.0" prefWidth="2052.0">
+                  <TableView fx:id="lecturerTable" prefHeight="1100.0" prefWidth="2052.0">
                     <columns>
                       <TableColumn fx:id="tcLecturerName" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
                       <TableColumn fx:id="tcLecturerCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
