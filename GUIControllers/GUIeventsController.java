@@ -47,7 +47,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private TableView<Event> eventsTable;
 	
-	@FXML private TableColumn<Event, LocalDate> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
+	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
 									tcEventStartTime,tcEventEndTime,tcEventDuration,tcEventPrice,tcEventDiscount,tcEventNumberOfTickets,
 									tcTicketsRemaining,tcEventLecturer;
 	
@@ -88,7 +88,7 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.getSelectionModel().select(0);
 		
 		//initialize table
-		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventName"));
+		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,String>("eventName"));
 		//tcEventType.setCellValueFactory(new PropertyValueFactory<Event,?>("eventType"));
 		//tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,?>("eventCategory"));
 		//tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
@@ -115,16 +115,16 @@ public class GUIeventsController implements Initializable
     {
     	String eventName = tfEnterEventTitle.getText();
     	//DatePicker datePicker = new DatePicker();
-    	LocalDate localStartDate = dpEventStartDate.getValue();
-    	LocalDate localEndDate = dpEventEndDate.getValue();
+    	//LocalDate localStartDate = dpEventStartDate.getValue();
+    	//LocalDate localEndDate = dpEventEndDate.getValue();
     	//int year = localDate.getYear();
     	//int month = localDate.getMonthValue();
     	//int day = localDate.getDayOfMonth();
-    	String startTime = tfEventStartTime.getText();
-    	String endTime = tfEventEndTime.getText();
-    	double price = Double.parseDouble(tfEventPrice.getText());
-    	double discount = Double.parseDouble(tfEventDiscount.getText());
-    	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
+    	//String startTime = tfEventStartTime.getText();
+    	//String endTime = tfEventEndTime.getText();
+    	//double price = Double.parseDouble(tfEventPrice.getText());
+    	//double discount = Double.parseDouble(tfEventDiscount.getText());
+    	//int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
          	
     	Event eventNew = new Event(eventName);
     	eventList.addEventToList(eventNew);
