@@ -7,7 +7,7 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="820.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIlecturersController">
    <content>
-      <BorderPane fx:id="lecturerPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
+      <BorderPane fx:id="lecturerPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
          <center>
             <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
@@ -67,7 +67,7 @@
          <right>
             <VBox prefHeight="500.0" prefWidth="295.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Selected sponsor details:" translateX="10.0" translateY="30.0" />
+                  <Label text="Selected lecturer details:" translateX="10.0" translateY="30.0" />
                   <Label text="Name:" translateX="10.0" translateY="40.0" />
                   <TextField fx:id="tfShowLecturerName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="45.0" />
                   <Label text="Category:" translateX="10.0" translateY="50.0" />

@@ -7,13 +7,13 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="200.0" prefHeight="820.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIeventsController">
    <content>
-      <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
+      <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
          <center>
             <ScrollPane minHeight="200.0" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
-                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2052.0">
+                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="1950.0">
                     <columns>
-                      <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="250.0" text="Title" />
+                      <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Title" />
                       <TableColumn fx:id="tcEventType" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Type" />
                         <TableColumn fx:id="tcEventCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
                         <TableColumn fx:id="tcEventLecturer" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Lecturer" />
