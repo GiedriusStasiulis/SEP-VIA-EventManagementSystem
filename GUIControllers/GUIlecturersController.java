@@ -182,7 +182,7 @@ public class GUIlecturersController implements Initializable {
 			
 			if(lecturerList.checkForDuplicates(lecturerList, lecturer))
 			{
-				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
+				JOptionPane.showMessageDialog(null, "Lecturer already exists in the system!");
 				clearAddLecturerTextFields(event);
 			}
 			
@@ -193,7 +193,7 @@ public class GUIlecturersController implements Initializable {
 				lecturerTable.getItems().add(lecturer);
 				clearAddLecturerTextFields(event);
 					
-				lblLecturerCount.setText(String.format("Member count: %d", lecturerList.size()));
+				lblLecturerCount.setText(String.format("Lecturer count: %d", lecturerList.size()));
 			}
 		}
 		

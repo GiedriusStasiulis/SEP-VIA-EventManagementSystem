@@ -81,7 +81,7 @@ public class GUIsponsorsController implements Initializable
 
       tcSponsorName.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("name"));
       tcSponsorEmail.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("email"));
-      tcSponsorPhoneNumber.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("phone number"));
+      tcSponsorPhoneNumber.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("phone"));
 
       tcSponsorName.setStyle("-fx-alignment: CENTER;");
       tcSponsorEmail.setStyle("-fx-alignment: CENTER;");
