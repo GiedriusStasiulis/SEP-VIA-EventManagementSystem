@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -26,6 +27,10 @@ public class FileReaderWriter
 	private MemberList currentMemberList = new MemberList();
 	private MemberList currentMembers = new MemberList();;
 	private MemberList memberList = new MemberList();
+	
+	private EventList currentEventList = new EventList();
+	private EventList currentEvents = new EventList();
+	private EventList eventList= new EventList();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -41,7 +46,65 @@ public class FileReaderWriter
 	{
 		return this.file;
 	}
-
+	
+	public EventList readEventsTextFile() throws FileNotFoundException,ParseException
+   {
+    Scanner input = null;
+    
+    try
+    {
+       input = new Scanner(file);
+       while (input.hasNext())
+       {
+          String line = input.nextLine();
+          String[] lineItems = line.split(";");
+          
+          String eventName=lineItems[0].trim();
+          String eventStartDate=lineItems[1].trim();
+          String eventStartTime=lineItems[2].trim();
+          String eventEndDate=lineItems[3].trim();
+          String eventEndTime=lineItems[4].trim();
+          double eventPrice=Double.parseDouble(lineItems[5].trim());
+          
+          double eventDiscount=Double.parseDouble(lineItems[6].trim());
+          int eventMaxMembers=Integer.parseInt(lineItems[7].trim());
+          
+          LocalDate eventStart = LocalDate.parse(eventStartDate);
+          LocalDate eventEnd = LocalDate.parse(eventEndDate);
+          
+          Event eventToAdd = new Event(eventName, eventStart,eventEnd,eventStartTime,eventEndTime,eventMaxMembers,eventPrice,eventDiscount);
+          currentEventList.addEventToList(eventToAdd);
+                   
+       }
+       return currentEventList;
+       
+       
+    }
+    finally
+    {
+       input.close();
+    }
+   }
+	
+	public void writeEventTextFile(EventList eventList) throws FileNotFoundException
+   {
+      PrintWriter output = null;
+      try
+      {
+         output = new PrintWriter(file);
+         for (int i = 0; i < eventList.size(); i++)
+         {
+            output.println(eventList.getEvent(i).getName()+ ";" +eventList.getEvent(i).getStartDate().toString()+ ";"+eventList.getEvent(i).getStartTime() + ";" + eventList.getEvent(i).getEndDate().toString()+ ";"+eventList.getEvent(i).getEndTime()+";"+eventList.getEvent(i).getPrice()+";"+eventList.getEvent(i).getDiscount()+";"+eventList.getEvent(i).getMaxMembers());
+         }
+         output.flush();
+         
+      }
+      finally
+      {
+         output.close();
+      }
+   }
+	
 	public SponsorList readSponsorTextFile() throws FileNotFoundException, ParseException 
 	{
 		Scanner input = null;
