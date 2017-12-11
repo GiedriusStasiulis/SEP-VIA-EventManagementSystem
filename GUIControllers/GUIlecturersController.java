@@ -29,8 +29,8 @@ public class GUIlecturersController implements Initializable
 	private Lecturer lecturer;
 	private Lecturer selectedLecturer;
 	private LecturerList lecturerList = new LecturerList();
-	private String filename = "LecturerList.txt";
-	private FileReaderWriter lecturerFile = new FileReaderWriter(filename);
+	private static final String FILENAME = "LecturerList.txt";
+	private FileReaderWriter lecturerFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "Category",
@@ -124,18 +124,6 @@ public class GUIlecturersController implements Initializable
 		lblLecturerCount.setText(String.format("Lecturer count: %d", lecturerList.size()));
 	}
 
-	public ObservableList<Lecturer> getList() throws FileNotFoundException, ParseException 
-	{
-		lecturerList = lecturerFile.readLecturerTextFile();
-
-		for (int i = 0; i < lecturerList.size(); i++) {
-
-			lecturers.add(new Lecturer(lecturerList.getLecturer(i).getName(), lecturerList.getLecturer(i).getCategory(),
-					lecturerList.getLecturer(i).getPhoneNumber(), lecturerList.getLecturer(i).getEmail()));
-		}
-		return lecturers;
-	}
-
 	public void showLecturerDetailsFromTable() 
 	{
 		if (lecturerTable.getSelectionModel().getSelectedItem() != null) 
@@ -179,6 +167,18 @@ public class GUIlecturersController implements Initializable
 			tfShowLecturerName.setText(selectedLecturer.getName());
 			tfShowLecturerEmail.setText(selectedLecturer.getEmail());
 		}
+	}
+	
+	public ObservableList<Lecturer> getList() throws FileNotFoundException, ParseException 
+	{
+		lecturerList = lecturerFile.readLecturerTextFile();
+
+		for (int i = 0; i < lecturerList.size(); i++) {
+
+			lecturers.add(new Lecturer(lecturerList.getLecturer(i).getName(), lecturerList.getLecturer(i).getCategory(),
+					lecturerList.getLecturer(i).getPhoneNumber(), lecturerList.getLecturer(i).getEmail()));
+		}
+		return lecturers;
 	}
 
 	@FXML

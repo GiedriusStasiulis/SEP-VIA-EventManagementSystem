@@ -133,6 +133,27 @@ public class FileReaderWriter
 			input.close();
 		}
 	}
+	
+	public void writeSponsorTextFile(SponsorList sponsorList) throws FileNotFoundException 
+	{
+		PrintWriter output = null;
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < sponsorList.size(); i++) 
+			{
+				output.println(sponsorList.getSponsor(i).getName() + "," + sponsorList.getSponsor(i).getEmail() + ","
+						+ sponsorList.getSponsor(i).getPhone());
+			}
+			output.flush();
+		} 
+		
+		finally 
+		{
+			output.close();
+		}
+	}
 
 	public LecturerList readLecturerTextFile() throws FileNotFoundException, ParseException 
 	{
@@ -164,6 +185,28 @@ public class FileReaderWriter
 			input.close();
 		}
 	}
+	
+	public void writeLecturerTextFile(LecturerList lecturerList) throws FileNotFoundException 
+	{
+		PrintWriter output = null;
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < lecturerList.size(); i++) 
+			{
+				output.println(lecturerList.getLecturer(i).getName() + "," + lecturerList.getLecturer(i).getCategory()
+						+ "," + lecturerList.getLecturer(i).getPhoneNumber() + ","
+						+ lecturerList.getLecturer(i).getEmail());
+			}
+			output.flush();
+		} 
+		
+		finally 
+		{
+			output.close();
+		}
+	}
 
 	public MemberList readMemberTextFile() throws FileNotFoundException, ParseException 
 	{
@@ -191,50 +234,7 @@ public class FileReaderWriter
 		{
 			input.close();
 		}
-	}
-
-	public void writeSponsorTextFile(SponsorList sponsorList) throws FileNotFoundException 
-	{
-		PrintWriter output = null;
-		try 
-		{
-			output = new PrintWriter(file);
-
-			for (int i = 0; i < sponsorList.size(); i++) 
-			{
-				output.println(sponsorList.getSponsor(i).getName() + "," + sponsorList.getSponsor(i).getEmail() + ","
-						+ sponsorList.getSponsor(i).getPhone());
-			}
-			output.flush();
-		} 
-		
-		finally 
-		{
-			output.close();
-		}
-	}
-
-	public void writeLecturerTextFile(LecturerList lecturerList) throws FileNotFoundException 
-	{
-		PrintWriter output = null;
-		try 
-		{
-			output = new PrintWriter(file);
-
-			for (int i = 0; i < lecturerList.size(); i++) 
-			{
-				output.println(lecturerList.getLecturer(i).getName() + "," + lecturerList.getLecturer(i).getCategory()
-						+ "," + lecturerList.getLecturer(i).getPhoneNumber() + ","
-						+ lecturerList.getLecturer(i).getEmail());
-			}
-			output.flush();
-		} 
-		
-		finally 
-		{
-			output.close();
-		}
-	}
+	}	
 
 	public void writeMemberTextFile(MemberList memberList) throws FileNotFoundException 
 	{

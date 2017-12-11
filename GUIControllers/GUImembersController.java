@@ -45,8 +45,8 @@ public class GUImembersController implements Initializable
 	private Member member;
 	private Member selectedMember;
 	private MemberList memberList = new MemberList();
-	private String filename = "MemberList.txt";
-	private FileReaderWriter memberFile = new FileReaderWriter(filename);
+	private static final String FILENAME = "MemberList.txt";
+	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","E-mail");
@@ -128,18 +128,6 @@ public class GUImembersController implements Initializable
 		lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 	}
 	
-	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
-	{
-		memberList = memberFile.readMemberTextFile();
-
-		for (int i = 0; i < memberList.size(); i++) 
-		{
-			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail()));
-		}
-
-		return members;
-	}
-	
 	public void showMemberDetailsFromTable() 
 	{
 	    if (memberTable.getSelectionModel().getSelectedItem() != null) {
@@ -157,6 +145,18 @@ public class GUImembersController implements Initializable
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
 	    }
 	}	
+	
+	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
+	{
+		memberList = memberFile.readMemberTextFile();
+
+		for (int i = 0; i < memberList.size(); i++) 
+		{
+			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail()));
+		}
+
+		return members;
+	}
 
 	@FXML
 	void addMember(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
@@ -285,7 +285,56 @@ public class GUImembersController implements Initializable
 		}		
     }
     
-    @FXML
+	@FXML
+	void saveEditMemberChanges(ActionEvent event) throws FileNotFoundException, ParseException 
+	{
+	    	int index = memberList.getMemberIndex(selectedMember);   
+	    	
+	    	String newMemberName = tfShowMemberName.getText();
+	    	String newMemberEmail = tfShowMemberEmail.getText();
+	    	
+	    	if(tfShowMemberName.getText().isEmpty())
+			{
+	    		newMemberName = "empty";
+			}
+			
+			if(tfShowMemberEmail.getText().isEmpty())
+			{
+				newMemberEmail = "empty";
+			}	
+	    	
+			if(newMemberEmail.contains("@"))
+			{
+				selectedMember.setName(newMemberName);
+		    	selectedMember.setEmail(newMemberEmail);
+
+		    	memberList.replaceMember(index,selectedMember);    	
+		    	memberFile.writeMemberTextFile(memberList);
+
+		    	memberTable.getItems().set(index, selectedMember);
+
+		    	hboxMemberEditOptions.setVisible(false);
+		    	tfShowMemberName.setEditable(false);
+		    	tfShowMemberEmail.setEditable(false);
+		    	
+		    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+		    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			}
+			
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
+			}
+	    }
+	   
+	@FXML
+    void clearEditMemberTextFields(ActionEvent event) 
+    {
+    	tfShowMemberName.setText("");
+    	tfShowMemberEmail.setText("");
+    }		
+	
+	@FXML
     void cancelEditMember(ActionEvent event) 
     {
     	hboxMemberEditOptions.setVisible(false);
@@ -294,56 +343,7 @@ public class GUImembersController implements Initializable
     	
     	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
     	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
-    }
-    
-    @FXML
-    void saveEditMemberChanges(ActionEvent event) throws FileNotFoundException, ParseException 
-    {
-    	int index = memberList.getMemberIndex(selectedMember);   
-    	
-    	String newMemberName = tfShowMemberName.getText();
-    	String newMemberEmail = tfShowMemberEmail.getText();
-    	
-    	if(tfShowMemberName.getText().isEmpty())
-		{
-    		newMemberName = "empty";
-		}
-		
-		if(tfShowMemberEmail.getText().isEmpty())
-		{
-			newMemberEmail = "empty";
-		}	
-    	
-		if(newMemberEmail.contains("@"))
-		{
-			selectedMember.setName(newMemberName);
-	    	selectedMember.setEmail(newMemberEmail);
-
-	    	memberList.replaceMember(index,selectedMember);    	
-	    	memberFile.writeMemberTextFile(memberList);
-
-	    	memberTable.getItems().set(index, selectedMember);
-
-	    	hboxMemberEditOptions.setVisible(false);
-	    	tfShowMemberName.setEditable(false);
-	    	tfShowMemberEmail.setEditable(false);
-	    	
-	    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
-	    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
-		}
-		
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
-		}
-    }
-
-    @FXML
-    void clearEditMemberTextFields(ActionEvent event) 
-    {
-    	tfShowMemberName.setText("");
-    	tfShowMemberEmail.setText("");
-    }	
+    } 
 
     @FXML
     void deleteMember(ActionEvent event) throws FileNotFoundException, ParseException, ArrayIndexOutOfBoundsException

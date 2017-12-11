@@ -6,8 +6,7 @@ public class EventList
    
    public EventList()
    {
-      eventList = new ArrayList<Event>();
-      
+      eventList = new ArrayList<Event>();      
    }
    
    public int size()

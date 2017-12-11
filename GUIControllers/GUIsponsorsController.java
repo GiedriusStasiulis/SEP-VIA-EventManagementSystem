@@ -29,8 +29,8 @@ public class GUIsponsorsController implements Initializable
    private Sponsor sponsor;
    private Sponsor selectedSponsor;
    private SponsorList sponsorList = new SponsorList();
-   private String filename = "SponsorList.txt";
-   private FileReaderWriter sponsorFile = new FileReaderWriter(filename);
+   private static final String FILENAME = "SponsorList.txt";
+   private FileReaderWriter sponsorFile = new FileReaderWriter(FILENAME);
 
    private ObservableList<Sponsor> sponsors = FXCollections.observableArrayList();
    private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail", "Phone");

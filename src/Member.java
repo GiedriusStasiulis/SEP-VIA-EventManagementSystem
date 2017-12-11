@@ -7,7 +7,6 @@
 public class Member
 {
 	private static final long serialVersionUID = 1L;
-	private int index;
 	private String name;
 	private String email;
 

@@ -24,16 +24,25 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * Controller class for GUIevents.fxml. Handles all ActionEvent and
+ * MouseEvents that occur on the events page in the application. *
+ * 
+ * @author Group#2 *
+ */
+
 public class GUIeventsController implements Initializable
 {
 	private Event eventToAdd;
 	private EventList eventList = new EventList();
-	private String filename = "EventList.txt";
-	private FileReaderWriter eventFile = new FileReaderWriter(filename);
+	private static final String FILENAME = "EventList.txt";
+	private FileReaderWriter eventFile = new FileReaderWriter(FILENAME);
+	
 	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture","Seminar","Workshop","Journey");
-   private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
-   private ObservableList<Event>  events = FXCollections.observableArrayList();
-   @FXML private BorderPane eventsPage = new BorderPane();
+	private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
+	private ObservableList<Event>  events = FXCollections.observableArrayList();
+	
+	@FXML private BorderPane eventsPage = new BorderPane();
 	
 	@FXML private Button btnCreateEvent,btnDeleteEvent,btnCancelEditEvent,btnEditEvent,btnClearTextFields,
 							btnSearchEvents,btnSaveEventEditChanges,btnClearEditEventTextFields,btnAddMemberToEvent,
@@ -61,8 +70,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private DatePicker dpShowEventEndDate,dpShowEventStartDate,dpEventStartDate,dpEventEndDate;
 	
-	@FXML private HBox hboxEventEditOptions;
-	
+	@FXML private HBox hboxEventEditOptions;	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -96,13 +104,23 @@ public class GUIeventsController implements Initializable
 		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
 		tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
 		tcEventStartTime.setCellValueFactory(new PropertyValueFactory<Event, String>("startTime"));
-	   tcEventEndTime.setCellValueFactory(new PropertyValueFactory<Event, String>("endTime"));
-	   tcEventPrice.setCellValueFactory(new PropertyValueFactory<Event, String>("price"));
-	   tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
-	   tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
+		tcEventEndTime.setCellValueFactory(new PropertyValueFactory<Event, String>("endTime"));
+		tcEventPrice.setCellValueFactory(new PropertyValueFactory<Event, String>("price"));
+		tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
+		tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
+		
+		tcEventTitle.setStyle("-fx-alignment: CENTER;");
+		tcEventStartDate.setStyle("-fx-alignment: CENTER;");
+		tcEventEndDate.setStyle("-fx-alignment: CENTER;");
+		tcEventStartTime.setStyle("-fx-alignment: CENTER;");
+		tcEventEndTime.setStyle("-fx-alignment: CENTER;");
+		tcEventPrice.setStyle("-fx-alignment: CENTER;");
+		tcEventDiscount.setStyle("-fx-alignment: CENTER;");
+		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");		
+		
 		try
 		{
-		   eventsTable.setItems(getEventList());
+		   eventsTable.setItems(getList());
 		}
 		catch (FileNotFoundException e)
 		{
@@ -111,11 +129,19 @@ public class GUIeventsController implements Initializable
 		catch (ParseException e)
 		{
 		   e.printStackTrace();
-		}
-		
-		
+		}		
 	}	
 	
+	public void showEventDetailsFromTable()
+	{
+		
+	}
+	
+	public void showEventDetailsFromListView()
+	{
+		
+	}
+
     @FXML
     void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException
     {
@@ -138,7 +164,7 @@ public class GUIeventsController implements Initializable
     	clearCreateEventTextFields(event);
     }
     
-    public ObservableList<Event> getEventList() throws FileNotFoundException, ParseException
+    public ObservableList<Event> getList() throws FileNotFoundException, ParseException
     {
        eventList = eventFile.readEventsTextFile();
        
@@ -148,6 +174,7 @@ public class GUIeventsController implements Initializable
        }
        return events;
     }
+
     @FXML
     void clearCreateEventTextFields(ActionEvent event) 
     {
@@ -158,18 +185,6 @@ public class GUIeventsController implements Initializable
     void searchEvents(ActionEvent event) 
     {
     	System.out.println("Search event");
-    }
-
-    @FXML
-    void saveEditEventChanges(ActionEvent event) 
-    {
-    	System.out.println("Save edit changes");
-    }
-
-    @FXML
-    void clearEditEventTextFields(ActionEvent event) 
-    {
-    	System.out.println("Clear edit event text fields");
     }
 
     @FXML
@@ -190,6 +205,18 @@ public class GUIeventsController implements Initializable
     }
     
     @FXML
+    void saveEditEventChanges(ActionEvent event) 
+    {
+    	System.out.println("Save edit changes");
+    }
+
+    @FXML
+    void clearEditEventTextFields(ActionEvent event) 
+    {
+    	System.out.println("Clear edit event text fields");
+    }
+
+    @FXML
     void cancelEditEvent(ActionEvent event) 
     {
     	System.out.println("Cancel edit event");
@@ -208,8 +235,7 @@ public class GUIeventsController implements Initializable
     @FXML
     void deleteEvent(ActionEvent event) 
     {
-    	System.out.println("Delete event");
-    	
+    	System.out.println("Delete event");    	
     }
 
     @FXML
