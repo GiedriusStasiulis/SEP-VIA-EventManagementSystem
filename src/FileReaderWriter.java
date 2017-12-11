@@ -57,7 +57,7 @@ public class FileReaderWriter
        while (input.hasNext())
        {
           String line = input.nextLine();
-          String[] lineItems = line.split(";");
+          String[] lineItems = line.split(",");
           
           String eventName=lineItems[0].trim();          
           
