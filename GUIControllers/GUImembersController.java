@@ -158,25 +158,27 @@ public class GUImembersController implements Initializable
 		String memberName = tfEnterMemberName.getText();
 		String memberEmail = tfEnterMemberEmail.getText();	
 
-		if(memberEmail.contains("@"))
+		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
 		{
-			if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
-			{
-				memberName = "empty";
-				memberEmail = "empty";
-			}		
-			
-			else if(tfEnterMemberName.getText().isEmpty())
-			{
-				memberName = "empty";
-			}
-			
-			else if(tfEnterMemberEmail.getText().isEmpty())
-			{
-				memberEmail = "empty";
-			}
-			
+			memberName = String.format("empty%d", memberList.size() + 1);
+			memberEmail = String.format("empty@empty%d", memberList.size() + 1);
+		}		
+		
+		else if(tfEnterMemberName.getText().isEmpty())
+		{
+			memberName = String.format("empty%d", memberList.size() + 1);
+		}
+		
+		else if(tfEnterMemberEmail.getText().isEmpty())
+		{
+			memberEmail = String.format("empty@empty%d", memberList.size() + 1);
+		}
+		
+		if(memberEmail.contains("@"))
+		{		
 			member = new Member(memberName, memberEmail);	
+			
+			System.out.println(member);
 			
 			if(memberList.checkForDuplicates(memberList, member))
 			{
