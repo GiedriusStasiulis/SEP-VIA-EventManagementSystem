@@ -19,10 +19,10 @@ public class Event
       ArrayList<Member> membersRegistered;
       ArrayList<Member> tempMembersRegistered;
       
-      public Event(String eventName, LocalDate eventStartDate, LocalDate eventEndDate, String startTime, String endTime, int maxMembers, double price, double discount)
+      public Event(String eventName)
       {
          this.eventName=eventName;
-         this.isFinalized=false;         
+         /*this.isFinalized=false;         
          this.eventStartDate=eventStartDate;
          this.eventEndDate=eventEndDate;
          this.startTime=startTime;
@@ -31,7 +31,7 @@ public class Event
          this.price=price;
          this.discount=discount;
          this.membersRegistered= new ArrayList<Member>();
-         this.tempMembersRegistered = new ArrayList<Member>();
+         this.tempMembersRegistered = new ArrayList<Member>();*/
       }
       
       public void setName(String name)

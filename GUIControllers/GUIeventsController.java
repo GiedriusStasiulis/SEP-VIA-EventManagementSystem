@@ -29,7 +29,7 @@ public class GUIeventsController implements Initializable
 	private Event eventToAdd;
 	private EventList eventList = new EventList();
 	private String filename = "EventList.txt";
-	private EventFile eventFile = new EventFile(filename);
+	private FileReaderWriter eventFile = new FileReaderWriter(filename);
 	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture","Seminar","Workshop","Journey");
    private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
    private ObservableList<Event>  events = FXCollections.observableArrayList();
@@ -47,7 +47,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private TableView<Event> eventsTable;
 	
-	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
+	@FXML private TableColumn<Event, LocalDate> tcEventTitle,tcEventType,tcEventCategory,tcEventStartDate,tcEventEndDate,
 									tcEventStartTime,tcEventEndTime,tcEventDuration,tcEventPrice,tcEventDiscount,tcEventNumberOfTickets,
 									tcTicketsRemaining,tcEventLecturer;
 	
@@ -88,11 +88,11 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.getSelectionModel().select(0);
 		
 		//initialize table
-		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event, String>("Name"));
-		tcEventType.setCellValueFactory(new PropertyValueFactory<Event, String>("Type"));
-		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("Category"));
-		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,String>("Start date"));
-		tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,String>("End date"));
+		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventName"));
+		//tcEventType.setCellValueFactory(new PropertyValueFactory<Event,?>("eventType"));
+		//tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,?>("eventCategory"));
+		//tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
+		//tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
 		
 		try
 		{
@@ -125,29 +125,27 @@ public class GUIeventsController implements Initializable
     	double price = Double.parseDouble(tfEventPrice.getText());
     	double discount = Double.parseDouble(tfEventDiscount.getText());
     	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
-      
-    	
-    	
-    	Event eventNew = new Event(eventName, localStartDate,localEndDate, startTime, endTime,maxMembers,price,discount);
+         	
+    	Event eventNew = new Event(eventName);
     	eventList.addEventToList(eventNew);
-    	eventFile.writeEventFile(eventList);
-    	eventsTable.getItems().add(eventNew);
-    	
+    	System.out.println(eventList);
+    	eventFile.writeEventTextFile(eventList);
+    	eventsTable.getItems().add(eventNew);   	
     	
     }
     
     public ObservableList<Event> getEventList() throws FileNotFoundException, ParseException
     {
        eventList = eventFile.readEventsTextFile();
-       
+       System.out.println(eventList);
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getName(),eventList.getEvent(i).getStartDate(),eventList.getEvent(i).getEndDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
+          events.add(new Event(eventList.getEvent(i).getName()));
        }
        return events;
     }
     @FXML
-    void clearTextFields(ActionEvent event) 
+    void clearCreateEventTextFields(ActionEvent event) 
     {
     	System.out.println("Clear text fields");
     }

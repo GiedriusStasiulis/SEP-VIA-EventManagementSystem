@@ -59,8 +59,9 @@ public class FileReaderWriter
           String line = input.nextLine();
           String[] lineItems = line.split(";");
           
-          String eventName=lineItems[0].trim();
-          String eventStartDate=lineItems[1].trim();
+          String eventName=lineItems[0].trim();          
+          
+          /*String eventStartDate=lineItems[1].trim();
           String eventStartTime=lineItems[2].trim();
           String eventEndDate=lineItems[3].trim();
           String eventEndTime=lineItems[4].trim();
@@ -71,12 +72,15 @@ public class FileReaderWriter
           
           LocalDate eventStart = LocalDate.parse(eventStartDate);
           LocalDate eventEnd = LocalDate.parse(eventEndDate);
-          
-          Event eventToAdd = new Event(eventName, eventStart,eventEnd,eventStartTime,eventEndTime,eventMaxMembers,eventPrice,eventDiscount);
+          */
+          Event eventToAdd = new Event(eventName);
           currentEventList.addEventToList(eventToAdd);
+          
                    
        }
+       System.out.println(currentEventList.toString());
        return currentEventList;
+       
        
        
     }
@@ -94,7 +98,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getName()+ ";" +eventList.getEvent(i).getStartDate().toString()+ ";"+eventList.getEvent(i).getStartTime() + ";" + eventList.getEvent(i).getEndDate().toString()+ ";"+eventList.getEvent(i).getEndTime()+";"+eventList.getEvent(i).getPrice()+";"+eventList.getEvent(i).getDiscount()+";"+eventList.getEvent(i).getMaxMembers());
+            output.println(eventList.getEvent(i).getName());
          }
          output.flush();
          
