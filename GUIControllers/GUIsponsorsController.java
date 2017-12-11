@@ -50,6 +50,8 @@ public class GUIsponsorsController implements Initializable
     	tfShowSponsorName.setEditable(false);
     	tfShowSponsorEmail.setEditable(false);
     	tfShowSponsorPhoneNumber.setEditable(false);
+    	
+    	
 	}
     
     public void showSponsorDetailsFromTable() 
@@ -90,6 +92,11 @@ public class GUIsponsorsController implements Initializable
     	tfShowSponsorName.setEditable(true);
     	tfShowSponsorEmail.setEditable(true);
     	tfShowSponsorPhoneNumber.setEditable(true);
+    	
+    	tfShowSponsorName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	tfShowSponsorEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	tfShowSponsorPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	
     }
     
     @FXML
@@ -100,6 +107,10 @@ public class GUIsponsorsController implements Initializable
     	tfShowSponsorName.setEditable(false);
     	tfShowSponsorEmail.setEditable(false);
     	tfShowSponsorPhoneNumber.setEditable(false);
+    	
+    	tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
+    	tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
+    	tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
@@ -118,6 +129,10 @@ public class GUIsponsorsController implements Initializable
     	tfShowSponsorName.setEditable(false);
     	tfShowSponsorEmail.setEditable(false);
     	tfShowSponsorPhoneNumber.setEditable(false);
+    	
+    	tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
+    	tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
+    	tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
     }    
 
     @FXML

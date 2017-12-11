@@ -92,6 +92,9 @@ public class GUImembersController implements Initializable
 
 		tcMemberName.setStyle("-fx-alignment: CENTER;");
 		tcMemberEmail.setStyle("-fx-alignment: CENTER;");
+		
+		btnEditMember.setDisable(true);
+		btnDeleteMember.setDisable(true);
 
 		try 
 		{
@@ -109,12 +112,16 @@ public class GUImembersController implements Initializable
 		memberTable.setOnMouseClicked((MouseEvent event) -> {
 		    if (event.getClickCount() == 1) {
 		    	showMemberDetailsFromTable();
+		    	btnEditMember.setDisable(false);
+				btnDeleteMember.setDisable(false);
 		    }
 		});
 
 		lvMemberSearchResults.setOnMouseClicked((MouseEvent event) -> {
 		    if (event.getClickCount() == 1) {
 		    	showMemberDetailsFromListView();
+		    	btnEditMember.setDisable(false);
+				btnDeleteMember.setDisable(false);
 		    }
 		});		
 		
@@ -134,7 +141,6 @@ public class GUImembersController implements Initializable
 	{
 	    if (lvMemberSearchResults.getSelectionModel().getSelectedItem() != null) {
 	        selectedMember = lvMemberSearchResults.getSelectionModel().getSelectedItem();
-	        System.out.println(selectedMember);
 	        tfShowMemberName.setText(selectedMember.getName());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
 	    }
@@ -188,7 +194,6 @@ public class GUImembersController implements Initializable
 			
 			else
 			{
-				System.out.println("No duplicates");
 				memberList.addMemberToList(member);		
 				memberFile.writeTextFile(memberList);		
 				memberTable.getItems().add(member);
@@ -267,10 +272,18 @@ public class GUImembersController implements Initializable
 	
 	@FXML
     void editMember(ActionEvent event) 
-    {
-    	hboxMemberEditOptions.setVisible(true);
-    	tfShowMemberName.setEditable(true);
-    	tfShowMemberEmail.setEditable(true);
+    {    	
+		if(memberTable.getSelectionModel() != null)
+		{
+			System.out.println(memberTable.getSelectionModel());
+			
+			hboxMemberEditOptions.setVisible(true);
+	    	tfShowMemberName.setEditable(true);
+	    	tfShowMemberEmail.setEditable(true);
+	    	
+	    	tfShowMemberName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+	    	tfShowMemberEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		}		
     }
     
     @FXML
@@ -279,6 +292,9 @@ public class GUImembersController implements Initializable
     	hboxMemberEditOptions.setVisible(false);
     	tfShowMemberName.setEditable(false);
     	tfShowMemberEmail.setEditable(false);
+    	
+    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
     }
     
     @FXML
@@ -310,6 +326,9 @@ public class GUImembersController implements Initializable
     	hboxMemberEditOptions.setVisible(false);
     	tfShowMemberName.setEditable(false);
     	tfShowMemberEmail.setEditable(false);
+    	
+    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
@@ -370,8 +389,7 @@ public class GUImembersController implements Initializable
     
     @FXML
     void generateMemberEmailList(ActionEvent event) 
-    {    	
-    	
+    {    	    	
     	emailList.clear();
     	
     	for(int i = 0; i < memberList.size(); i ++)

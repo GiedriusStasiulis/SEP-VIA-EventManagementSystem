@@ -98,6 +98,12 @@ public class GUIlecturersController implements Initializable
     	tfShowLecturerName.setEditable(true);
     	tfShowLecturerEmail.setEditable(true);
     	tfShowLecturerPhoneNumber.setEditable(true);
+    	
+    	tfShowLecturerName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	tfShowLecturerEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	tfShowLecturerPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+    	
+    	cbShowLecturerCategory.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
     }
 
     @FXML
@@ -110,6 +116,12 @@ public class GUIlecturersController implements Initializable
     	tfShowLecturerName.setEditable(false);
     	tfShowLecturerEmail.setEditable(false);
     	tfShowLecturerPhoneNumber.setEditable(false);
+    	
+    	tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+    	tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+    	tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+    	
+    	cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
@@ -132,6 +144,12 @@ public class GUIlecturersController implements Initializable
     	tfShowLecturerPhoneNumber.setEditable(false);
     	
     	cbShowLecturerCategory.setDisable(true);
+    	
+    	tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+    	tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+    	tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+    	
+    	cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
     }    
 
     @FXML

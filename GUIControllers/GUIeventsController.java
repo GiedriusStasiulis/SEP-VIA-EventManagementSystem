@@ -88,6 +88,10 @@ public class GUIeventsController implements Initializable
 		tfShowEventTicketsRemaining.setEditable(false);
 		tfShowEventPrice.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
+		
+		//btnEditEvent.setDisable(true);
+		btnDeleteEvent.setDisable(true);
+		
 	}	
 	
 	public void showEventDetailsFromTable() 
@@ -152,6 +156,21 @@ public class GUIeventsController implements Initializable
 		tfShowEventTicketsRemaining.setEditable(true);
 		tfShowEventPrice.setEditable(true);
 		tfShowEventDiscount.setEditable(true);
+		
+		tfShowEventTitle.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventStartTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventEndTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventNumberOfTickets.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventTicketsRemaining.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventPrice.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		tfShowEventDiscount.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		
+		cbShowEventType.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		cbShowEventCategory.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		cbShowEventLecturer.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		
+		dpShowEventStartDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");	
+		dpShowEventEndDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
     }
     
     @FXML
@@ -173,6 +192,21 @@ public class GUIeventsController implements Initializable
 		tfShowEventTicketsRemaining.setEditable(false);
 		tfShowEventPrice.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
+		
+		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;");
+		tfShowEventPrice.setStyle("-fx-border-width: 0px ;");
+		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;");
+		
+		cbShowEventType.setStyle("-fx-border-width: 0px ;");
+		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+		
+		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");	
+		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
@@ -216,6 +250,21 @@ public class GUIeventsController implements Initializable
 		tfShowEventTicketsRemaining.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
 		tfShowEventPrice.setEditable(false);
+		
+		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;");
+		tfShowEventPrice.setStyle("-fx-border-width: 0px ;");
+		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;");
+		
+		cbShowEventType.setStyle("-fx-border-width: 0px ;");
+		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+		
+		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");	
+		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
     }
 
     @FXML
