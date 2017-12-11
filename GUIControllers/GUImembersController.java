@@ -34,6 +34,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for GUImembers.fxml. Handles all ActionEvent and MouseEvents
+ * that occur on the members page in the application. * 
+ * @author Group#2 *
+ */
+
 public class GUImembersController implements Initializable 
 {
 	private Member member;
@@ -44,8 +50,7 @@ public class GUImembersController implements Initializable
 
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","E-mail");
-	private ObservableList<String> emailList = FXCollections.observableArrayList();
-	
+	private ObservableList<String> emailList = FXCollections.observableArrayList();	
 
 	@FXML private BorderPane memberPage = new BorderPane();
 
@@ -57,7 +62,6 @@ public class GUImembersController implements Initializable
 							tfShowMemberName,tfShowMemberEmail;
 	
 	@FXML private Label lblMemberCount;
-
 
 	@FXML private TableView<Member> memberTable; 
 
@@ -86,8 +90,8 @@ public class GUImembersController implements Initializable
 		tcMemberName.setCellValueFactory(new PropertyValueFactory<Member, String>("name"));
 		tcMemberEmail.setCellValueFactory(new PropertyValueFactory<Member, String>("email"));
 
-		tcMemberName.setStyle( "-fx-alignment: CENTER;");
-		tcMemberEmail.setStyle( "-fx-alignment: CENTER;");
+		tcMemberName.setStyle("-fx-alignment: CENTER;");
+		tcMemberEmail.setStyle("-fx-alignment: CENTER;");
 
 		try 
 		{
@@ -117,8 +121,8 @@ public class GUImembersController implements Initializable
 		lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 	}
 	
-	public void showMemberDetailsFromTable() {
-
+	public void showMemberDetailsFromTable() 
+	{
 	    if (memberTable.getSelectionModel().getSelectedItem() != null) {
 	        selectedMember = memberTable.getSelectionModel().getSelectedItem();
 	        tfShowMemberName.setText(selectedMember.getName());
@@ -126,8 +130,8 @@ public class GUImembersController implements Initializable
 	    }
 	}
 	
-	public void showMemberDetailsFromListView() {
-
+	public void showMemberDetailsFromListView() 
+	{
 	    if (lvMemberSearchResults.getSelectionModel().getSelectedItem() != null) {
 	        selectedMember = lvMemberSearchResults.getSelectionModel().getSelectedItem();
 	        System.out.println(selectedMember);
@@ -153,26 +157,52 @@ public class GUImembersController implements Initializable
 	{				
 		String memberName = tfEnterMemberName.getText();
 		String memberEmail = tfEnterMemberEmail.getText();	
-			
-		if(tfEnterMemberName.getText().isEmpty())
+
+		if(memberEmail.contains("@"))
 		{
-			memberName = "empty";
+			if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
+			{
+				memberName = "empty";
+				memberEmail = "empty";
+			}		
+			
+			else if(tfEnterMemberName.getText().isEmpty())
+			{
+				memberName = "empty";
+			}
+			
+			else if(tfEnterMemberEmail.getText().isEmpty())
+			{
+				memberEmail = "empty";
+			}
+			
+			member = new Member(memberName, memberEmail);	
+			
+			if(memberList.checkForDuplicates(memberList, member))
+			{
+				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
+				clearAddMemberTextFields(event);
+			}
+			
+			else
+			{
+				System.out.println("No duplicates");
+				memberList.addMemberToList(member);		
+				memberFile.writeTextFile(memberList);		
+				memberTable.getItems().add(member);
+				clearAddMemberTextFields(event);
+					
+				lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+			}
 		}
 		
-		if(tfEnterMemberEmail.getText().isEmpty())
+		else
 		{
-			memberEmail = "empty";
-		}			
-
-			member = new Member(memberName, memberEmail);		
-			memberList.addMemberToList(member);		
-			memberFile.writeTextFile(memberList);		
-			memberTable.getItems().add(member);
+			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
 			clearAddMemberTextFields(event);
-			
-			lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
-	}
-	
+		}		
+	}	
+
 	@FXML
 	void clearAddMemberTextFields(ActionEvent event) 
 	{
@@ -184,11 +214,8 @@ public class GUImembersController implements Initializable
     void searchMembers(ActionEvent event) 
 	{
 		ObservableList<Member> searchResults = FXCollections.observableArrayList();
-
-		int searchCriteriaComboBoxSelection = cbMemberSearchCriteria.getSelectionModel().getSelectedIndex();
-		
-		String searchKeyword = tfEnterSearchKeywords.getText();
-		
+		int searchCriteriaComboBoxSelection = cbMemberSearchCriteria.getSelectionModel().getSelectedIndex();		
+		String searchKeyword = tfEnterSearchKeywords.getText();		
 		tfEnterSearchKeywords.setText("");
 		
 		switch(searchCriteriaComboBoxSelection)
@@ -250,43 +277,7 @@ public class GUImembersController implements Initializable
     	tfShowMemberName.setEditable(false);
     	tfShowMemberEmail.setEditable(false);
     }
-
-    @FXML
-    void deleteMember(ActionEvent event) throws FileNotFoundException, ParseException, ArrayIndexOutOfBoundsException
-    {        	
-    	if(memberTable.getSelectionModel() != null)
-    	{
-    		if(memberList.size() > 0)
-    		{
-	    		try 
-	    		{
-			    	int index = memberList.getMemberIndex(selectedMember);
-			
-			    	memberList.deleteMember(index);
-			    	memberFile.writeTextFile(memberList);
-			    	memberTable.getItems().remove(index);
-			    	
-			    	tfShowMemberName.setText("");
-			    	tfShowMemberEmail.setText("");	
-			    	
-			    	lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
-	    		}
-	    		catch(ArrayIndexOutOfBoundsException e)
-	    		{
-	    			JOptionPane.showMessageDialog(null, "Please select a member from the table to delete");
-	    		}
-    		}    		
-    		else
-    		{
-    			JOptionPane.showMessageDialog(null, "No more members left to delete");
-    		}
-    	}    	
-    	else
-    	{
-    		JOptionPane.showMessageDialog(null, "Please select a member from the table to delete");
-    	}    	
-    }
-
+    
     @FXML
     void saveEditMemberChanges(ActionEvent event) throws FileNotFoundException, ParseException 
     {
@@ -324,6 +315,55 @@ public class GUImembersController implements Initializable
     	tfShowMemberName.setText("");
     	tfShowMemberEmail.setText("");
     }	
+
+    @FXML
+    void deleteMember(ActionEvent event) throws FileNotFoundException, ParseException, ArrayIndexOutOfBoundsException
+    {        
+    	if(memberTable.getSelectionModel() != null)
+    	{
+    		if(memberList.size() > 0)
+    		{
+	    		try 
+	    		{
+	    	    	String[] options = {"Delete","Cancel"}; 
+	    	    	int n = JOptionPane.showOptionDialog(null,
+	    	                "Are you sure you want to delete member:\n" + selectedMember + " ?",
+	    	                "Delete a member",
+	    	                JOptionPane.YES_NO_OPTION,
+	    	                JOptionPane.QUESTION_MESSAGE,
+	    	                null,
+	    	                options,
+	    	                options[0]);	    			
+	    			
+	    			if (n == JOptionPane.YES_OPTION) 
+	    			{
+	    				int index = memberList.getMemberIndex(selectedMember);
+	    				
+				    	memberList.deleteMember(index);
+				    	memberFile.writeTextFile(memberList);
+				    	memberTable.getItems().remove(index);
+				    	
+				    	tfShowMemberName.setText("");
+				    	tfShowMemberEmail.setText("");	
+				    	
+				    	lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+	    			} 	    	
+	    		}
+	    		catch(ArrayIndexOutOfBoundsException e)
+	    		{
+	    			JOptionPane.showMessageDialog(null, "Please select a member from the table to delete");
+	    		}
+    		}    		
+    		else
+    		{
+    			JOptionPane.showMessageDialog(null, "No more members left to delete");
+    		}
+    	}    	
+    	else
+    	{
+    		JOptionPane.showMessageDialog(null, "Please select a member from the table to delete");
+    	}    	
+    }    
     
     @FXML
     void generateMemberEmailList(ActionEvent event) 
@@ -345,6 +385,7 @@ public class GUImembersController implements Initializable
     	if(cboxSelectAllMemberEmailList.isSelected())
     	{
     		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + emailList);
+    		cboxSelectAllMemberEmailList.setSelected(false);
     	}
     	
     	else

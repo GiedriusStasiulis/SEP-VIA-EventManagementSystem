@@ -44,7 +44,7 @@
                                     <TextField fx:id="tfEnterEventTitle" layoutX="10.0" layoutY="35.0" prefWidth="260.0" />
                                     <Label layoutX="10.0" layoutY="65.0" text="Type:" />
                                     <Button fx:id="btnCreateEvent" layoutX="10.0" layoutY="600.0" mnemonicParsing="false" onAction="#createEvent" prefWidth="120.0" text="Create" />
-                                    <Button fx:id="btnClearEditEventTextFields" layoutX="145.0" layoutY="600.0" mnemonicParsing="false" onAction="#clearEditEventTextFields" prefWidth="120.0" text="Clear fields" />
+                                    <Button fx:id="btnClearCreateEventTextFields" layoutX="145.0" layoutY="600.0" mnemonicParsing="false" onAction="#clearCreateEventTextFields" prefWidth="120.0" text="Clear fields" />
                                     <ComboBox fx:id="cbEventType" layoutX="10.0" layoutY="85.0" prefWidth="260.0" />
                                     <Label layoutX="10.0" layoutY="115.0" text="Category:" />
                                     <ComboBox fx:id="cbEventCategory" layoutX="10.0" layoutY="135.0" prefWidth="260.0" />
@@ -105,7 +105,7 @@
                                           <Label text="Category:" translateX="10.0" translateY="50.0" />
                                           <ComboBox fx:id="cbShowEventCategory" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="55.0" />
                                           <Label text="Lecturer:" translateX="10.0" translateY="60.0" />
-                                          <ComboBox fx:id="cbSHowEventLecturer" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="65.0" />
+                                          <ComboBox fx:id="cbShowEventLecturer" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="65.0" />
                                           <Label text="Start-date:" translateX="10.0" translateY="70.0" />
                                           <DatePicker fx:id="dpShowEventStartDate" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="75.0" />
                                           <Label text="End-date:" translateX="10.0" translateY="80.0" />

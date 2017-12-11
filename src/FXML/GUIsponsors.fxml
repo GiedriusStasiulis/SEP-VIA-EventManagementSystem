@@ -71,7 +71,7 @@
                   <TextField fx:id="tfShowSponsorEmail" maxWidth="260.0" translateX="10.0" translateY="55.0" />
                   <Label text="Phone number:" translateX="10.0" translateY="60.0" />
                   <TextField fx:id="tfShowSponsorPhoneNumber" maxWidth="260.0" translateX="10.0" translateY="65.0" />
-                  <HBox prefHeight="25.0" prefWidth="200.0" translateY="75.0">
+                  <HBox fx:id="hboxSponsorEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="75.0">
                      <children>
                         <Button fx:id="btnSaveSponsorEditChanges" minWidth="80.0" mnemonicParsing="false" onAction="#saveEditSponsorChanges" prefWidth="80.0" text="Save" translateX="10.0" />
                         <Button fx:id="btnClearEditSponsorTextFields" minWidth="80.0" mnemonicParsing="false" onAction="#clearEditSponsorTextFields" prefWidth="80.0" text="Clear fields" translateX="20.0" />

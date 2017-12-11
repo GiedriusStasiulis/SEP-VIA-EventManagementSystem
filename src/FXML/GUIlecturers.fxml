@@ -76,7 +76,7 @@
                   <TextField fx:id="tfShowLecturerEmail" maxWidth="260.0" translateX="10.0" translateY="65.0" />
                   <Label text="Phone number:" translateX="10.0" translateY="70.0" />
                   <TextField fx:id="tfShowLecturerPhoneNumber" maxWidth="260.0" translateX="10.0" translateY="75.0" />
-                  <HBox prefHeight="25.0" prefWidth="200.0" translateY="85.0">
+                  <HBox fx:id="hboxLecturerEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="85.0">
                      <children>
                         <Button fx:id="btnSaveLecturerEditChanges" minWidth="80.0" mnemonicParsing="false" onAction="#saveEditLecturerChanges" prefWidth="80.0" text="Save" translateX="10.0" />
                         <Button fx:id="btnClearEditLecturerTextFields" minWidth="80.0" mnemonicParsing="false" onAction="#clearEditLecturerTextFields" prefWidth="80.0" text="Clear fields" translateX="20.0" />

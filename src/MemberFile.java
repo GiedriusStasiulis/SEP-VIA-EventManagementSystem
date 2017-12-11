@@ -10,6 +10,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ *The MemberFile class is responsible for handling operations when reading and writing to a text files.
+ * 
+ * @author Group#2 *
+ */
+
 public class MemberFile 
 {
 	private File file;

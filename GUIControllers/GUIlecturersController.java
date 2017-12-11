@@ -6,6 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
+/**
+ * Controller class for GUIlecturers.fxml. Handles all ActionEvent and MouseEvents
+ * that occur on the lecturers page in the application. * 
+ * @author Group#2 *
+ */
 
 public class GUIlecturersController implements Initializable 
 {
@@ -26,13 +33,38 @@ public class GUIlecturersController implements Initializable
     @FXML private ComboBox<?> cbLecturerSearchCriteria,cbSelectLecturerCategory,cbShowLecturerCategory;
 
     @FXML private Label lblLecturerCount;
+    
+    @FXML private HBox hboxLecturerEditOptions;
 
     @Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
     	lecturerPage.setMaxHeight(Double.MAX_VALUE);
     	lecturerPage.setMaxWidth(Double.MAX_VALUE);
+    	
+    	hboxLecturerEditOptions.setVisible(false);
+    	
+    	tcLecturerCategory.setStyle("-fx-alignment: CENTER;");
+    	tcLecturerEmail.setStyle("-fx-alignment: CENTER;");
+    	tcLecturerPhoneNumber.setStyle("-fx-alignment: CENTER;");
+    	tcLecturerName.setStyle("-fx-alignment: CENTER;");
+    	
+    	cbShowLecturerCategory.setDisable(true);
+    	
+    	tfShowLecturerName.setEditable(false);
+    	tfShowLecturerEmail.setEditable(false);
+    	tfShowLecturerPhoneNumber.setEditable(false);
 	}    
+    
+    public void showLecturerDetailsFromTable() 
+	{
+
+	}
+	
+	public void showLecturerDetailsFromListView() 
+	{
+
+	}	    
     
     @FXML
     void addLecturer(ActionEvent event) 
@@ -43,7 +75,11 @@ public class GUIlecturersController implements Initializable
     @FXML
     void clearAddLecturerTextFields(ActionEvent event) 
     {
-
+    	tfEnterLecturerName.setText("");
+    	tfEnterLecturerEmail.setText("");
+    	tfEnterLecturerPhoneNumber.setText("");
+    	
+    	cbSelectLecturerCategory.getSelectionModel().select(0);
     }
 
     @FXML
@@ -51,30 +87,52 @@ public class GUIlecturersController implements Initializable
     {
 
     }
+    
+    @FXML
+    void editLecturer(ActionEvent event) 
+    {
+    	hboxLecturerEditOptions.setVisible(true);
+    	
+    	cbShowLecturerCategory.setDisable(false);
+    	
+    	tfShowLecturerName.setEditable(true);
+    	tfShowLecturerEmail.setEditable(true);
+    	tfShowLecturerPhoneNumber.setEditable(true);
+    }
 
     @FXML
     void saveEditLecturerChanges(ActionEvent event) 
     {
-
+    	hboxLecturerEditOptions.setVisible(false);
+    	
+    	cbShowLecturerCategory.setDisable(true);
+    	
+    	tfShowLecturerName.setEditable(false);
+    	tfShowLecturerEmail.setEditable(false);
+    	tfShowLecturerPhoneNumber.setEditable(false);
     }
 
     @FXML
     void clearEditLecturerTextFields(ActionEvent event) 
     {
-
+    	tfShowLecturerName.setText("");
+    	tfShowLecturerEmail.setText("");
+    	tfShowLecturerPhoneNumber.setText("");
+    	
+    	cbShowLecturerCategory.getSelectionModel().select(0);
     }
 
     @FXML
     void cancelEditLecturer(ActionEvent event) 
     {
-
-    }
-
-    @FXML
-    void editLecturer(ActionEvent event) 
-    {
-
-    }
+    	hboxLecturerEditOptions.setVisible(false);   	
+    	
+    	tfShowLecturerName.setEditable(false);
+    	tfShowLecturerEmail.setEditable(false);
+    	tfShowLecturerPhoneNumber.setEditable(false);
+    	
+    	cbShowLecturerCategory.setDisable(true);
+    }    
 
     @FXML
     void deleteLecturer(ActionEvent event) 

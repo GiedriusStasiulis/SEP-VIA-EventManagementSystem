@@ -2,7 +2,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberList implements Serializable
+/**
+ *The MemberList class represents an ArrayList() of Member objects. 
+ * 
+ * @author Group#2 *
+ */
+
+public class MemberList 
 {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Member> memberList;
@@ -40,6 +46,19 @@ public class MemberList implements Serializable
 	public void deleteMember(int index)
 	{
 		memberList.remove(index);
+	}
+	
+	public boolean checkForDuplicates(MemberList memberList, Member member)
+	{
+		boolean status = false;
+		
+		for(int i = 0; i < memberList.size(); i++)
+		{
+			if(member.equals(memberList.getMember(i)))
+				return true;
+		}
+		
+		return status;
 	}
 	
 	public String toString()

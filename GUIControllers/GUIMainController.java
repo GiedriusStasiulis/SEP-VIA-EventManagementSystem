@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
+import java.security.acl.Group;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -15,31 +16,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class GUImainController
+/**
+ * Controller class for GUImain.fxml. Each Tabbed Pane tab in GUImain.fxml is encapsulated with a 
+ * separate FXML file with it's own associated controller class. fx:include directive tells the FXMLLoader to 
+ * load the FXML file that is being referenced. 
+ * @author Group#2
+ */
+
+public class GUImainController implements Initializable 
 {
-	@FXML GUImembersController childController;
-	
-    @FXML TabPane TabPane;
-
-    @FXML Tab eventsTab;
-
-    @FXML Tab sponsorsTab;
-
-    @FXML Tab membersTab;
-
-    @FXML Tab homeTab;
-
-    @FXML Tab lecturersTab;
-
-    @FXML
-    private BorderPane membersBorderPane = new BorderPane();
-
-    public void initialize()
-    {
-    	
-    }
-
-
+	@Override
+	public void initialize(URL location, ResourceBundle resources) 
+	{
+		// TODO Auto-generated method stub		
+	}
 }
 
 
