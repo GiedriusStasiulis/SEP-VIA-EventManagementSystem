@@ -32,9 +32,10 @@ public class GUIlecturersController implements Initializable {
 	private LecturerFile lecturerFile = new LecturerFile(filename);
 
 	private ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
-	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail");
+	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","Category","Phone number", "E-mail");
 	private ObservableList<String> lecturerCategory = FXCollections.observableArrayList("Dream Interpretation",
 			"Healing", "Astrology", "Reincarnation", "Karma", "Alternative Health-Care", "None");
+	
 
 	@FXML
 	private BorderPane lecturerPage = new BorderPane();
@@ -61,6 +62,9 @@ public class GUIlecturersController implements Initializable {
 
 	@FXML
 	private Label lblLecturerCount;
+	
+	@FXML
+   private HBox hboxLecturerEditOptions;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -132,6 +136,7 @@ public class GUIlecturersController implements Initializable {
 			selectedLecturer = lecturerTable.getSelectionModel().getSelectedItem();
 			tfShowLecturerName.setText(selectedLecturer.getName());
 			tfShowLecturerEmail.setText(selectedLecturer.getEmail());
+			tfShowLecturerPhoneNumber.setText(selectedLecturer.getPhoneNumber());
 		}
 	}
 
@@ -206,36 +211,228 @@ public class GUIlecturersController implements Initializable {
 
 	@FXML
 	void clearAddLecturerTextFields(ActionEvent event) {
-
+      tfEnterLecturerName.setText("");
+      tfEnterLecturerPhoneNumber.setText("");
+      tfEnterLecturerEmail.setText("");
 	}
 
 	@FXML
 	void searchLecturers(ActionEvent event) {
+      ObservableList<Lecturer> searchResults= FXCollections.observableArrayList();
+      int searchCriteriaComboBoxSelection = cbLecturerSearchCriteria.getSelectionModel().getSelectedIndex();     
+      String searchKeyword = tfEnterLecturerSearchKeywords.getText();     
+      tfEnterLecturerSearchKeywords.setText("");
+      
+      searchResults.clear();
+      
+      switch(searchCriteriaComboBoxSelection)
+      {
+         case 0:
+            
+            for(int i = 0; i < lecturers.size(); i ++)
+            {
+               if (lecturers.get(i).getName().toLowerCase().contains(searchKeyword))
+               {
+                  searchResults.add(lecturers.get(i));
+               }
+            }
+            
+            if(searchResults.isEmpty())
+            {
+               JOptionPane.showMessageDialog(null, "No lecturers found with the given search keyword: \n" + searchKeyword);
+            }
+            
+            break;
+            
+         case 1:
+            
+            for(int i = 0; i < lecturers.size(); i ++)
+            {
+               if (lecturers.get(i).getEmail().toLowerCase().contains(searchKeyword))
+               {
+                  searchResults.add(lecturers.get(i));
+               }
+            }
+            
+            if(searchResults.isEmpty())
+            {
+               JOptionPane.showMessageDialog(null, "No lecturers found with the given search keyword: " + searchKeyword);
+            }
+            
+            break;
+         case 2:
+            for (int i = 0; i < lecturers.size(); i++)
+            {
+               if (lecturers.get(i).getPhoneNumber().toLowerCase()
+                     .contains(searchKeyword))
+               {
+                  searchResults.add(lecturers.get(i));
+               }
+            }
 
+            if (searchResults.isEmpty())
+            {
+               JOptionPane.showMessageDialog(null,
+                     "No lecturers found with the given search keyword: \n"
+                           + searchKeyword);
+            }
+            break;
+         case 3:
+            for (int i = 0; i < lecturers.size(); i++)
+            {
+               if (lecturers.get(i).getCategory().toLowerCase().contains(searchKeyword))
+               {
+                  searchResults.add(lecturers.get(i));
+               }
+            }
+
+            if (searchResults.isEmpty())
+            {
+               JOptionPane.showMessageDialog(null,
+                     "No lecturers found with the given search keyword: \n"
+                           + searchKeyword);
+            }
+
+            default:             
+               break;         
+      }  
+      
+      lvLecturerSearchResults.setItems(searchResults);  
+    
 	}
 
 	@FXML
-	void saveEditLecturerChanges(ActionEvent event) {
+	void saveEditLecturerChanges(ActionEvent event) throws FileNotFoundException, ParseException {
+	   int index = lecturerList.getLecturerIndex(selectedLecturer);   
+	     
+	     String newLecturerName = tfShowLecturerName.getText();
+	     String newLecturerEmail = tfShowLecturerEmail.getText();
+	     String newLecturerPhone = tfShowLecturerPhoneNumber.getText();
+	     
+	     if(tfShowLecturerName.getText().isEmpty())
+	     {
+	        newLecturerName = "empty";
+	     }
+	     
+	     if(tfShowLecturerEmail.getText().isEmpty())
+	     {
+	        newLecturerEmail = "empty";
+	     }  
+	     
+	     if(tfShowLecturerPhoneNumber.getText().isEmpty())
+	     {
+	        newLecturerPhone = "empty";
+	     }  
+	     
+	     selectedLecturer.setName(newLecturerName);
+	     selectedLecturer.setEmail(newLecturerEmail);
+	     selectedLecturer.setPhoneNumber(newLecturerPhone);
 
+	     lecturerList.replaceLecturer(index,selectedLecturer);       
+	     lecturerFile.writeLecturerTextFile(lecturerList);
+
+	     lecturerTable.getItems().set(index, selectedLecturer);
+
+	     hboxLecturerEditOptions.setVisible(false);
+	     tfShowLecturerName.setEditable(false);
+	     tfShowLecturerEmail.setEditable(false);
+	     tfShowLecturerPhoneNumber.setEditable(false);
+	     
+	     tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+	     tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+	     tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
 	}
 
 	@FXML
 	void clearEditLecturerTextFields(ActionEvent event) {
-
+	   tfShowLecturerName.setText("");
+      tfShowLecturerEmail.setText("");
+      tfShowLecturerPhoneNumber.setText("");
 	}
 
 	@FXML
 	void cancelEditLecturer(ActionEvent event) {
+	   hboxLecturerEditOptions.setVisible(false);
+
+      tfShowLecturerName.setEditable(false);
+      tfShowLecturerEmail.setEditable(false);
+      tfShowLecturerPhoneNumber.setEditable(false);
+
+      tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+      tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+      tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
 
 	}
 
 	@FXML
 	void editLecturer(ActionEvent event) {
+	   if (lecturerTable.getSelectionModel() != null)
+      {
+         System.out.println(lecturerTable.getSelectionModel());
+         hboxLecturerEditOptions.setVisible(true);
+
+         tfShowLecturerName.setEditable(true);
+         tfShowLecturerEmail.setEditable(true);
+         tfShowLecturerPhoneNumber.setEditable(true);
+
+         tfShowLecturerName
+               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+         tfShowLecturerEmail
+               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+         tfShowLecturerPhoneNumber
+               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+      }
 
 	}
 
 	@FXML
-	void deleteLecturer(ActionEvent event) {
+	void deleteLecturer(ActionEvent event) throws FileNotFoundException {
+	   if(lecturerTable.getSelectionModel() != null)
+	     {
+	        if(lecturerList.size() > 0)
+	        {
+	           try 
+	           {
+	              String[] options = {"Delete","Cancel"}; 
+	              int n = JOptionPane.showOptionDialog(null,
+	                        "Are you sure you want to delete lecturer:\n" + selectedLecturer + " ?",
+	                        "Delete a lecturer",
+	                        JOptionPane.YES_NO_OPTION,
+	                        JOptionPane.QUESTION_MESSAGE,
+	                        null,
+	                        options,
+	                        options[0]);              
+	              
+	              if (n == JOptionPane.YES_OPTION) 
+	              {
+	                 int index = lecturerList.getLecturerIndex(selectedLecturer);
+	                 
+	                 lecturerList.deleteLecturer(index);
+	                 lecturerFile.writeLecturerTextFile(lecturerList);
+	                 lecturerTable.getItems().remove(index);
+	                 
+	                 tfShowLecturerName.setText("");
+	                 tfShowLecturerEmail.setText("");   
+	                 tfShowLecturerPhoneNumber.setText("");   
+	                 
+	                 lblLecturerCount.setText(String.format("lecturer count: %d", lecturerList.size()));
+	              }        
+	           }
+	           catch(ArrayIndexOutOfBoundsException e)
+	           {
+	              JOptionPane.showMessageDialog(null, "Please select a lecturer from the table to delete");
+	           }
+	        }        
+	        else
+	        {
+	           JOptionPane.showMessageDialog(null, "No more lecturers left to delete");
+	        }
+	     }     
+	     else
+	     {
+	        JOptionPane.showMessageDialog(null, "Please select a lecturer from the table to delete");
+	     }     
+	   }    
 
 	}
-}
+

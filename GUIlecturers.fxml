@@ -67,7 +67,7 @@
          <right>
             <VBox prefHeight="500.0" prefWidth="295.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Selected sponsor details:" translateX="10.0" translateY="30.0" />
+                  <Label text="Selected lecturer details:" translateX="10.0" translateY="30.0" />
                   <Label text="Name:" translateX="10.0" translateY="40.0" />
                   <TextField fx:id="tfShowLecturerName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="45.0" />
                   <Label text="Category:" translateX="10.0" translateY="50.0" />
