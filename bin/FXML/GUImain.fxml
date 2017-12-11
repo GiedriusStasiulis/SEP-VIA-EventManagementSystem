@@ -21,12 +21,12 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="800.0" translateY="200.0">
                            <children>
-                              <Label text="Welcome to VIA Event Management System" textAlignment="CENTER" translateY="50.0">
+                              <Label text="Welcome to VIA Organization Management System" textAlignment="CENTER" translateY="70.0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
                               </Label>
-                              <Label text="© 2017 Vipassanā - Insight Awareness. All right reserved. Powered by VIA ICT group #2 Solutions" translateY="150.0" />
+                              <Label text="© 2017 Vipassanā - Insight Awareness. All right reserved. Powered by VIA ICT Group #2 Solutions" translateY="80.0" />
                            </children>
                         </VBox>
                      </children>
