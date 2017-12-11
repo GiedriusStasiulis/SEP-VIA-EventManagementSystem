@@ -76,6 +76,7 @@ public class GUIlecturersController implements Initializable {
 		cbLecturerSearchCriteria.getSelectionModel().select(0);
 
 		cbSelectLecturerCategory.setItems(lecturerCategory);
+		cbShowLecturerCategory.setItems(lecturerCategory);
 		cbSelectLecturerCategory.getSelectionModel().select(0);
 
 		tcLecturerName.setCellValueFactory(new PropertyValueFactory<Lecturer,String>("name"));
@@ -137,6 +138,33 @@ public class GUIlecturersController implements Initializable {
 			tfShowLecturerName.setText(selectedLecturer.getName());
 			tfShowLecturerEmail.setText(selectedLecturer.getEmail());
 			tfShowLecturerPhoneNumber.setText(selectedLecturer.getPhoneNumber());
+			int tempIndex=0;
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Dream Interpretation"))
+			{
+			   tempIndex=0;
+			}
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Healing"))
+         {
+            tempIndex=1;
+         }
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Astrology"))
+         {
+            tempIndex=2;
+         }
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Reincarnation"))
+         {
+            tempIndex=3;
+         }
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Karma"))
+         {
+            tempIndex=4;
+         }
+			if(selectedLecturer.getCategory().equalsIgnoreCase("Alternative Health-Care"))
+         {
+            tempIndex=5;
+         }
+			   
+			cbShowLecturerCategory.getSelectionModel().clearAndSelect(tempIndex);
 		}
 	}
 
@@ -214,6 +242,7 @@ public class GUIlecturersController implements Initializable {
       tfEnterLecturerName.setText("");
       tfEnterLecturerPhoneNumber.setText("");
       tfEnterLecturerEmail.setText("");
+      
 	}
 
 	@FXML
@@ -248,7 +277,7 @@ public class GUIlecturersController implements Initializable {
             
             for(int i = 0; i < lecturers.size(); i ++)
             {
-               if (lecturers.get(i).getEmail().toLowerCase().contains(searchKeyword))
+               if (lecturers.get(i).getCategory().toLowerCase().contains(searchKeyword))
                {
                   searchResults.add(lecturers.get(i));
                }
@@ -280,7 +309,7 @@ public class GUIlecturersController implements Initializable {
          case 3:
             for (int i = 0; i < lecturers.size(); i++)
             {
-               if (lecturers.get(i).getCategory().toLowerCase().contains(searchKeyword))
+               if (lecturers.get(i).getEmail().toLowerCase().contains(searchKeyword))
                {
                   searchResults.add(lecturers.get(i));
                }
@@ -308,6 +337,7 @@ public class GUIlecturersController implements Initializable {
 	     String newLecturerName = tfShowLecturerName.getText();
 	     String newLecturerEmail = tfShowLecturerEmail.getText();
 	     String newLecturerPhone = tfShowLecturerPhoneNumber.getText();
+	     String newLecturerCategory=cbShowLecturerCategory.getSelectionModel().getSelectedItem();
 	     
 	     if(tfShowLecturerName.getText().isEmpty())
 	     {
@@ -327,6 +357,7 @@ public class GUIlecturersController implements Initializable {
 	     selectedLecturer.setName(newLecturerName);
 	     selectedLecturer.setEmail(newLecturerEmail);
 	     selectedLecturer.setPhoneNumber(newLecturerPhone);
+	     selectedLecturer.setCategory(newLecturerCategory);
 
 	     lecturerList.replaceLecturer(index,selectedLecturer);       
 	     lecturerFile.writeLecturerTextFile(lecturerList);
