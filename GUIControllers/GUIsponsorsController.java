@@ -30,43 +30,33 @@ public class GUIsponsorsController implements Initializable
    private Sponsor selectedSponsor;
    private SponsorList sponsorList = new SponsorList();
    private String filename = "SponsorList.txt";
-   private SponsorFile sponsorFile = new SponsorFile(filename);
+   private FileReaderWriter sponsorFile = new FileReaderWriter(filename);
 
-   private ObservableList<Sponsor> sponsors = FXCollections
-         .observableArrayList();
-   private ObservableList<String> searchCriteria = FXCollections
-         .observableArrayList("Name", "E-mail", "Phone");
-   @FXML
-   private BorderPane sponsorPage = new BorderPane();
+   private ObservableList<Sponsor> sponsors = FXCollections.observableArrayList();
+   private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail", "Phone");
+   
+   @FXML private BorderPane sponsorPage = new BorderPane();
 
-   @FXML
-   private Button btnAddSponsor, btnDeleteSponsor, btnEditSponsor,
+   @FXML private Button btnAddSponsor, btnDeleteSponsor, btnEditSponsor,
          btnClearAddSponsorTextFields, btnSearchSponsors, btnCancelEditSponsor,
          btnClearEditSponsorTextFields, btnSaveSponsorEditChanges;
 
-   @FXML
-   private TextField tfSponsorID, tfShowSponsorEmail, tfEnterSponsorSearchKeywords,
+   @FXML private TextField tfSponsorID, tfShowSponsorEmail, tfEnterSponsorSearchKeywords,
          tfEnterSponsorEmail, tfShowSponsorName, tfShowSponsorPhoneNumber,
          tfEnterSponsorName, tfEnterSponsorPhoneNumber;
 
-   @FXML
-   private TableView<Sponsor> sponsorTable;
+   @FXML private TableView<Sponsor> sponsorTable;
 
-   @FXML
-   private TableColumn<Sponsor, String> tcSponsorID, tcSponsorName, tcSponsorEmail,
+   @FXML private TableColumn<Sponsor, String> tcSponsorID, tcSponsorName, tcSponsorEmail,
          tcSponsorPhoneNumber;
 
-   @FXML
-   private ListView<Sponsor> lvSponsorSearchResults;
+   @FXML private ListView<Sponsor> lvSponsorSearchResults;
 
-   @FXML
-   private ComboBox<String> cbSponsorSearchCriteria;
+   @FXML private ComboBox<String> cbSponsorSearchCriteria;
 
-   @FXML
-   private Label lblSponsorCount;
+   @FXML private Label lblSponsorCount;
 
-   @FXML
-   private HBox hboxSponsorEditOptions;
+   @FXML private HBox hboxSponsorEditOptions;
 
    @Override
    public void initialize(URL location, ResourceBundle resources)
@@ -123,7 +113,6 @@ public class GUIsponsorsController implements Initializable
 
       lblSponsorCount
             .setText(String.format("Sponsor count: %d", sponsorList.size()));
-
    }
 
    public void showSponsorDetailsFromTable()
@@ -141,16 +130,14 @@ public class GUIsponsorsController implements Initializable
    {
       if (lvSponsorSearchResults.getSelectionModel().getSelectedItem() != null)
       {
-         selectedSponsor = lvSponsorSearchResults.getSelectionModel()
-               .getSelectedItem();
+         selectedSponsor = lvSponsorSearchResults.getSelectionModel().getSelectedItem();
          tfShowSponsorName.setText(selectedSponsor.getName());
          tfShowSponsorEmail.setText(selectedSponsor.getEmail());
          tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhone());
       }
    }
 
-   public ObservableList<Sponsor> getList()
-         throws FileNotFoundException, ParseException
+   public ObservableList<Sponsor> getList() throws FileNotFoundException, ParseException
    {
       sponsorList = sponsorFile.readSponsorTextFile();
 
@@ -160,13 +147,11 @@ public class GUIsponsorsController implements Initializable
                sponsorList.getSponsor(i).getEmail(),
                sponsorList.getSponsor(i).getPhone()));
       }
-
       return sponsors;
    }
 
    @FXML
-   void addSponsor(ActionEvent event)
-         throws ParseException, CloneNotSupportedException, IOException
+   void addSponsor(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException
    {
       String sponsorName = tfEnterSponsorName.getText();
       String sponsorEmail = tfEnterSponsorEmail.getText();
@@ -204,28 +189,24 @@ public class GUIsponsorsController implements Initializable
 
          if (sponsorList.checkForDuplicates(sponsorList, sponsor))
          {
-            JOptionPane.showMessageDialog(null,
-                  "Sponsor already exists in the system!");
+            JOptionPane.showMessageDialog(null,"Sponsor already exists in the system!");
             clearAddSponsorTextFields(event);
          }
 
          else
          {
             sponsorList.addSponsorToList(sponsor);
-            sponsorFile.writeTextFile(sponsorList);
+            sponsorFile.writeSponsorTextFile(sponsorList);
             sponsorTable.getItems().add(sponsor);
             clearAddSponsorTextFields(event);
 
-            lblSponsorCount.setText(
-                  String.format("Sponsor count: %d", sponsorList.size()));
+            lblSponsorCount.setText(String.format("Sponsor count: %d", sponsorList.size()));
          }
       }
 
       else
       {
-         JOptionPane.showMessageDialog(null,
-               "Invalid e-mail format entered!\nFormat: example@gmail.com");
-         clearAddSponsorTextFields(event);
+         JOptionPane.showMessageDialog(null,"Invalid e-mail format entered!\nFormat: example@gmail.com");
       }
    }
 
@@ -292,6 +273,7 @@ public class GUIsponsorsController implements Initializable
             break;
             
          case 2:
+        	 
             for (int i = 0; i < sponsors.size(); i++)
             {
                if (sponsors.get(i).getPhone().toLowerCase()
@@ -329,12 +311,9 @@ public class GUIsponsorsController implements Initializable
          tfShowSponsorEmail.setEditable(true);
          tfShowSponsorPhoneNumber.setEditable(true);
 
-         tfShowSponsorName
-               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-         tfShowSponsorEmail
-               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-         tfShowSponsorPhoneNumber
-               .setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+         tfShowSponsorName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+         tfShowSponsorEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+         tfShowSponsorPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
       }
    }
 
@@ -362,12 +341,14 @@ public class GUIsponsorsController implements Initializable
         newSponsorPhone = "empty";
      }  
      
+     if(newSponsorEmail.contains("@"))
+     {
      selectedSponsor.setName(newSponsorName);
      selectedSponsor.setEmail(newSponsorEmail);
      selectedSponsor.setPhone(newSponsorPhone);
 
      sponsorList.replaceSponsor(index,selectedSponsor);       
-     sponsorFile.writeTextFile(sponsorList);
+     sponsorFile.writeSponsorTextFile(sponsorList);
 
      sponsorTable.getItems().set(index, selectedSponsor);
 
@@ -379,6 +360,12 @@ public class GUIsponsorsController implements Initializable
      tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
      tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
      tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
+     }
+     
+     else
+     {
+    	 JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
+     }
    }
 
    @FXML
@@ -427,7 +414,7 @@ public class GUIsponsorsController implements Initializable
                  int index = sponsorList.getSponsorIndex(selectedSponsor);
                  
                  sponsorList.deleteSponsor(index);
-                 sponsorFile.writeTextFile(sponsorList);
+                 sponsorFile.writeSponsorTextFile(sponsorList);
                  sponsorTable.getItems().remove(index);
                  
                  tfShowSponsorName.setText("");

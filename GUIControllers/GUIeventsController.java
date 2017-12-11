@@ -90,8 +90,7 @@ public class GUIeventsController implements Initializable
 		tfShowEventDiscount.setEditable(false);
 		
 		//btnEditEvent.setDisable(true);
-		btnDeleteEvent.setDisable(true);
-		
+		btnDeleteEvent.setDisable(true);		
 	}	
 	
 	public void showEventDetailsFromTable() 

@@ -46,7 +46,7 @@ public class GUImembersController implements Initializable
 	private Member selectedMember;
 	private MemberList memberList = new MemberList();
 	private String filename = "MemberList.txt";
-	private MemberFile memberFile = new MemberFile(filename);
+	private FileReaderWriter memberFile = new FileReaderWriter(filename);
 
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","E-mail");
@@ -78,8 +78,7 @@ public class GUImembersController implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
-	{
-		
+	{		
 		memberPage.setMaxHeight(Double.MAX_VALUE);
 		memberPage.setMaxWidth(Double.MAX_VALUE);
 
@@ -132,8 +131,6 @@ public class GUImembersController implements Initializable
 	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
 	{
 		memberList = memberFile.readMemberTextFile();
-		
-		System.out.println(memberList.toString());
 
 		for (int i = 0; i < memberList.size(); i++) 
 		{
@@ -209,7 +206,6 @@ public class GUImembersController implements Initializable
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
-			clearAddMemberTextFields(event);
 		}		
 	}	
 
@@ -318,20 +314,28 @@ public class GUImembersController implements Initializable
 			newMemberEmail = "empty";
 		}	
     	
-    	selectedMember.setName(newMemberName);
-    	selectedMember.setEmail(newMemberEmail);
+		if(newMemberEmail.contains("@"))
+		{
+			selectedMember.setName(newMemberName);
+	    	selectedMember.setEmail(newMemberEmail);
 
-    	memberList.replaceMember(index,selectedMember);    	
-    	memberFile.writeMemberTextFile(memberList);
+	    	memberList.replaceMember(index,selectedMember);    	
+	    	memberFile.writeMemberTextFile(memberList);
 
-    	memberTable.getItems().set(index, selectedMember);
+	    	memberTable.getItems().set(index, selectedMember);
 
-    	hboxMemberEditOptions.setVisible(false);
-    	tfShowMemberName.setEditable(false);
-    	tfShowMemberEmail.setEditable(false);
-    	
-    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
-    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+	    	hboxMemberEditOptions.setVisible(false);
+	    	tfShowMemberName.setEditable(false);
+	    	tfShowMemberEmail.setEditable(false);
+	    	
+	    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+	    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+		}
+		
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
+		}
     }
 
     @FXML
