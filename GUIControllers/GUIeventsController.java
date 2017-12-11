@@ -94,8 +94,12 @@ public class GUIeventsController implements Initializable
 		//tcEventType.setCellValueFactory(new PropertyValueFactory<Event,?>("eventType"));
 		//tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,?>("eventCategory"));
 		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
-		//tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
-		
+		tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
+		tcEventStartTime.setCellValueFactory(new PropertyValueFactory<Event, String>("startTime"));
+	   tcEventEndTime.setCellValueFactory(new PropertyValueFactory<Event, String>("endTime"));
+	   tcEventPrice.setCellValueFactory(new PropertyValueFactory<Event, String>("price"));
+	   tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
+	   tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
 		try
 		{
 		   eventsTable.setItems(getEventList());
@@ -118,17 +122,15 @@ public class GUIeventsController implements Initializable
     	String eventName = tfEnterEventTitle.getText();
     	//DatePicker datePicker = new DatePicker();
     	LocalDate localStartDate = dpEventStartDate.getValue();
-    	//LocalDate localEndDate = dpEventEndDate.getValue();
-    	//int year = localDate.getYear();
-    	//int month = localDate.getMonthValue();
-    	//int day = localDate.getDayOfMonth();
-    	//String startTime = tfEventStartTime.getText();
-    	//String endTime = tfEventEndTime.getText();
-    	//double price = Double.parseDouble(tfEventPrice.getText());
-    	//double discount = Double.parseDouble(tfEventDiscount.getText());
-    	//int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
+    	LocalDate localEndDate = dpEventEndDate.getValue();
+    	
+    	String startTime = tfEventStartTime.getText();
+    	String endTime = tfEventEndTime.getText();
+    	double price = Double.parseDouble(tfEventPrice.getText());
+    	double discount = Double.parseDouble(tfEventDiscount.getText());
+    	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
          	
-    	Event eventNew = new Event(eventName,localStartDate);
+    	Event eventNew = new Event(eventName,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
     	eventList.addEventToList(eventNew);
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
@@ -142,7 +144,7 @@ public class GUIeventsController implements Initializable
        
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getEventName(),eventList.getEvent(i).getEventStartDate()));
+          events.add(new Event(eventList.getEvent(i).getEventName(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
        }
        return events;
     }

@@ -21,25 +21,25 @@ public class Event
       ArrayList<Member> membersRegistered;
       ArrayList<Member> tempMembersRegistered;
       
-      public Event(String eventName, LocalDate eventStartDate)
+      public Event(String eventName, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime, int maxMembers, double price,double discount)
       {
          this.eventName = eventName;
          //this.isFinalized=false;         
          this.eventStartDate = eventStartDate;
-         /*this.eventEndDate=eventEndDate;
+         this.eventEndDate=eventEndDate;
          this.startTime=startTime;
          this.endTime=endTime;
          this.maxMembers=maxMembers;
          this.price=price;
          this.discount=discount;
          this.membersRegistered= new ArrayList<Member>();
-         this.tempMembersRegistered = new ArrayList<Member>();*/
+         this.tempMembersRegistered = new ArrayList<Member>();
       }
       
       
 
       public LocalDate getEventStartDate() {
-		return eventStartDate;
+		return this.eventStartDate;
 	}
 
 
@@ -47,7 +47,14 @@ public class Event
 	public void setEventStartDate(LocalDate eventStartDate) {
 		this.eventStartDate = eventStartDate;
 	}
-
+	public LocalDate getEventEndDate()
+	{
+	   return this.eventEndDate;
+	}
+	public void setEventEndDate(LocalDate eventEndDate)
+	{
+	   this.eventEndDate=eventEndDate;
+	}
 
 
 	public String getEventName() {
@@ -72,4 +79,25 @@ public class Event
       {
          return this.eventName +" " + this.isFinalized;
       }
+      
+    public String getStartTime()
+    {
+       return this.startTime;
+    }
+    public String getEndTime()
+    {
+       return this.endTime;
+    }
+    public int getMaxMembers()
+    {
+       return this.maxMembers;
+    }
+    public double getPrice()
+    {
+       return this.price;
+    }
+    public double getDiscount()
+    {
+       return this.discount;
+    }
 }

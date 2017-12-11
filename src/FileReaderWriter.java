@@ -62,20 +62,17 @@ public class FileReaderWriter
           String eventName=lineItems[0].trim();          
           
           LocalDate eventStartDate=LocalDate.parse(lineItems[1].trim());        
-         
-                   
-          /*String eventStartTime=lineItems[2].trim();
-          String eventEndDate=lineItems[3].trim();
+          String eventStartTime=lineItems[2].trim();
+          LocalDate eventEndDate=LocalDate.parse(lineItems[3].trim());
           String eventEndTime=lineItems[4].trim();
-          double eventPrice=Double.parseDouble(lineItems[5].trim());
+          int maxMembers=Integer.parseInt(lineItems[5].trim());
+          double price = Double.parseDouble(lineItems[6].trim());
+          double discount = Double.parseDouble(lineItems[7].trim());
           
-          double eventDiscount=Double.parseDouble(lineItems[6].trim());
-          int eventMaxMembers=Integer.parseInt(lineItems[7].trim());
-          */
           //LocalDate eventStart = LocalDate.parse(date);
           //LocalDate eventEnd = LocalDate.parse(eventEndDate);
           
-          Event eventToAdd = new Event(eventName,eventStartDate);
+          Event eventToAdd = new Event(eventName,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
           currentEventList.addEventToList(eventToAdd);
           
                    
@@ -96,7 +93,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventName() + "," + eventList.getEvent(i).getEventStartDate());
+            output.println(eventList.getEvent(i).getEventName() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount());
          }
          output.flush();
          
