@@ -220,17 +220,18 @@ public class GUImembersController implements Initializable
 		String searchKeyword = tfEnterSearchKeywords.getText();		
 		tfEnterSearchKeywords.setText("");
 		
+		searchResults.clear();
+		
 		switch(searchCriteriaComboBoxSelection)
 		{
 			case 0:
 				
 				for(int i = 0; i < members.size(); i ++)
 				{
-					if (searchKeyword.equalsIgnoreCase(members.get(i).getName()))
+					if (members.get(i).getName().toLowerCase().contains(searchKeyword))
 					{
 						searchResults.add(members.get(i));
 					}
-					
 				}
 				
 				if(searchResults.isEmpty())
@@ -244,7 +245,7 @@ public class GUImembersController implements Initializable
 				
 				for(int i = 0; i < members.size(); i ++)
 				{
-					if (searchKeyword.equalsIgnoreCase(members.get(i).getEmail()))
+					if (members.get(i).getEmail().toLowerCase().contains(searchKeyword))
 					{
 						searchResults.add(members.get(i));
 					}
