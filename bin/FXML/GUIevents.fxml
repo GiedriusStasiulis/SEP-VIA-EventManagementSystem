@@ -11,22 +11,22 @@
          <center>
             <ScrollPane fx:id="spEventsTableScrollPane" minHeight="200.0" prefHeight="1100.0" prefWidth="1535.0" BorderPane.alignment="CENTER">
                <content>
-                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2100.0">
+                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="1800.0">
                     <columns>
-                      <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Title" />
-                      <TableColumn fx:id="tcEventType" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Type" />
-                        <TableColumn fx:id="tcEventCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
-                        <TableColumn fx:id="tcEventLecturer" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Lecturer" />
-                        <TableColumn fx:id="tcEventStartDate" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Start-date:" />
-                        <TableColumn fx:id="tcEventEndDate" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="End-date:" />
-                        <TableColumn fx:id="tcEventStartTime" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Start-time" />
-                        <TableColumn fx:id="tcEventEndTime" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="End-time" />
-                        <TableColumn fx:id="tcEventDuration" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Duration" />
-                        <TableColumn fx:id="tcEventNumberOfTickets" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Number of tickets" />
-                        <TableColumn fx:id="tcTicketsRemaining" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Tickets remaining" />
-                        <TableColumn fx:id="tcEventPrice" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Price" />
-                        <TableColumn fx:id="tcEventDiscount" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Discount" />
-                        <TableColumn minWidth="50.0" prefWidth="150.0" text="Finalized" />
+                      <TableColumn fx:id="tcEventTitle" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Title" />
+                      <TableColumn fx:id="tcEventType" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Type" />
+                        <TableColumn fx:id="tcEventCategory" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Category" />
+                        <TableColumn fx:id="tcEventLecturer" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Lecturer" />
+                        <TableColumn fx:id="tcEventStartDate" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Start-date:" />
+                        <TableColumn fx:id="tcEventEndDate" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="End-date:" />
+                        <TableColumn fx:id="tcEventStartTime" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Start-time" />
+                        <TableColumn fx:id="tcEventEndTime" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="End-time" />
+                        <TableColumn fx:id="tcEventDuration" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Duration" />
+                        <TableColumn fx:id="tcEventNumberOfTickets" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Number of tickets" />
+                        <TableColumn fx:id="tcTicketsRemaining" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Tickets remaining" />
+                        <TableColumn fx:id="tcEventPrice" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Price" />
+                        <TableColumn fx:id="tcEventDiscount" maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Discount" />
+                        <TableColumn maxWidth="350.0" minWidth="60.0" prefWidth="110.0" text="Finalized" />
                     </columns>
                   </TableView>
                </content>

@@ -23,7 +23,7 @@ public class MainClass extends Application
 		Parent root = loader.load();					
 		Scene scene = new Scene(root);		
 
-		stage.setTitle("VIA - Event Management System");
+		stage.setTitle("VIA - Organization Management System");
 		stage.setScene(scene);
 		stage.show();		
 	}

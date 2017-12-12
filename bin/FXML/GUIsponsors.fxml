@@ -13,9 +13,9 @@
                <content>
                   <TableView fx:id="sponsorTable" prefHeight="1100.0" prefWidth="2052.0">
                     <columns>
-                      <TableColumn fx:id="tcSponsorName" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tcSponsorEmail" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
-                        <TableColumn fx:id="tcSponsorPhoneNumber" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Phone number" />
+                      <TableColumn fx:id="tcSponsorName" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Name" />
+                      <TableColumn fx:id="tcSponsorEmail" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                        <TableColumn fx:id="tcSponsorPhoneNumber" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Phone number" />
                     </columns>
                   </TableView>
                </content>

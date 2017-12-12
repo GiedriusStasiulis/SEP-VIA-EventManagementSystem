@@ -13,8 +13,8 @@
                <content>
                   <TableView fx:id="memberTable" prefHeight="1100.0" prefWidth="1375.0">
                     <columns>
-                      <TableColumn fx:id="tcMemberName" minWidth="50.0" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tcMemberEmail" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                      <TableColumn fx:id="tcMemberName" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Name" />
+                      <TableColumn fx:id="tcMemberEmail" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
                     </columns>
                   </TableView>
                </content>

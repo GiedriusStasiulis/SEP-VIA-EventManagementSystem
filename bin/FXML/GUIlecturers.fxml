@@ -13,10 +13,10 @@
                <content>
                   <TableView fx:id="lecturerTable" prefHeight="1100.0" prefWidth="2052.0">
                     <columns>
-                      <TableColumn fx:id="tcLecturerName" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tcLecturerCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
-                        <TableColumn fx:id="tcLecturerEmail" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
-                        <TableColumn fx:id="tcLecturerPhoneNumber" minWidth="50.0" prefWidth="150.0" text="Phone number" />
+                      <TableColumn fx:id="tcLecturerName" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Name" />
+                      <TableColumn fx:id="tcLecturerCategory" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Category" />
+                        <TableColumn fx:id="tcLecturerEmail" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                        <TableColumn fx:id="tcLecturerPhoneNumber" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Phone number" />
                     </columns>
                   </TableView>
                </content>
