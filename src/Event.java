@@ -10,19 +10,25 @@ import javafx.scene.control.DatePicker;
 
 //Abstract class Event
 public class Event {
-	private String eventName;
+	private String eventTitle;
 	private LocalDate eventStartDate, eventEndDate;
 	private boolean isFinalized;
 	private String startTime, endTime;
 	private int maxMembers;
 	private double price, discount;
+	
+	private String eventType;
+	private String eventCategory;
+	
 
 	ArrayList<Member> membersRegistered;
 	ArrayList<Member> tempMembersRegistered;
 
-	public Event(String eventName, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) 
+	public Event(String eventTitle,String eventType,String eventCategory, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) 
 	{
-		this.eventName = eventName;
+		this.eventTitle = eventTitle;
+		this.eventType=eventType;
+		this.eventCategory=eventCategory;
 		// this.isFinalized=false;
 		this.eventStartDate = eventStartDate;
 		this.eventEndDate = eventEndDate;
@@ -55,14 +61,14 @@ public class Event {
 		this.eventEndDate = eventEndDate;
 	}
 
-	public String getEventName() 
+	public String getEventTitle() 
 	{
-		return eventName;
+		return eventTitle;
 	}
 
-	public void setEventName(String eventName) 
+	public void setEventTitle(String eventTitle) 
 	{
-		this.eventName = eventName;
+		this.eventTitle = eventTitle;
 	}
 
 	public Member getMemberByIndex(int index) 
@@ -72,7 +78,7 @@ public class Event {
 
 	public String toString() 
 	{
-		return this.eventName + " " + this.isFinalized;
+		return this.eventTitle + " " + this.isFinalized;
 	}
 
 	public String getStartTime() 
@@ -98,5 +104,13 @@ public class Event {
 	public double getDiscount() 
 	{
 		return this.discount;
+	}
+	public String getCategory()
+	{
+	   return this.eventCategory;
+	}
+	public String getType()
+	{
+	   return this.eventType;
 	}
 }

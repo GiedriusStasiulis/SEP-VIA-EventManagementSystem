@@ -59,20 +59,25 @@ public class FileReaderWriter
           String line = input.nextLine();
           String[] lineItems = line.split(",");
           
-          String eventName=lineItems[0].trim();          
+          String eventTitle=lineItems[0].trim();          
           
-          LocalDate eventStartDate=LocalDate.parse(lineItems[1].trim());        
-          String eventStartTime=lineItems[2].trim();
-          LocalDate eventEndDate=LocalDate.parse(lineItems[3].trim());
-          String eventEndTime=lineItems[4].trim();
-          int maxMembers=Integer.parseInt(lineItems[5].trim());
-          double price = Double.parseDouble(lineItems[6].trim());
-          double discount = Double.parseDouble(lineItems[7].trim());
+          String eventType=lineItems[1].trim();
+          
+          String eventCategory=lineItems[2].trim();
+          
+          LocalDate eventStartDate=LocalDate.parse(lineItems[3].trim());        
+          String eventStartTime=lineItems[4].trim();
+          LocalDate eventEndDate=LocalDate.parse(lineItems[5].trim());
+          String eventEndTime=lineItems[6].trim();
+          int maxMembers=Integer.parseInt(lineItems[7].trim());
+          double price = Double.parseDouble(lineItems[8].trim());
+          double discount = Double.parseDouble(lineItems[9].trim());
           
           //LocalDate eventStart = LocalDate.parse(date);
           //LocalDate eventEnd = LocalDate.parse(eventEndDate);
           
-          Event eventToAdd = new Event(eventName,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
+          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
+          
           currentEventList.addEventToList(eventToAdd);
           
                    
@@ -93,7 +98,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventName() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount());
+            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount());
          }
          output.flush();
          

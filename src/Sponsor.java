@@ -10,23 +10,23 @@ public class Sponsor
    private int index;
    private String name;
    private String email;
-   private String phone;
+   private String phoneNumber;
 
-   public Sponsor(String name, String email, String phone) 
+   public Sponsor(String name, String email, String phoneNumber) 
    {
       this.name = name;
       this.email = email;
-      this.phone = phone;
+      this.phoneNumber = phoneNumber;
    }
    
    public String getPhone() 
    {
-      return phone;
+      return phoneNumber;
    }
    
-   public void setPhone(String phone)
+   public void setPhone(String phoneNumber)
    {
-      this.phone = phone;
+      this.phoneNumber = phoneNumber;
    }
 
    public String getName() 
@@ -56,7 +56,7 @@ public class Sponsor
       }
 
       Sponsor other = (Sponsor) obj;
-      return name.equals(other.name) && email.equals(other.email) && phone.equals(other.phone);
+      return name.equals(other.name) && email.equals(other.email) && phoneNumber.equals(other.phoneNumber);
    }
 
    public String toString() 

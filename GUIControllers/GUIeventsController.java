@@ -37,6 +37,7 @@ import javafx.scene.layout.HBox;
 public class GUIeventsController implements Initializable
 {
 	private Event eventToAdd;
+	private Event selectedEvent;
 	private EventList eventList = new EventList();
 	private static final String FILENAME = "EventList.txt";
 	private FileReaderWriter eventFile = new FileReaderWriter(FILENAME);
@@ -106,10 +107,20 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.setItems(categoryChoices);
 		cbEventCategory.getSelectionModel().select(0);
 		
+		cbShowEventCategory.setItems(categoryChoices);
+		cbShowEventType.setItems(typeChoices);
+		//cbShowEventCategory.getSelectionModel().select(0);
+		//cbShowEventType.getSelectionModel().select(0);
 		//initialize table
-		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,String>("eventName"));
-		//tcEventType.setCellValueFactory(new PropertyValueFactory<Event,?>("eventType"));
-		//tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,?>("eventCategory"));
+		tcEventTitle.setCellValueFactory(new PropertyValueFactory<Event,String>("eventTitle"));
+		//////////////////
+		
+		
+		tcEventType.setCellValueFactory(new PropertyValueFactory<Event,String>("Type"));
+		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("Category"));
+		
+		
+		/////////////////
 		tcEventStartDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventStartDate"));
 		tcEventEndDate.setCellValueFactory(new PropertyValueFactory<Event,LocalDate>("eventEndDate"));
 		tcEventStartTime.setCellValueFactory(new PropertyValueFactory<Event, String>("startTime"));
@@ -118,6 +129,8 @@ public class GUIeventsController implements Initializable
 		tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
 		tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
 		
+		tcEventType.setStyle("-fx-alignment: CENTER;");
+		tcEventCategory.setStyle("-fx-alignment: CENTER;");
 		tcEventTitle.setStyle("-fx-alignment: CENTER;");
 		tcEventStartDate.setStyle("-fx-alignment: CENTER;");
 		tcEventEndDate.setStyle("-fx-alignment: CENTER;");
@@ -149,6 +162,7 @@ public class GUIeventsController implements Initializable
 		
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
+			   showEventDetailsFromTable();
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);				
@@ -170,7 +184,20 @@ public class GUIeventsController implements Initializable
 	
 	public void showEventDetailsFromTable()
 	{
-		
+		if (eventsTable.getSelectionModel().getSelectedItem() !=null)
+		{
+		   selectedEvent = eventsTable.getSelectionModel().getSelectedItem();
+		   tfShowEventTitle.setText(selectedEvent.getEventTitle());
+		   cbShowEventType.getSelectionModel().select(selectedEvent.getType());
+		   cbShowEventCategory.getSelectionModel().select(selectedEvent.getCategory());
+		   dpShowEventStartDate.setValue(selectedEvent.getEventStartDate());
+		   dpShowEventEndDate.setValue(selectedEvent.getEventEndDate());
+		   tfShowEventPrice.setText(Double.toString(selectedEvent.getPrice()));
+		   tfShowEventStartTime.setText(selectedEvent.getStartTime());
+		   tfShowEventEndTime.setText(selectedEvent.getEndTime());
+		   tfShowEventDiscount.setText(Double.toString(selectedEvent.getDiscount()));
+		   
+		}
 	}
 	
 	public void showEventDetailsFromListView()
@@ -181,7 +208,11 @@ public class GUIeventsController implements Initializable
     @FXML
     void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException
     {
-    	String eventName = tfEnterEventTitle.getText();
+    	String eventTitle = tfEnterEventTitle.getText();
+    	
+    	String eventType = cbEventType.getValue();
+    	String eventCategory = cbEventCategory.getValue();
+    	
     	//DatePicker datePicker = new DatePicker();
     	LocalDate localStartDate = dpEventStartDate.getValue();
     	LocalDate localEndDate = dpEventEndDate.getValue();
@@ -192,11 +223,16 @@ public class GUIeventsController implements Initializable
     	double discount = Double.parseDouble(tfEventDiscount.getText());
     	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
          	
-    	Event eventNew = new Event(eventName,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
+    	Event eventNew = new Event(eventTitle,eventType,eventCategory,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
     	eventList.addEventToList(eventNew);
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
     	
+    	///testing////
+    	System.out.println(eventNew.getCategory());
+    	
+    	
+    	//////////////
     	clearCreateEventTextFields(event);
     }
     
@@ -206,8 +242,9 @@ public class GUIeventsController implements Initializable
        
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getEventName(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
+          events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getType(),eventList.getEvent(i).getCategory(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
        }
+       System.out.println("From Controller getList() method, get category -: "+eventList.getEvent(0).getCategory() );
        return events;
     }
 
