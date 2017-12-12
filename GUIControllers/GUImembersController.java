@@ -99,7 +99,7 @@ public class GUImembersController implements Initializable
 		btnEditMember.setDisable(true);
 		btnDeleteMember.setDisable(true);
 		
-		spMemberTableScrollPane.setStyle("-fx-font-size: 13px;");
+		//spMemberTableScrollPane.setStyle("-fx-font-size: 13px;");
 
 		try 
 		{

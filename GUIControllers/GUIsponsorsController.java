@@ -86,7 +86,7 @@ public class GUIsponsorsController implements Initializable
       tfShowSponsorEmail.setEditable(false);
       tfShowSponsorPhoneNumber.setEditable(false);
 
-      spSponsorsTableScrollPane.setStyle("-fx-font-size: 13px;");
+      //spSponsorsTableScrollPane.setStyle("-fx-font-size: 13px;");
       
       try
       {

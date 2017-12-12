@@ -127,7 +127,7 @@ public class GUIeventsController implements Initializable
 		tcEventDiscount.setStyle("-fx-alignment: CENTER;");
 		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");		
 		
-		spEventsTableScrollPane.setStyle("-fx-font-size: 13px;");
+		//spEventsTableScrollPane.setStyle("-fx-font-size: 13px;");
 		
 		btnEditEvent.setDisable(true);
 		btnDeleteEvent.setDisable(true);

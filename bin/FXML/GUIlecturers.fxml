@@ -9,62 +9,54 @@
    <content>
       <BorderPane fx:id="lecturerPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
          <center>
-            <ScrollPane fx:id="spLecturersTableScrollPane" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
                   <TableView fx:id="lecturerTable" prefHeight="1100.0" prefWidth="2052.0">
                     <columns>
-                      <TableColumn fx:id="tcLecturerName" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tcLecturerCategory" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Category" />
-                        <TableColumn fx:id="tcLecturerEmail" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
-                        <TableColumn fx:id="tcLecturerPhoneNumber" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Phone number" />
+                      <TableColumn fx:id="tcLecturerName" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Name" />
+                      <TableColumn fx:id="tcLecturerCategory" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Category" />
+                        <TableColumn fx:id="tcLecturerEmail" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                        <TableColumn fx:id="tcLecturerPhoneNumber" minWidth="50.0" prefWidth="150.0" text="Phone number" />
                     </columns>
                   </TableView>
                </content>
             </ScrollPane>
          </center>
          <left>
-            <VBox prefHeight="200.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="280.0" BorderPane.alignment="CENTER">
                <children>
                   <Accordion prefHeight="690.0">
                     <panes>
                       <TitledPane text="Add lecturer">
                         <content>
-                              <ScrollPane prefViewportHeight="639.0" prefViewportWidth="278.0">
-                                 <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="267.0" prefWidth="271.0">
-                                       <children>
-                                          <Label layoutX="10.0" layoutY="15.0" text="Name:" />
-                                          <TextField fx:id="tfEnterLecturerName" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
-                                          <Label layoutX="10.0" layoutY="65.0" text="Category:" />
-                                          <Button fx:id="btnAddLecturer" layoutX="10.0" layoutY="230.0" mnemonicParsing="false" onAction="#addLecturer" prefWidth="120.0" text="Add" />
-                                          <Button fx:id="btnClearAddLecturerTextFields" layoutX="145.0" layoutY="230.0" mnemonicParsing="false" onAction="#clearAddLecturerTextFields" prefWidth="120.0" text="Clear fields" />
-                                          <Label layoutX="10.0" layoutY="115.0" text="E-mail:" />
-                                          <TextField fx:id="tfEnterLecturerEmail" layoutX="10.0" layoutY="135.0" prefWidth="255.0" />
-                                          <ComboBox fx:id="cbSelectLecturerCategory" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
-                                          <Label layoutX="10.0" layoutY="165.0" text="Phone number:" />
-                                          <TextField fx:id="tfEnterLecturerPhoneNumber" layoutX="10.0" layoutY="185.0" prefWidth="255.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Name:" />
+                                    <TextField fx:id="tfEnterLecturerName" layoutX="10.0" layoutY="35.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="Category:" />
+                                    <Button fx:id="btnAddLecturer" layoutX="10.0" layoutY="230.0" mnemonicParsing="false" onAction="#addLecturer" prefWidth="120.0" text="Add" />
+                                    <Button fx:id="btnClearAddLecturerTextFields" layoutX="145.0" layoutY="230.0" mnemonicParsing="false" onAction="#clearAddLecturerTextFields" prefWidth="120.0" text="Clear fields" />
+                                    <Label layoutX="10.0" layoutY="115.0" text="E-mail:" />
+                                    <TextField fx:id="tfEnterLecturerEmail" layoutX="10.0" layoutY="135.0" prefWidth="260.0" />
+                                    <ComboBox fx:id="cbSelectLecturerCategory" layoutX="10.0" layoutY="85.0" prefWidth="260.0" />
+                                    <Label layoutX="10.0" layoutY="165.0" text="Phone number:" />
+                                    <TextField fx:id="tfEnterLecturerPhoneNumber" layoutX="10.0" layoutY="185.0" prefWidth="260.0" />
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </TitledPane>
                       <TitledPane expanded="false" text="Search lecturers">
                         <content>
-                              <ScrollPane prefViewportHeight="639.0" prefViewportWidth="288.0">
-                                 <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="636.0" prefWidth="271.0">
-                                       <children>
-                                          <Label layoutX="10.0" layoutY="15.0" text="Select search criteria:" />
-                                          <Label layoutX="10.0" layoutY="65.0" text="Enter search key-words:" />
-                                          <TextField fx:id="tfEnterLecturerSearchKeywords" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
-                                          <Button fx:id="btnSearchLecturers" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchLecturers" prefWidth="255.0" text="Search" />
-                                          <ListView fx:id="lvLecturerSearchResults" layoutX="12.0" layoutY="155.0" prefHeight="470.0" prefWidth="255.0" />
-                                          <ComboBox fx:id="cbLecturerSearchCriteria" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Select search criteria:" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="Enter search key-words:" />
+                                    <TextField fx:id="tfEnterLecturerSearchKeywords" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
+                                    <Button fx:id="btnSearchLecturers" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchLecturers" prefWidth="255.0" text="Search" />
+                                    <ListView fx:id="lvLecturerSearchResults" layoutX="12.0" layoutY="155.0" prefHeight="470.0" prefWidth="255.0" />
+                                    <ComboBox fx:id="cbLecturerSearchCriteria" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </TitledPane>
                     </panes>
@@ -73,46 +65,39 @@
             </VBox>
          </left>
          <right>
-            <ScrollPane maxHeight="345.0" prefHeight="568.0" prefViewportHeight="778.0" prefViewportWidth="295.0" prefWidth="297.0">
-               <content>
-                  <VBox prefHeight="340.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="500.0" prefWidth="295.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Selected lecturer details:" translateX="10.0" translateY="30.0" />
+                  <Label text="Name:" translateX="10.0" translateY="40.0" />
+                  <TextField fx:id="tfShowLecturerName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="45.0" />
+                  <Label text="Category:" translateX="10.0" translateY="50.0" />
+                  <ComboBox fx:id="cbShowLecturerCategory" prefWidth="260.0" translateX="10.0" translateY="55.0" />
+                  <Label text="E-mail:" translateX="10.0" translateY="60.0" />
+                  <TextField fx:id="tfShowLecturerEmail" maxWidth="260.0" translateX="10.0" translateY="65.0" />
+                  <Label text="Phone number:" translateX="10.0" translateY="70.0" />
+                  <TextField fx:id="tfShowLecturerPhoneNumber" maxWidth="260.0" translateX="10.0" translateY="75.0" />
+                  <HBox fx:id="hboxLecturerEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="85.0">
                      <children>
-                        <Label text="Selected lecturer details:" translateX="10.0" translateY="10.0" />
-                        <Label text="Name:" translateX="10.0" translateY="40.0" />
-                        <TextField fx:id="tfShowLecturerName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="260.0" translateX="10.0" translateY="45.0" />
-                        <Label text="Category:" translateX="10.0" translateY="50.0" />
-                        <ComboBox fx:id="cbShowLecturerCategory" prefWidth="260.0" translateX="10.0" translateY="55.0" />
-                        <Label text="E-mail:" translateX="10.0" translateY="60.0" />
-                        <TextField fx:id="tfShowLecturerEmail" maxWidth="260.0" translateX="10.0" translateY="65.0" />
-                        <Label text="Phone number:" translateX="10.0" translateY="70.0" />
-                        <TextField fx:id="tfShowLecturerPhoneNumber" maxWidth="260.0" translateX="10.0" translateY="75.0" />
-                        <HBox fx:id="hboxLecturerEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="85.0">
-                           <children>
-                              <Button fx:id="btnSaveLecturerEditChanges" minWidth="80.0" mnemonicParsing="false" onAction="#saveEditLecturerChanges" prefWidth="80.0" text="Save" translateX="10.0" />
-                              <Button fx:id="btnClearEditLecturerTextFields" minWidth="80.0" mnemonicParsing="false" onAction="#clearEditLecturerTextFields" prefWidth="80.0" text="Clear fields" translateX="20.0" />
-                              <Button fx:id="btnCancelEditLecturer" minWidth="80.0" mnemonicParsing="false" onAction="#cancelEditLecturer" prefWidth="80.0" text="Cancel" translateX="30.0" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="25.0" prefWidth="200.0" translateY="95.0">
-                           <children>
-                              <Button fx:id="btnEditLecturer" mnemonicParsing="false" onAction="#editLecturer" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
-                              <Button fx:id="btnDeleteLecturer" mnemonicParsing="false" onAction="#deleteLecturer" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />
-                           </children>
-                        </HBox>
+                        <Button fx:id="btnSaveLecturerEditChanges" minWidth="80.0" mnemonicParsing="false" onAction="#saveEditLecturerChanges" prefWidth="80.0" text="Save" translateX="10.0" />
+                        <Button fx:id="btnClearEditLecturerTextFields" minWidth="80.0" mnemonicParsing="false" onAction="#clearEditLecturerTextFields" prefWidth="80.0" text="Clear fields" translateX="20.0" />
+                        <Button fx:id="btnCancelEditLecturer" minWidth="80.0" mnemonicParsing="false" onAction="#cancelEditLecturer" prefWidth="80.0" text="Cancel" translateX="30.0" />
                      </children>
-                  </VBox>
-               </content>
-            </ScrollPane>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" translateY="95.0">
+                     <children>
+                        <Button fx:id="btnEditLecturer" mnemonicParsing="false" onAction="#editLecturer" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
+                        <Button fx:id="btnDeleteLecturer" mnemonicParsing="false" onAction="#deleteLecturer" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </right>
          <top>
-            <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <items>
-                  <Label fx:id="lblLecturerCount" text="Lecturer count:" translateX="10.0" />
+                  <Label fx:id="lblLecturerCount" text="Lecturer count:" translateX="80.0" />
                </items></ToolBar>
          </top>
-         <bottom>
-            <ToolBar prefHeight="20.0" prefWidth="200.0" rotate="180.0" BorderPane.alignment="CENTER" />
-         </bottom>
       </BorderPane>
    </content>
 </ScrollPane>

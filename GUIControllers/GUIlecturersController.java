@@ -94,7 +94,7 @@ public class GUIlecturersController implements Initializable
 		btnEditLecturer.setDisable(true);
 		btnDeleteLecturer.setDisable(true);
 		
-		spLecturersTableScrollPane.setStyle("-fx-font-size: 13px;");
+		//spLecturersTableScrollPane.setStyle("-fx-font-size: 13px;");
 		
 		try 
 		{

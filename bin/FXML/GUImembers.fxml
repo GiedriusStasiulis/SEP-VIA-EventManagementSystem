@@ -9,72 +9,60 @@
    <content>
       <BorderPane fx:id="memberPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0">
          <center>
-            <ScrollPane fx:id="spMemberTableScrollPane" prefHeight="726.0" prefWidth="625.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="726.0" prefWidth="625.0" BorderPane.alignment="CENTER">
                <content>
                   <TableView fx:id="memberTable" prefHeight="1100.0" prefWidth="1375.0">
                     <columns>
-                      <TableColumn fx:id="tcMemberName" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="Name" />
-                      <TableColumn fx:id="tcMemberEmail" maxWidth="350.0" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                      <TableColumn fx:id="tcMemberName" minWidth="50.0" prefWidth="150.0" text="Name" />
+                      <TableColumn fx:id="tcMemberEmail" minWidth="50.0" prefWidth="150.0" text="E-mail" />
                     </columns>
                   </TableView>
                </content>
             </ScrollPane>
          </center>
          <left>
-            <VBox prefHeight="200.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="280.0" BorderPane.alignment="CENTER">
                <children>
                   <Accordion prefHeight="600.0">
                     <panes>
                       <TitledPane text="Add member">
                         <content>
-                              <ScrollPane prefViewportHeight="524.0" prefViewportWidth="278.0">
-                                 <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" prefWidth="268.0">
-                                       <children>
-                                          <Label layoutX="10.0" layoutY="15.0" text="Name:" />
-                                          <TextField fx:id="tfEnterMemberName" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
-                                          <Label layoutX="10.0" layoutY="65.0" text="E-mail:" />
-                                          <TextField fx:id="tfEnterMemberEmail" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
-                                          <Button fx:id="btnAddMember" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#addMember" prefWidth="120.0" text="Add" />
-                                          <Button fx:id="btnClearAddMemberTextFields" layoutX="145.0" layoutY="120.0" mnemonicParsing="false" onAction="#clearAddMemberTextFields" prefWidth="120.0" text="Clear fields" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Name:" />
+                                    <TextField fx:id="tfEnterMemberName" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="E-mail:" />
+                                    <TextField fx:id="tfEnterMemberEmail" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
+                                    <Button fx:id="btnAddMember" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#addMember" prefWidth="120.0" text="Add" />
+                                    <Button fx:id="btnClearAddMemberTextFields" layoutX="145.0" layoutY="120.0" mnemonicParsing="false" onAction="#clearAddMemberTextFields" prefWidth="120.0" text="Clear fields" />
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </TitledPane>
                       <TitledPane expanded="false" prefHeight="500.0" text="Search members">
                         <content>
-                              <ScrollPane prefViewportHeight="524.0" prefViewportWidth="278.0">
-                                 <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="521.0" prefWidth="267.0">
-                                       <children>
-                                          <Label layoutX="10.0" layoutY="15.0" text="Select search criteria:" />
-                                          <Label layoutX="10.0" layoutY="65.0" text="Enter search key-words:" />
-                                          <TextField fx:id="tfEnterSearchKeywords" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
-                                          <Button fx:id="btnSearchMembers" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchMembers" prefWidth="255.0" text="Search" />
-                                          <ListView fx:id="lvMemberSearchResults" layoutX="10.0" layoutY="160.0" prefHeight="350.0" prefWidth="255.0" />
-                                          <ComboBox fx:id="cbMemberSearchCriteria" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="10.0" layoutY="15.0" text="Select search criteria:" />
+                                    <Label layoutX="10.0" layoutY="65.0" text="Enter search key-words:" />
+                                    <TextField fx:id="tfEnterSearchKeywords" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
+                                    <Button fx:id="btnSearchMembers" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchMembers" prefWidth="255.0" text="Search" />
+                                    <ListView fx:id="lvMemberSearchResults" layoutX="10.0" layoutY="160.0" prefHeight="350.0" prefWidth="255.0" />
+                                    <ComboBox fx:id="cbMemberSearchCriteria" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </TitledPane>
-                        <TitledPane text="Member e-mail list">
+                        <TitledPane animated="false" text="Member e-mail list">
                           <content>
-                              <ScrollPane prefViewportHeight="524.0" prefViewportWidth="278.0">
-                                 <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="521.0" prefWidth="267.0">
-                                       <children>
-                                          <Button fx:id="btnGenerateMemberEmailList" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateMemberEmailList" prefWidth="255.0" text="Generate member e-mail list" />
-                                          <ListView fx:id="lvMemberEmailList" layoutX="10.0" layoutY="50.0" prefHeight="360.0" prefWidth="255.0" />
-                                          <Button fx:id="btnSendNewsletter" layoutX="10.0" layoutY="485.0" mnemonicParsing="false" onAction="#sendNewsLetter" prefWidth="255.0" text="Send newsletter" />
-                                          <CheckBox fx:id="cboxSelectAllMemberEmailList" layoutX="14.0" layoutY="420.0" mnemonicParsing="false" text="Select all" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="btnGenerateMemberEmailList" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateMemberEmailList" prefWidth="255.0" text="Generate member e-mail list" />
+                                    <ListView fx:id="lvMemberEmailList" layoutX="10.0" layoutY="50.0" prefHeight="360.0" prefWidth="255.0" />
+                                    <Button fx:id="btnSendNewsletter" layoutX="10.0" layoutY="485.0" mnemonicParsing="false" onAction="#sendNewsLetter" prefWidth="255.0" text="Send newsletter" />
+                                    <CheckBox fx:id="cboxSelectAllMemberEmailList" layoutX="14.0" layoutY="420.0" mnemonicParsing="false" text="Select all" />
+                                 </children>
+                              </AnchorPane>
                           </content>
                         </TitledPane>
                     </panes>
@@ -83,42 +71,35 @@
             </VBox>
          </left>
          <right>
-            <ScrollPane maxHeight="240.0" prefHeight="240.0" prefViewportHeight="758.0" prefViewportWidth="297.0" prefWidth="297.0">
-               <content>
-                  <VBox prefHeight="237.0" prefWidth="274.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="295.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Selected member details:" translateX="10.0" translateY="30.0" />
+                  <Label text="Name:" translateX="10.0" translateY="40.0" />
+                  <TextField fx:id="tfShowMemberName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="220.0" translateX="10.0" translateY="45.0" />
+                  <Label text="E-mail:" translateX="10.0" translateY="50.0" />
+                  <TextField fx:id="tfShowMemberEmail" editable="false" maxWidth="260.0" translateX="10.0" translateY="55.0" />
+                  <HBox fx:id="hboxMemberEditOptions" prefHeight="30.0" prefWidth="200.0" translateY="65.0">
                      <children>
-                        <Label text="Selected member details:" translateX="10.0" translateY="10.0" />
-                        <Label text="Name:" translateX="10.0" translateY="40.0" />
-                        <TextField fx:id="tfShowMemberName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="220.0" translateX="10.0" translateY="45.0" />
-                        <Label text="E-mail:" translateX="10.0" translateY="50.0" />
-                        <TextField fx:id="tfShowMemberEmail" editable="false" maxWidth="260.0" translateX="10.0" translateY="55.0" />
-                        <HBox fx:id="hboxMemberEditOptions" prefHeight="30.0" prefWidth="200.0" translateY="65.0">
-                           <children>
-                              <Button fx:id="btnSaveMemberEditChanges" mnemonicParsing="false" onAction="#saveEditMemberChanges" prefHeight="25.0" prefWidth="80.0" text="Save" translateX="10.0" />
-                              <Button fx:id="btnClearEditMemberTextFields" mnemonicParsing="false" onAction="#clearEditMemberTextFields" prefHeight="25.0" prefWidth="80.0" text="Clear fields" translateX="20.0" />
-                              <Button fx:id="btnCancelEditMember" cancelButton="true" mnemonicParsing="false" onAction="#cancelEditMember" prefHeight="25.0" prefWidth="80.0" text="Cancel" translateX="30.0" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="30.0" prefWidth="200.0" translateY="70.0">
-                           <children>
-                              <Button fx:id="btnEditMember" mnemonicParsing="false" onAction="#editMember" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
-                              <Button fx:id="btnDeleteMember" mnemonicParsing="false" onAction="#deleteMember" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />
-                           </children>
-                        </HBox>
+                        <Button fx:id="btnSaveMemberEditChanges" mnemonicParsing="false" onAction="#saveEditMemberChanges" prefHeight="25.0" prefWidth="80.0" text="Save" translateX="10.0" />
+                        <Button fx:id="btnClearEditMemberTextFields" mnemonicParsing="false" onAction="#clearEditMemberTextFields" prefHeight="25.0" prefWidth="80.0" text="Clear fields" translateX="20.0" />
+                        <Button fx:id="btnCancelEditMember" mnemonicParsing="false" onAction="#cancelEditMember" prefHeight="25.0" prefWidth="80.0" text="Cancel" translateX="30.0" />
                      </children>
-                  </VBox>
-               </content>
-            </ScrollPane>
+                  </HBox>
+                  <HBox prefHeight="30.0" prefWidth="200.0" translateY="70.0">
+                     <children>
+                        <Button fx:id="btnEditMember" mnemonicParsing="false" onAction="#editMember" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
+                        <Button fx:id="btnDeleteMember" mnemonicParsing="false" onAction="#deleteMember" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </right>
          <top>
-            <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <items>
-                  <Label fx:id="lblMemberCount" text="Current member count:" translateX="10.0" />
+                  <Label fx:id="lblMemberCount" text="Current member count:" translateX="80.0" />
                </items></ToolBar>
          </top>
-         <bottom>
-            <ToolBar prefHeight="20.0" prefWidth="200.0" rotate="180.0" BorderPane.alignment="CENTER" />
-         </bottom>
       </BorderPane>
    </content>
 </ScrollPane>
