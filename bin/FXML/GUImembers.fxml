@@ -96,7 +96,7 @@
                            <children>
                               <Button fx:id="btnSaveMemberEditChanges" mnemonicParsing="false" onAction="#saveEditMemberChanges" prefHeight="25.0" prefWidth="80.0" text="Save" translateX="10.0" />
                               <Button fx:id="btnClearEditMemberTextFields" mnemonicParsing="false" onAction="#clearEditMemberTextFields" prefHeight="25.0" prefWidth="80.0" text="Clear fields" translateX="20.0" />
-                              <Button fx:id="btnCancelEditMember" mnemonicParsing="false" onAction="#cancelEditMember" prefHeight="25.0" prefWidth="80.0" text="Cancel" translateX="30.0" />
+                              <Button fx:id="btnCancelEditMember" cancelButton="true" mnemonicParsing="false" onAction="#cancelEditMember" prefHeight="25.0" prefWidth="80.0" text="Cancel" translateX="30.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="30.0" prefWidth="200.0" translateY="70.0">

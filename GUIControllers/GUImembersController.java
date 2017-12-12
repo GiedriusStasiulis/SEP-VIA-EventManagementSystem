@@ -128,7 +128,7 @@ public class GUImembersController implements Initializable
 		    	btnEditMember.setDisable(false);
 				btnDeleteMember.setDisable(false);
 		    }
-		});		
+		});	
 		
 		lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 	}
@@ -168,7 +168,7 @@ public class GUImembersController implements Initializable
 	{				
 		String memberName = tfEnterMemberName.getText();
 		String memberEmail = tfEnterMemberEmail.getText();	
-
+		
 		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
 		{
 			memberName = String.format("empty%d", memberList.size() + 1);
@@ -186,10 +186,8 @@ public class GUImembersController implements Initializable
 		}
 		
 		if(memberEmail.contains("@"))
-		{		
+		{					
 			member = new Member(memberName, memberEmail);	
-			
-			System.out.println(member);
 			
 			if(memberList.checkForDuplicates(memberList, member))
 			{
