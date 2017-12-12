@@ -32,6 +32,13 @@
                      </children>
                   </TextFlow>
                </center>
+               <bottom>
+                  <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="21.0" prefWidth="200.0" rotate="180.0" BorderPane.alignment="CENTER">
+                     <items>
+                        <Label maxHeight="10.0" prefHeight="10.0" rotate="180.0" text="Version 1.0 / Last update 2017.12.12" />
+                     </items>
+                  </ToolBar>
+               </bottom>
             </BorderPane>
          </content>
     </Tab>

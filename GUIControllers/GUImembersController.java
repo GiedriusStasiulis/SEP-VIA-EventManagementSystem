@@ -23,6 +23,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -75,6 +76,8 @@ public class GUImembersController implements Initializable
     @FXML private HBox hboxMemberEditOptions;
     
     @FXML private CheckBox cboxSelectAllMemberEmailList;
+    
+    @FXML private ScrollPane spMemberTableScrollPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -95,6 +98,8 @@ public class GUImembersController implements Initializable
 		
 		btnEditMember.setDisable(true);
 		btnDeleteMember.setDisable(true);
+		
+		spMemberTableScrollPane.setStyle("-fx-font-size: 13px;");
 
 		try 
 		{

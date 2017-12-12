@@ -57,6 +57,8 @@ public class GUIsponsorsController implements Initializable
    @FXML private Label lblSponsorCount;
 
    @FXML private HBox hboxSponsorEditOptions;
+   
+   @FXML private ScrollPane spSponsorsTableScrollPane;
 
    @Override
    public void initialize(URL location, ResourceBundle resources)
@@ -84,6 +86,8 @@ public class GUIsponsorsController implements Initializable
       tfShowSponsorEmail.setEditable(false);
       tfShowSponsorPhoneNumber.setEditable(false);
 
+      spSponsorsTableScrollPane.setStyle("-fx-font-size: 13px;");
+      
       try
       {
          sponsorTable.setItems(getList());

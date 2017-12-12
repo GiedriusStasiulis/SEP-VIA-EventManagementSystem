@@ -17,10 +17,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -72,24 +75,30 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private HBox hboxEventEditOptions;	
 	
+	@FXML private ScrollPane spEventsTableScrollPane;
+	
+	@FXML private TitledPane tpShowEventsPane,tpShowSearchEventsPane,tpShowCreateEventPane;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		eventsPage.setMaxHeight(Double.MAX_VALUE);
 		eventsPage.setMaxWidth(Double.MAX_VALUE);	
 		
-		hboxEventEditOptions.setVisible(false);
-		tfShowEventTitle.setEditable(false);
+		hboxEventEditOptions.setVisible(false);			
 		
-		dpShowEventStartDate.setEditable(false);
-
-		dpShowEventEndDate.setEditable(false);
+		/*
+		dpShowEventStartDate.setDisable(true);
+		dpShowEventEndDate.setDisable(true);		
+		
+		tfShowEventTitle.setEditable(false);		
 		tfShowEventStartTime.setEditable(false);
 		tfShowEventEndTime.setEditable(false);
 		tfShowEventNumberOfTickets.setEditable(false);
 		tfShowEventTicketsRemaining.setEditable(false);
+		tfShowEventPrice.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
-		
+		*/
 		//initialize combobox
 		
 		cbEventType.setItems(typeChoices);
@@ -118,6 +127,13 @@ public class GUIeventsController implements Initializable
 		tcEventDiscount.setStyle("-fx-alignment: CENTER;");
 		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");		
 		
+		spEventsTableScrollPane.setStyle("-fx-font-size: 13px;");
+		
+		btnEditEvent.setDisable(true);
+		btnDeleteEvent.setDisable(true);
+		
+		
+		
 		try
 		{
 		   eventsTable.setItems(getList());
@@ -130,6 +146,26 @@ public class GUIeventsController implements Initializable
 		{
 		   e.printStackTrace();
 		}		
+		
+		eventsTable.setOnMouseClicked((MouseEvent event) -> {
+			if (event.getClickCount() == 1) {
+				tpShowEventsPane.setExpanded(true);
+				btnEditEvent.setDisable(false);
+				btnDeleteEvent.setDisable(false);				
+			}
+		});
+		
+		/*tpShowCreateEventPane.setOnMouseClicked((MouseEvent event) -> {
+			if(event.getClickCount() == 1) {
+				tpShowEventsPane.setExpanded(false);
+			}
+		});
+		
+		tpShowSearchEventsPane.setOnMouseClicked((MouseEvent event) -> {
+			if(event.getClickCount() == 1) {
+				tpShowEventsPane.setExpanded(false);
+			}
+		}); */
 	}	
 	
 	public void showEventDetailsFromTable()

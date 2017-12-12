@@ -57,6 +57,8 @@ public class GUIlecturersController implements Initializable
 	@FXML private Label lblLecturerCount;
 
 	@FXML private HBox hboxLecturerEditOptions;
+	
+	@FXML private ScrollPane spLecturersTableScrollPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -91,6 +93,8 @@ public class GUIlecturersController implements Initializable
 
 		btnEditLecturer.setDisable(true);
 		btnDeleteLecturer.setDisable(true);
+		
+		spLecturersTableScrollPane.setStyle("-fx-font-size: 13px;");
 		
 		try 
 		{
