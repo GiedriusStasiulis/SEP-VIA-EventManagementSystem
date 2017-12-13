@@ -26,7 +26,7 @@ public class Event {
 	
 	ArrayList<Member> membersRegistered;
 	ArrayList<Member> tempMembersRegistered;
-	ArrayList<Lecturer> lecturersRegistered;
+	ArrayList<String> lecturersRegistered;
 	
 	
 	public Event(String eventTitle,String eventType,String eventCategory, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) throws IOException 
@@ -44,6 +44,7 @@ public class Event {
 		this.discount = discount;
 		this.membersRegistered = new ArrayList<Member>();
 		this.tempMembersRegistered = new ArrayList<Member>();
+		this.lecturersRegistered = new ArrayList<String>();
 		calculateDuration();
 		
 		
@@ -132,12 +133,32 @@ public class Event {
 	   this.eventDuration=intervalPeriod.getDays()+1;
 	   
 	}
-	public void createFileForLecturers() throws IOException
+	public void registerLecturer(String lecturerName) throws FileNotFoundException
 	{
-	   String filename = this.getEventTitle()+"LecturerListForEvent.txt";
-	   File file = new File(filename);
-	   file.createNewFile();
+	   lecturersRegistered.add(lecturerName);
+	   writeRegisteredLecturersToFile();
 	   
 	}
 	
+	public void writeRegisteredLecturersToFile() throws FileNotFoundException
+	{
+	   PrintWriter output = null;
+	   String filename = this.eventTitle+"LecturerListForEvent.txt";
+	   
+	   try
+	   {
+	      output = new PrintWriter(filename);
+	      for ( int i = 0; i<lecturersRegistered.size(); i++)
+	      {
+	         output.println(lecturersRegistered.get(i));
+	      }
+	      output.flush();
+	      
+	   }
+	   finally
+	   {
+	      output.close();
+	   }
+	   
+	}
 }

@@ -78,7 +78,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Label lblEventCount;
 	
-	@FXML private ListView<?> lvEventSearchResults,lvMembersAddedToEvent;
+	@FXML private ListView<String> lvEventSearchResults,lvMembersAddedToEvent;
 	@FXML private ListView<String> lvMemberList;
 	
 	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove;
@@ -186,6 +186,7 @@ public class GUIeventsController implements Initializable
 				//tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
+				tfSelectedEvent.setText(eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
 				try
             {
 				   
@@ -198,7 +199,20 @@ public class GUIeventsController implements Initializable
             };
 			}
 		});
-		
+		lvMemberList.setOnMouseClicked((MouseEvent event) -> {
+		   if (event.getClickCount()==1) {
+		   try
+         {
+            eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMemberList.getSelectionModel().getSelectedItem());
+         }
+         catch (FileNotFoundException e)
+         {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }	
+		   
+		   }
+		});
 		
 		   
 		   
@@ -418,6 +432,9 @@ public class GUIeventsController implements Initializable
     void addMemberToEvent(ActionEvent event) 
     {
     	System.out.println("Add member to event");
+    	String newMember = lvMemberList.selectionModelProperty().getName();
+    	 
+    	
     }
 
     @FXML
