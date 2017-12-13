@@ -510,6 +510,8 @@ public class GUIeventsController implements Initializable
     	
     	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle() );
     	
+    	lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+
     }
 
     @FXML
