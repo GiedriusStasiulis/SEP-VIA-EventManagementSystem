@@ -38,7 +38,7 @@ public class FileReaderWriter
 	private EventList eventList= new EventList();
 	
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
-	private ObservableList<String> membersAlreadyRegistered = FXCollections.observableArrayList();
+	private ArrayList<String> membersAlreadyRegistered = new ArrayList<String>();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -153,7 +153,7 @@ public class FileReaderWriter
 		   
 	}
 	
-	public ObservableList<String> readEventMemberFile() throws FileNotFoundException
+	public ArrayList<String> readEventMemberFile() throws FileNotFoundException
 	{
 		membersAlreadyRegistered.clear();
 		Scanner input = null;

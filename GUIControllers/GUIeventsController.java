@@ -315,12 +315,12 @@ public class GUIeventsController implements Initializable
 		
 		memberEventFile.setFile(eventsTable.getSelectionModel().getSelectedItem().getEventTitle().toString() + "MemberListForEvent.txt");
 		
-		membersAlreadyAdded = memberEventFile.readEventMemberFile();
+		membersRegisteredList = memberEventFile.readEventMemberFile();
 		
 		
-		for(int i = 0; i < membersAlreadyAdded.size(); i++)
+		for(int i = 0; i < membersRegisteredList.size(); i++)
 		{
-			membersAlreadyAddedtemp.add(membersAlreadyAdded.get(i));
+			membersAlreadyAddedtemp.add(membersRegisteredList.get(i));
 		}
 		
 		//membersAlreadyAddedtemp.clear();
@@ -512,7 +512,7 @@ public class GUIeventsController implements Initializable
     	System.out.println("Add member to event");
     	
     	eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
-    	membersRegisteredList.clear();
+    	//membersRegisteredList.clear();
     	membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
     	
     	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle() );
