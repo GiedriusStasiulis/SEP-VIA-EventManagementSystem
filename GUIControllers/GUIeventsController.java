@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -504,15 +506,36 @@ public class GUIeventsController implements Initializable
     {
     	//System.out.println("Add member to event");
     	
-    	eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
-    	//membersRegisteredList.clear();
-    	membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
     	
-    	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+    	if(checkForDuplicates(membersRegisteredList,lvMembersToAdd.getSelectionModel().getSelectedItem()))
+    	{
+    		JOptionPane.showMessageDialog(null, "Member is already added to event!");
+    	}
     	
-    	lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
-
+    	else
+    	{
+    		eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
+        	//membersRegisteredList.clear();
+        	membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+        	
+        	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+        	
+        	lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+    	}
     }
+    
+    public boolean checkForDuplicates(ArrayList<String> memberList, String member)
+	{
+		boolean status = false;
+		
+		for(int i = 0; i < membersRegisteredList.size(); i++)
+		{
+			if(member.equals(membersRegisteredList.get(i)))
+				return true;
+		}
+		
+		return status;
+	}
 
     @FXML
     void removeMemberFromEvent(ActionEvent event) throws FileNotFoundException
@@ -543,4 +566,6 @@ public class GUIeventsController implements Initializable
     {
     	System.out.println("Remove lecturer from event");
     }
+    
+    
 }
