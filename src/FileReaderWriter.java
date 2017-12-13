@@ -48,8 +48,18 @@ public class FileReaderWriter
 		return this.file;
 	}
 	
+	/*public String readEventsMemberFile()
+	{
+		Scanner input = null;
+		
+		try {
+			input = new Scanner(file);
+			
+		}
+	}*/
+	
 	public EventList readEventsTextFile() throws FileNotFoundException,ParseException, IOException
-   {
+	{
     Scanner input = null;
     
     try
@@ -66,18 +76,20 @@ public class FileReaderWriter
           
           String eventCategory=lineItems[2].trim();
           
-          LocalDate eventStartDate=LocalDate.parse(lineItems[3].trim());        
-          String eventStartTime=lineItems[4].trim();
-          LocalDate eventEndDate=LocalDate.parse(lineItems[5].trim());
-          String eventEndTime=lineItems[6].trim();
-          int maxMembers=Integer.parseInt(lineItems[7].trim());
-          double price = Double.parseDouble(lineItems[8].trim());
-          double discount = Double.parseDouble(lineItems[9].trim());
+          String eventLecturer = lineItems[3].trim();
+          
+          LocalDate eventStartDate=LocalDate.parse(lineItems[4].trim());        
+          String eventStartTime=lineItems[5].trim();
+          LocalDate eventEndDate=LocalDate.parse(lineItems[6].trim());
+          String eventEndTime=lineItems[7].trim();
+          int maxMembers=Integer.parseInt(lineItems[8].trim());
+          double price = Double.parseDouble(lineItems[9].trim());
+          double discount = Double.parseDouble(lineItems[10].trim());
           
           //LocalDate eventStart = LocalDate.parse(date);
           //LocalDate eventEnd = LocalDate.parse(eventEndDate);
           
-          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
+          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
           
           currentEventList.addEventToList(eventToAdd);
           
@@ -91,15 +103,17 @@ public class FileReaderWriter
     }
    }
 	
+	
+	
 	public void writeEventTextFile(EventList eventList) throws FileNotFoundException
-   {
+	{
       PrintWriter output = null;
       try
       {
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getDuration());
+            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getDuration());
          }
          output.flush();
          
@@ -109,6 +123,7 @@ public class FileReaderWriter
          output.close();
       }
    }
+	
 	
 	public SponsorList readSponsorTextFile() throws FileNotFoundException, ParseException 
 	{

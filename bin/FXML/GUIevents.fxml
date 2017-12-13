@@ -11,7 +11,7 @@
          <center>
             <ScrollPane minHeight="200.0" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
-                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="1950.0">
+                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2100.0">
                     <columns>
                       <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Title" />
                       <TableColumn fx:id="tcEventType" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Type" />
@@ -26,6 +26,7 @@
                         <TableColumn fx:id="tcTicketsRemaining" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Tickets remaining" />
                         <TableColumn fx:id="tcEventPrice" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Price" />
                         <TableColumn fx:id="tcEventDiscount" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Discount" />
+                        <TableColumn fx:id="tcEventStatus" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Status" />
                     </columns>
                   </TableView>
                </content>
@@ -189,7 +190,7 @@
                               </ScrollPane>
                         </content>
                       </TitledPane>
-                        <TitledPane animated="false" prefWidth="295.0" text="Add lecturers to event">
+                        <TitledPane animated="false" prefWidth="295.0" text="Add categories to event">
                           <content>
                               <ScrollPane prefViewportHeight="754.0" prefViewportWidth="293.0">
                                  <content>
@@ -199,18 +200,18 @@
                                              <children>
                                                 <Label text="Selected event:" translateX="10.0" translateY="10.0" />
                                                 <TextField fx:id="tfSelectedEvent" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
-                                                <Label text="Add lecturers to event:" translateX="10.0" translateY="20.0" />
-                                                <ListView fx:id="lvLecturersToAdd" maxWidth="260.0" prefHeight="278.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
+                                                <Label text="Add category to event:" translateX="10.0" translateY="20.0" />
+                                                <ListView fx:id="lvCategoriesToAdd" maxWidth="260.0" prefHeight="278.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
                                                    <children>
-                                                      <Button fx:id="btnAddLecturerToEvent" mnemonicParsing="false" onAction="#addLecturerToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
+                                                      <Button fx:id="btnAddCategoryToEvent" mnemonicParsing="false" onAction="#addCategoryToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="Lecturers already added:" translateX="10.0" translateY="45.0" />
-                                                <ListView fx:id="lvLecturersAddedToEvent" maxWidth="260.0" prefHeight="278.0" prefWidth="260.0" translateX="10.0" translateY="50.0" />
+                                                <Label text="Categories already added:" translateX="10.0" translateY="45.0" />
+                                                <ListView fx:id="lvCategoriesAddedToEvent" maxWidth="260.0" prefHeight="278.0" prefWidth="260.0" translateX="10.0" translateY="50.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
                                                    <children>
-                                                      <Button fx:id="btnRemoveLecturerFromEvent" mnemonicParsing="false" onAction="#removeLecturerFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
+                                                      <Button fx:id="btnRemoveCategoryFromEvent" mnemonicParsing="false" onAction="#removeCategoryFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
                                                    </children>
                                                 </HBox>
                                              </children>

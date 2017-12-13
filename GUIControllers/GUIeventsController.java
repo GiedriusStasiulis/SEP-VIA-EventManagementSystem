@@ -60,7 +60,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Button btnCreateEvent,btnDeleteEvent,btnCancelEditEvent,btnEditEvent,btnClearTextFields,
 							btnSearchEvents,btnSaveEventEditChanges,btnClearEditEventTextFields,btnAddMemberToEvent,
-							btnRemoveMemberFromEvent,btnAddLecturerToEvent,btnRemoveLecturerFromEvent;
+							btnRemoveMemberFromEvent,btnAddCategoryToEvent,btnRemoveCategoryFromEvent;
 	
 	@FXML private TextField tfEnterSearchKeywords,tfEventEndTime,tfShowEventPrice,tfShowEventNumberOfTickets,tfShowEventEndTime,
 							tfEventNumberOfTickets,tfEventPrice,tfShowEventDiscount,tfEnterEventTitle,tfEventStartTime,
@@ -72,14 +72,14 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private TableColumn<Event, String> tcEventTitle,tcEventType,tcEventCategory,
 									tcEventStartTime,tcEventEndTime,tcEventDuration,tcEventPrice,tcEventDiscount,tcEventNumberOfTickets,
-									tcTicketsRemaining,tcEventLecturer;
+									tcTicketsRemaining,tcEventLecturer,tcEventStatus;
 	
 	@FXML private TableColumn<Event, LocalDate> tcEventStartDate,tcEventEndDate;
 	
 	@FXML private Label lblEventCount;
 	
 	@FXML private ListView<String> lvEventSearchResults;
-	@FXML private ListView<String> lvMembersToAdd,lvMembersAddedToEvent,lvLecturersToAdd,lvLecturersAddedToEvent;
+	@FXML private ListView<String> lvMembersToAdd,lvMembersAddedToEvent,lvCategoriesToAdd,lvCategoriesAddedToEvent;
 	
 	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove;
 	
@@ -116,6 +116,18 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.setItems(categoryChoices);
 		cbEventCategory.getSelectionModel().select(0);
 		
+		try {
+			cbEventLecturer.setItems(getLecturerNames());
+			cbEventLecturer.getSelectionModel().select(0);
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		cbShowEventCategory.setItems(categoryChoices);
 		cbShowEventType.setItems(typeChoices);
@@ -129,6 +141,7 @@ public class GUIeventsController implements Initializable
 		
 		tcEventType.setCellValueFactory(new PropertyValueFactory<Event,String>("Type"));
 		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("Category"));
+		tcEventLecturer.setCellValueFactory(new PropertyValueFactory<Event,String>("eventLecturer"));
 		
 		
 		/////////////////
@@ -150,7 +163,10 @@ public class GUIeventsController implements Initializable
 		tcEventEndTime.setStyle("-fx-alignment: CENTER;");
 		tcEventPrice.setStyle("-fx-alignment: CENTER;");
 		tcEventDiscount.setStyle("-fx-alignment: CENTER;");
-		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");		
+		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");	
+		tcEventLecturer.setStyle("-fx-alignment: CENTER;");	
+		tcEventDuration.setStyle("-fx-alignment: CENTER;");	
+		
 		
 		//spEventsTableScrollPane.setStyle("-fx-font-size: 13px;");
 		
@@ -163,7 +179,7 @@ public class GUIeventsController implements Initializable
 		{
 		   
 		   eventsTable.setItems(getList());
-		   cbEventLecturer.setItems(getLecturerNames());
+		   
 		}
 		catch (FileNotFoundException e)
 		{
@@ -197,20 +213,16 @@ public class GUIeventsController implements Initializable
             };
 			}
 		});
+		
+		
 		lvMembersToAdd.setOnMouseClicked((MouseEvent event) -> {
 		   if (event.getClickCount()==1) {
-		   try
-         {
-            eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMembersToAdd.getSelectionModel().getSelectedItem());
-         }
-         catch (FileNotFoundException e)
-         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }	
+		   System.out.println(lvMembersToAdd.getSelectionModel().getSelectedItem());
+		   System.out.println(eventsTable.getSelectionModel().getSelectedItem());
+		//eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMembersToAdd.getSelectionModel().getSelectedItem());	
 		   
 		   }
-		});
+		}); 
 		
 		   
 		   
@@ -242,7 +254,8 @@ public class GUIeventsController implements Initializable
 		   tfShowEventStartTime.setText(selectedEvent.getStartTime());
 		   tfShowEventEndTime.setText(selectedEvent.getEndTime());
 		   tfShowEventDiscount.setText(Double.toString(selectedEvent.getDiscount()));
-		   
+		   cbShowEventLecturer.getSelectionModel().select(selectedEvent.getEventLecturer());
+		   tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getMaxMembers()));		   
 		}
 	}
 	
@@ -301,6 +314,7 @@ public class GUIeventsController implements Initializable
     	
     	String eventType = cbEventType.getValue();
     	String eventCategory = cbEventCategory.getValue();
+    	String eventLecturer = cbEventLecturer.getValue();
     	
     	//DatePicker datePicker = new DatePicker();
     	LocalDate localStartDate = dpEventStartDate.getValue();
@@ -312,7 +326,7 @@ public class GUIeventsController implements Initializable
     	double discount = Double.parseDouble(tfEventDiscount.getText());
     	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
          	
-    	Event eventNew = new Event(eventTitle,eventType,eventCategory,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
+    	Event eventNew = new Event(eventTitle,eventType,eventCategory,eventLecturer,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
     	eventList.addEventToList(eventNew);
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
@@ -345,7 +359,7 @@ public class GUIeventsController implements Initializable
        
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getType(),eventList.getEvent(i).getCategory(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
+          events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getType(),eventList.getEvent(i).getCategory(),eventList.getEvent(i).getEventLecturer(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
        }
        //System.out.println("From Controller getList() method, get category -: "+eventList.getEvent(0).getCategory() );
        return events;
@@ -427,11 +441,12 @@ public class GUIeventsController implements Initializable
     }
 
     @FXML
-    void addMemberToEvent(ActionEvent event) 
+    void addMemberToEvent(ActionEvent event) throws FileNotFoundException 
     {
     	System.out.println("Add member to event");
-    	String newMember = lvMembersToAdd.selectionModelProperty().getName();
-    	 
+    	
+    	eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
+    	
     	
     }
 
@@ -442,13 +457,13 @@ public class GUIeventsController implements Initializable
     }
     
     @FXML
-    void addLecturerToEvent(ActionEvent event) 
+    void addCategoryToEvent(ActionEvent event) 
     {
     	System.out.println("Add lecturer to event");
     }
     
     @FXML
-    void removeLecturerFromEvent(ActionEvent event) 
+    void removeCategoryFromEvent(ActionEvent event) 
     {
     	System.out.println("Remove lecturer from event");
     }

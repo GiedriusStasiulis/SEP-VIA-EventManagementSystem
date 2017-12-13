@@ -13,6 +13,8 @@ import javafx.scene.control.DatePicker;
 //Abstract class Event
 public class Event {
 	private String eventTitle;
+	
+	private String eventLecturer;
 	private LocalDate eventStartDate, eventEndDate;
 	private boolean isFinalized;
 	private String startTime, endTime;
@@ -20,20 +22,25 @@ public class Event {
 	private double price, discount;
 	
 	private String eventType;
+	
+	
+	
+
 	private String eventCategory;
 	
 	private int eventDuration;
 	
-	ArrayList<Member> membersRegistered;
+	ArrayList<String> membersRegistered;
 	ArrayList<Member> tempMembersRegistered;
-	ArrayList<String> lecturersRegistered;
 	
 	
-	public Event(String eventTitle,String eventType,String eventCategory, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) throws IOException 
+	
+	public Event(String eventTitle,String eventType,String eventCategory,String eventLecturer, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) throws IOException 
 	{
 		this.eventTitle = eventTitle;
 		this.eventType=eventType;
 		this.eventCategory=eventCategory;
+		this.eventLecturer = eventLecturer;
 		// this.isFinalized=false;
 		this.eventStartDate = eventStartDate;
 		this.eventEndDate = eventEndDate;
@@ -42,9 +49,9 @@ public class Event {
 		this.maxMembers = maxMembers;
 		this.price = price;
 		this.discount = discount;
-		this.membersRegistered = new ArrayList<Member>();
+		this.membersRegistered = new ArrayList<String>();
 		this.tempMembersRegistered = new ArrayList<Member>();
-		this.lecturersRegistered = new ArrayList<String>();
+		//this.lecturersRegistered = new ArrayList<String>();
 		calculateDuration();
 		
 		
@@ -80,7 +87,7 @@ public class Event {
 		this.eventTitle = eventTitle;
 	}
 
-	public Member getMemberByIndex(int index) 
+	public String getMemberByIndex(int index) 
 	{
 		return membersRegistered.get(index);
 	}
@@ -127,19 +134,55 @@ public class Event {
 	   return this.eventDuration;
 	}
 	
+	public String getEventLecturer() {
+		return eventLecturer;
+	}
+
+	public void setEventLecturer(String eventLecturer) {
+		this.eventLecturer = eventLecturer;
+	}
+
+	
+
 	public void calculateDuration()
 	{
 	   Period intervalPeriod= Period.between(eventStartDate, eventEndDate);
 	   this.eventDuration=intervalPeriod.getDays()+1;
 	   
 	}
-	public void registerLecturer(String lecturerName) throws FileNotFoundException
+	
+	
+	public void addMemberToEvent(String memberName) throws FileNotFoundException
 	{
-	   lecturersRegistered.add(lecturerName);
-	   writeRegisteredLecturersToFile();
-	   
+		membersRegistered.add(memberName);
+		System.out.println(membersRegistered);
+		writeEventMemberFile();
 	}
 	
+	
+	public void writeEventMemberFile() throws FileNotFoundException
+	{
+		PrintWriter output = null;
+		String filename = this.eventTitle+"MemberListForEvent.txt";
+		
+		try
+		{
+			output = new PrintWriter(filename);
+			for ( int i=0; i<membersRegistered.size(); i++)
+			{
+				output.println(membersRegistered.get(i));
+			}
+			output.flush();
+			
+			
+		}
+		finally
+		{
+			output.close();
+		}
+		   
+	}
+	/*
 	public void writeRegisteredLecturersToFile() throws FileNotFoundException
 	{
 	   PrintWriter output = null;
@@ -160,5 +203,5 @@ public class Event {
 	      output.close();
 	   }
 	   
-	}
+	} */
 }
