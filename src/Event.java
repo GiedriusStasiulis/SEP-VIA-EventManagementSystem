@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -20,11 +22,14 @@ public class Event {
 	private String eventType;
 	private String eventCategory;
 	
-
+	private int eventDuration;
+	
 	ArrayList<Member> membersRegistered;
 	ArrayList<Member> tempMembersRegistered;
-
-	public Event(String eventTitle,String eventType,String eventCategory, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) 
+	ArrayList<Lecturer> lecturersRegistered;
+	
+	
+	public Event(String eventTitle,String eventType,String eventCategory, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) throws IOException 
 	{
 		this.eventTitle = eventTitle;
 		this.eventType=eventType;
@@ -39,6 +44,9 @@ public class Event {
 		this.discount = discount;
 		this.membersRegistered = new ArrayList<Member>();
 		this.tempMembersRegistered = new ArrayList<Member>();
+		calculateDuration();
+		
+		
 	}
 
 	public LocalDate getEventStartDate() 
@@ -113,4 +121,23 @@ public class Event {
 	{
 	   return this.eventType;
 	}
+	public int getDuration()
+	{
+	   return this.eventDuration;
+	}
+	
+	public void calculateDuration()
+	{
+	   Period intervalPeriod= Period.between(eventStartDate, eventEndDate);
+	   this.eventDuration=intervalPeriod.getDays()+1;
+	   
+	}
+	public void createFileForLecturers() throws IOException
+	{
+	   String filename = this.getEventTitle()+"LecturerListForEvent.txt";
+	   File file = new File(filename);
+	   file.createNewFile();
+	   
+	}
+	
 }

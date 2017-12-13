@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -47,7 +48,7 @@ public class FileReaderWriter
 		return this.file;
 	}
 	
-	public EventList readEventsTextFile() throws FileNotFoundException,ParseException
+	public EventList readEventsTextFile() throws FileNotFoundException,ParseException, IOException
    {
     Scanner input = null;
     
@@ -98,7 +99,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount());
+            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getDuration());
          }
          output.flush();
          

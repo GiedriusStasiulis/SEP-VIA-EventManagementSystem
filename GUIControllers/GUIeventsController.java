@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -39,12 +40,21 @@ public class GUIeventsController implements Initializable
 	private Event eventToAdd;
 	private Event selectedEvent;
 	private EventList eventList = new EventList();
-	private static final String FILENAME = "EventList.txt";
-	private FileReaderWriter eventFile = new FileReaderWriter(FILENAME);
+	private MemberList memberList = new MemberList();
+	private LecturerList lecturerList= new LecturerList();
+	private static final String FILENAMEEVENT = "EventList.txt";
+	private FileReaderWriter eventFile = new FileReaderWriter(FILENAMEEVENT);
+	private static final String LECTURERFILENAME = "LecturerList.txt";
+	private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
 	
+	private static final String FILENAME = "MemberList.txt";
+   private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
+	private ObservableList<String> memberNames=FXCollections.observableArrayList();
+	//private ObservableList<String> emptyList=FXCollections.observableArrayList();
 	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture","Seminar","Workshop","Journey");
 	private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
 	private ObservableList<Event>  events = FXCollections.observableArrayList();
+	private ObservableList<String> lecturerNames = FXCollections.observableArrayList();
 	
 	@FXML private BorderPane eventsPage = new BorderPane();
 	
@@ -56,7 +66,7 @@ public class GUIeventsController implements Initializable
 							tfEventNumberOfTickets,tfEventPrice,tfShowEventDiscount,tfEnterEventTitle,tfEventStartTime,
 							tfEventDiscount,tfShowEventTicketsRemaining,tfShowEventStartTime,tfSelectedEvent,tfShowEventTitle;
 
-	@FXML private ComboBox<String> cbEventCategory,cbEventSearchCriteria,cbShowEventCategory,cbEventType,cbShowEventLecturer,cbShowEventType;
+	@FXML private ComboBox<String> cbEventLecturer, cbEventCategory,cbEventSearchCriteria,cbShowEventCategory,cbEventType,cbShowEventLecturer,cbShowEventType;
 	
 	@FXML private TableView<Event> eventsTable;
 	
@@ -68,7 +78,8 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Label lblEventCount;
 	
-	@FXML private ListView<?> lvEventSearchResults,lvMemberList,lvMembersAddedToEvent;
+	@FXML private ListView<?> lvEventSearchResults,lvMembersAddedToEvent;
+	@FXML private ListView<String> lvMemberList;
 	
 	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove;
 	
@@ -107,8 +118,10 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.setItems(categoryChoices);
 		cbEventCategory.getSelectionModel().select(0);
 		
+		
 		cbShowEventCategory.setItems(categoryChoices);
 		cbShowEventType.setItems(typeChoices);
+		
 		//cbShowEventCategory.getSelectionModel().select(0);
 		//cbShowEventType.getSelectionModel().select(0);
 		//initialize table
@@ -128,6 +141,7 @@ public class GUIeventsController implements Initializable
 		tcEventPrice.setCellValueFactory(new PropertyValueFactory<Event, String>("price"));
 		tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
 		tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
+		tcEventDuration.setCellValueFactory(new PropertyValueFactory<Event,String>("Duration"));
 		
 		tcEventType.setStyle("-fx-alignment: CENTER;");
 		tcEventCategory.setStyle("-fx-alignment: CENTER;");
@@ -149,7 +163,9 @@ public class GUIeventsController implements Initializable
 		
 		try
 		{
+		   
 		   eventsTable.setItems(getList());
+		   cbEventLecturer.setItems(getLecturerNames());
 		}
 		catch (FileNotFoundException e)
 		{
@@ -158,16 +174,34 @@ public class GUIeventsController implements Initializable
 		catch (ParseException e)
 		{
 		   e.printStackTrace();
-		}		
+		}	
+		catch (IOException e)
+		{
+		   e.printStackTrace();
+		}
 		
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
 			   showEventDetailsFromTable();
-				tpShowEventsPane.setExpanded(true);
+				//tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
-				btnDeleteEvent.setDisable(false);				
+				btnDeleteEvent.setDisable(false);
+				try
+            {
+				   
+               generateAllMemberNameList();
+            }
+            catch (FileNotFoundException | ParseException e)
+            {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            };
 			}
 		});
+		
+		
+		   
+		   
 		
 		/*tpShowCreateEventPane.setOnMouseClicked((MouseEvent event) -> {
 			if(event.getClickCount() == 1) {
@@ -200,11 +234,54 @@ public class GUIeventsController implements Initializable
 		}
 	}
 	
+	
 	public void showEventDetailsFromListView()
 	{
 		
 	}
-
+	@FXML
+	public void clearMemberListView()
+	{
+	   
+	}
+	
+	 @FXML
+	 public void  generateAllMemberNameList() throws FileNotFoundException, ParseException 
+	 {
+	    
+	    memberNames.clear();
+	   
+	    
+	    
+	    memberList= memberFile.readMemberTextFile();
+	    
+	    for (int i=0; i<memberList.size(); i++)
+	    {
+	       memberNames.add(memberList.getMember(i).getName());
+	       
+	    }
+	    
+	    
+	    lvMemberList.setItems(memberNames);
+	    
+	    System.out.println(memberList.size());
+	    int size = memberList.size();
+	    for ( int i = 0; i<size ; i++)
+	    {
+	       memberList.deleteMember(0);
+	    }
+	    
+	    System.out.println(memberList.size());
+	    
+	    
+	 }
+	    
+	 //@FXML
+	/* void showRegisteredMemberList()
+	 {
+	    lvMemberList.setItems(generateRegisteredMemberList());
+	 }
+	 */
     @FXML
     void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException
     {
@@ -228,6 +305,20 @@ public class GUIeventsController implements Initializable
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
     	
+    	//////////create a file to store lecturer names for this event///////
+    	
+    	String filename = eventTitle+"LecturerListForEvent.txt";
+      File file = new File(filename);
+      file.createNewFile();
+      /////////////////////////////////////////////////////////////////////
+      
+      /////////// Create a file to store members for this event///////////
+      String filename2= eventTitle+"MemberListForEvent.txt";
+      File file2 = new File(filename2);
+      file2.createNewFile();
+      ////////////////////////////////////////////////////////////////////
+      
+      
     	///testing////
     	System.out.println(eventNew.getCategory());
     	
@@ -236,7 +327,7 @@ public class GUIeventsController implements Initializable
     	clearCreateEventTextFields(event);
     }
     
-    public ObservableList<Event> getList() throws FileNotFoundException, ParseException
+    public ObservableList<Event> getList() throws ParseException, IOException
     {
        eventList = eventFile.readEventsTextFile();
        
@@ -244,9 +335,21 @@ public class GUIeventsController implements Initializable
        {
           events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getType(),eventList.getEvent(i).getCategory(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
        }
-       System.out.println("From Controller getList() method, get category -: "+eventList.getEvent(0).getCategory() );
+       //System.out.println("From Controller getList() method, get category -: "+eventList.getEvent(0).getCategory() );
        return events;
     }
+    
+    public ObservableList<String> getLecturerNames() throws FileNotFoundException,ParseException
+    {
+       lecturerList = lecturerFile.readLecturerTextFile();
+       
+       for (int i=0; i<lecturerList.size(); i ++)
+       {
+          lecturerNames.add(lecturerList.getLecturer(i).getName());
+       }
+       return lecturerNames;
+    }
+    
 
     @FXML
     void clearCreateEventTextFields(ActionEvent event) 
