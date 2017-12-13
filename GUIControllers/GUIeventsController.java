@@ -218,18 +218,9 @@ public class GUIeventsController implements Initializable
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
-				//tfSelectedEvent.setText(eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
-				try {
-					System.out.println(getMembersAdded());
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				try
             {
+					System.out.println(getMembersAdded());
 				//lvMembersAddedToEvent.setItems(memberEventFile.readEventMemberFile();   
 				
                generateAllMemberNameList();
@@ -509,7 +500,7 @@ public class GUIeventsController implements Initializable
     @FXML
     void addMemberToEvent(ActionEvent event) throws FileNotFoundException 
     {
-    	System.out.println("Add member to event");
+    	//System.out.println("Add member to event");
     	
     	eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
     	//membersRegisteredList.clear();

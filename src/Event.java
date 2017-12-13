@@ -153,7 +153,7 @@ public class Event {
 	public void addMemberToEvent(String memberName) throws FileNotFoundException
 	{
 		membersRegistered.add(memberName);
-		System.out.println(membersRegistered);
+		//System.out.println(membersRegistered);
 	}
 	
 	
