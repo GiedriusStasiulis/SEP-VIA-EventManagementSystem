@@ -220,7 +220,9 @@ public class GUIeventsController implements Initializable
 				btnDeleteEvent.setDisable(false);
 				try
             {
-					System.out.println(getMembersAdded());
+					lvMembersAddedToEvent.setItems(getMembersAdded());
+					
+			//System.out.println(getMembersAdded());
 				//lvMembersAddedToEvent.setItems(memberEventFile.readEventMemberFile();   
 				
                generateAllMemberNameList();
