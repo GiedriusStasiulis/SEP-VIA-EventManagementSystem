@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * The FileReaderWriter class is responsible for handling operations when
@@ -32,6 +36,9 @@ public class FileReaderWriter
 	private EventList currentEventList = new EventList();
 	private EventList currentEvents = new EventList();
 	private EventList eventList= new EventList();
+	
+	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
+	private ObservableList<String> membersAlreadyRegistered = FXCollections.observableArrayList();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -123,6 +130,57 @@ public class FileReaderWriter
          output.close();
       }
    }
+	
+	public void writeEventMemberFile(ArrayList<String> membersRegisteredList, String eventName) throws FileNotFoundException
+	{
+		PrintWriter output = null;
+		String file = eventName+"MemberListForEvent.txt";
+		try
+		{
+			output = new PrintWriter(file);
+			for ( int i=0; i<membersRegisteredList.size(); i++)
+			{
+				output.println(membersRegisteredList.get(i));
+			}
+			output.flush();
+			
+			
+		}
+		finally
+		{
+			output.close();
+		}
+		   
+	}
+	
+	public ObservableList<String> readEventMemberFile() throws FileNotFoundException
+	{
+		membersAlreadyRegistered.clear();
+		Scanner input = null;
+		
+		//String file = filenamememberevent+"MemberListForEvent.txt";
+		//System.out.println(filename);
+		try
+		{
+			input = new Scanner(file);
+			
+			int lineNumber = 0;
+			while(input.hasNext())
+			{
+				String line = input.nextLine();
+				lineNumber++;
+				membersAlreadyRegistered.add(line);
+			}
+			//System.out.println(membersAlreadyRegistered);
+			return membersAlreadyRegistered;
+		}
+		
+		finally 
+		{
+			input.close();
+		}
+		
+	}
 	
 	
 	public SponsorList readSponsorTextFile() throws FileNotFoundException, ParseException 
@@ -262,6 +320,7 @@ public class FileReaderWriter
 		PrintWriter output = null;
 		try 
 		{
+			 
 			output = new PrintWriter(file);
 
 			for (int i = 0; i < memberList.size(); i++) 

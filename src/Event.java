@@ -52,9 +52,7 @@ public class Event {
 		this.membersRegistered = new ArrayList<String>();
 		this.tempMembersRegistered = new ArrayList<Member>();
 		//this.lecturersRegistered = new ArrayList<String>();
-		calculateDuration();
-		
-		
+		calculateDuration();		
 	}
 
 	public LocalDate getEventStartDate() 
@@ -156,32 +154,10 @@ public class Event {
 	{
 		membersRegistered.add(memberName);
 		System.out.println(membersRegistered);
-		writeEventMemberFile();
 	}
 	
 	
-	public void writeEventMemberFile() throws FileNotFoundException
-	{
-		PrintWriter output = null;
-		String filename = this.eventTitle+"MemberListForEvent.txt";
-		
-		try
-		{
-			output = new PrintWriter(filename);
-			for ( int i=0; i<membersRegistered.size(); i++)
-			{
-				output.println(membersRegistered.get(i));
-			}
-			output.flush();
-			
-			
-		}
-		finally
-		{
-			output.close();
-		}
-		   
-	}
+	
 	/*
 	public void writeRegisteredLecturersToFile() throws FileNotFoundException
 	{

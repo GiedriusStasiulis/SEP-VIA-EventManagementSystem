@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -37,24 +38,35 @@ import javafx.scene.layout.HBox;
 
 public class GUIeventsController implements Initializable
 {
+	private File file;
+	
 	private Event eventToAdd;
 	private Event selectedEvent;
 	private EventList eventList = new EventList();
 	private MemberList memberList = new MemberList();
 	private LecturerList lecturerList= new LecturerList();
-	private static final String FILENAMEEVENT = "EventList.txt";
-	private FileReaderWriter eventFile = new FileReaderWriter(FILENAMEEVENT);
-	private static final String LECTURERFILENAME = "LecturerList.txt";
-	private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
-	
+	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
+		
 	private static final String FILENAME = "MemberList.txt";
-   private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
+	private static final String FILENAMEEVENT = "EventList.txt";
+	private static final String LECTURERFILENAME = "LecturerList.txt";
+	private String filenameMembersEvent = "MemberListForEvent.txt";
+
+	private FileReaderWriter eventFile = new FileReaderWriter(FILENAMEEVENT);
+	private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
+	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
+	private FileReaderWriter memberEventFile = new FileReaderWriter(filenameMembersEvent);
+	
 	private ObservableList<String> memberNames=FXCollections.observableArrayList();
 	//private ObservableList<String> emptyList=FXCollections.observableArrayList();
 	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture","Seminar","Workshop","Journey");
 	private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
 	private ObservableList<Event>  events = FXCollections.observableArrayList();
 	private ObservableList<String> lecturerNames = FXCollections.observableArrayList();
+	
+	private ObservableList<String> membersAlreadyAdded = FXCollections.observableArrayList();
+	private ObservableList<String> membersAlreadyAddedtemp = FXCollections.observableArrayList();
+	
 	
 	@FXML private BorderPane eventsPage = new BorderPane();
 	
@@ -116,17 +128,6 @@ public class GUIeventsController implements Initializable
 		cbEventCategory.setItems(categoryChoices);
 		cbEventCategory.getSelectionModel().select(0);
 		
-		try {
-			cbEventLecturer.setItems(getLecturerNames());
-			cbEventLecturer.getSelectionModel().select(0);
-			
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		
 		cbShowEventCategory.setItems(categoryChoices);
@@ -173,13 +174,29 @@ public class GUIeventsController implements Initializable
 		btnEditEvent.setDisable(true);
 		btnDeleteEvent.setDisable(true);
 		
+		try {
+			cbEventLecturer.setItems(getLecturerNames());
+			cbEventLecturer.getSelectionModel().select(0);
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
+		/*try {
+			lvMembersAddedToEvent.setItems(memberEventFile.readEventMemberFile(eventsTable.getSelectionModel().getSelectedItem().getEventTitle()));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 		
 		
 		try
-		{
-		   
-		   eventsTable.setItems(getList());
-		   
+		{		   
+		   eventsTable.setItems(getList()); 
 		}
 		catch (FileNotFoundException e)
 		{
@@ -194,16 +211,27 @@ public class GUIeventsController implements Initializable
 		   e.printStackTrace();
 		}
 		
+		
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
 			   showEventDetailsFromTable();
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
-				tfSelectedEvent.setText(eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+				//tfSelectedEvent.setText(eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+				try {
+					System.out.println(getMembersAdded());
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				try
             {
-				   
+				//lvMembersAddedToEvent.setItems(memberEventFile.readEventMemberFile();   
+				
                generateAllMemberNameList();
             }
             catch (FileNotFoundException | ParseException e)
@@ -217,16 +245,13 @@ public class GUIeventsController implements Initializable
 		
 		lvMembersToAdd.setOnMouseClicked((MouseEvent event) -> {
 		   if (event.getClickCount()==1) {
-		   System.out.println(lvMembersToAdd.getSelectionModel().getSelectedItem());
-		   System.out.println(eventsTable.getSelectionModel().getSelectedItem());
+		   //System.out.println(lvMembersToAdd.getSelectionModel().getSelectedItem());
+		   //System.out.println(eventsTable.getSelectionModel().getSelectedItem());
 		//eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMembersToAdd.getSelectionModel().getSelectedItem());	
 		   
 		   }
 		}); 
-		
-		   
-		   
-		
+				
 		/*tpShowCreateEventPane.setOnMouseClicked((MouseEvent event) -> {
 			if(event.getClickCount() == 1) {
 				tpShowEventsPane.setExpanded(false);
@@ -240,6 +265,8 @@ public class GUIeventsController implements Initializable
 		}); */
 	}	
 	
+	
+
 	public void showEventDetailsFromTable()
 	{
 		if (eventsTable.getSelectionModel().getSelectedItem() !=null)
@@ -264,6 +291,45 @@ public class GUIeventsController implements Initializable
 	{
 		
 	}
+	
+	public ObservableList<String> getLecturerNames() throws FileNotFoundException, ParseException
+	{
+		lecturerList = lecturerFile.readLecturerTextFile();
+		
+		for(int i = 0; i < lecturerList.size(); i++)
+		{
+			lecturerNames.add(lecturerList.getLecturer(i).getName());
+		}
+		
+		return lecturerNames;
+	}
+	
+	
+	
+	
+	
+	
+	public ObservableList<String> getMembersAdded() throws FileNotFoundException, ParseException
+	{
+		membersAlreadyAddedtemp.clear();
+		
+		memberEventFile.setFile(eventsTable.getSelectionModel().getSelectedItem().getEventTitle().toString() + "MemberListForEvent.txt");
+		
+		membersAlreadyAdded = memberEventFile.readEventMemberFile();
+		
+		
+		for(int i = 0; i < membersAlreadyAdded.size(); i++)
+		{
+			membersAlreadyAddedtemp.add(membersAlreadyAdded.get(i));
+		}
+		
+		//membersAlreadyAddedtemp.clear();
+		return membersAlreadyAddedtemp;
+	}
+
+	
+
+	
 	@FXML
 	public void clearMemberListView()
 	{
@@ -271,7 +337,7 @@ public class GUIeventsController implements Initializable
 	}
 	
 	 @FXML
-	 public void  generateAllMemberNameList() throws FileNotFoundException, ParseException 
+	 public void generateAllMemberNameList() throws FileNotFoundException, ParseException 
 	 {
 	    
 	    memberNames.clear();
@@ -289,14 +355,14 @@ public class GUIeventsController implements Initializable
 	    
 	    lvMembersToAdd.setItems(memberNames);
 	    
-	    System.out.println(memberList.size());
+	    //System.out.println(memberList.size());
 	    int size = memberList.size();
 	    for ( int i = 0; i<size ; i++)
 	    {
 	       memberList.deleteMember(0);
 	    }
 	    
-	    System.out.println(memberList.size());
+	    //System.out.println(memberList.size());
 	    
 	    
 	 }
@@ -365,7 +431,7 @@ public class GUIeventsController implements Initializable
        return events;
     }
     
-    public ObservableList<String> getLecturerNames() throws FileNotFoundException,ParseException
+    /*public ObservableList<String> getLecturerNames() throws FileNotFoundException,ParseException
     {
        lecturerList = lecturerFile.readLecturerTextFile();
        
@@ -374,7 +440,7 @@ public class GUIeventsController implements Initializable
           lecturerNames.add(lecturerList.getLecturer(i).getName());
        }
        return lecturerNames;
-    }
+    }*/
     
 
     @FXML
@@ -446,7 +512,10 @@ public class GUIeventsController implements Initializable
     	System.out.println("Add member to event");
     	
     	eventsTable.getSelectionModel().getSelectedItem().addMemberToEvent(lvMembersToAdd.getSelectionModel().getSelectedItem());
+    	membersRegisteredList.clear();
+    	membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
     	
+    	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle() );
     	
     }
 
