@@ -508,16 +508,28 @@ public class GUIeventsController implements Initializable
     	//membersRegisteredList.clear();
     	membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
     	
-    	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle() );
+    	memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
     	
     	lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
 
     }
 
     @FXML
-    void removeMemberFromEvent(ActionEvent event) 
+    void removeMemberFromEvent(ActionEvent event) throws FileNotFoundException
     {
     	System.out.println("Remove member from event");
+    	
+    	if(lvMembersAddedToEvent.getSelectionModel() != null)
+    	{
+    		if(membersRegisteredList.size() > 0)
+    		{
+    			int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+    			membersRegisteredList.remove(index);
+    			memberEventFile.writeEventMemberFile(membersRegisteredList,eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+    			lvMembersAddedToEvent.getItems().remove(index);
+    		}
+    	}
+    	
     }
     
     @FXML

@@ -1,1 +1,2 @@
 aaaa,Lecture,Astrology,Jerry Smith,2017-12-14,aaa,2017-12-08,aaa,150,50.0,50.0,-5
+bbbb,Seminar,Astrology,Jerry Smith,2017-12-12,aaaa,2017-12-23,aaaa,200,200.0,200.0,12
