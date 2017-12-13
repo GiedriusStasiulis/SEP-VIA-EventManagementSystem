@@ -60,7 +60,7 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Button btnCreateEvent,btnDeleteEvent,btnCancelEditEvent,btnEditEvent,btnClearTextFields,
 							btnSearchEvents,btnSaveEventEditChanges,btnClearEditEventTextFields,btnAddMemberToEvent,
-							btnRemoveMemberFromEvent;
+							btnRemoveMemberFromEvent,btnAddLecturerToEvent,btnRemoveLecturerFromEvent;
 	
 	@FXML private TextField tfEnterSearchKeywords,tfEventEndTime,tfShowEventPrice,tfShowEventNumberOfTickets,tfShowEventEndTime,
 							tfEventNumberOfTickets,tfEventPrice,tfShowEventDiscount,tfEnterEventTitle,tfEventStartTime,
@@ -78,16 +78,14 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Label lblEventCount;
 	
-	@FXML private ListView<String> lvEventSearchResults,lvMembersAddedToEvent;
-	@FXML private ListView<String> lvMemberList;
+	@FXML private ListView<String> lvEventSearchResults;
+	@FXML private ListView<String> lvMembersToAdd,lvMembersAddedToEvent,lvLecturersToAdd,lvLecturersAddedToEvent;
 	
 	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove;
 	
 	@FXML private DatePicker dpShowEventEndDate,dpShowEventStartDate,dpEventStartDate,dpEventEndDate;
 	
 	@FXML private HBox hboxEventEditOptions;	
-	
-	@FXML private ScrollPane spEventsTableScrollPane;
 	
 	@FXML private TitledPane tpShowEventsPane,tpShowSearchEventsPane,tpShowCreateEventPane;
 	
@@ -183,7 +181,7 @@ public class GUIeventsController implements Initializable
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
 			   showEventDetailsFromTable();
-				//tpShowEventsPane.setExpanded(true);
+				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
 				tfSelectedEvent.setText(eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
@@ -199,11 +197,11 @@ public class GUIeventsController implements Initializable
             };
 			}
 		});
-		lvMemberList.setOnMouseClicked((MouseEvent event) -> {
+		lvMembersToAdd.setOnMouseClicked((MouseEvent event) -> {
 		   if (event.getClickCount()==1) {
 		   try
          {
-            eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMemberList.getSelectionModel().getSelectedItem());
+            eventsTable.getSelectionModel().getSelectedItem().registerLecturer(lvMembersToAdd.getSelectionModel().getSelectedItem());
          }
          catch (FileNotFoundException e)
          {
@@ -276,7 +274,7 @@ public class GUIeventsController implements Initializable
 	    }
 	    
 	    
-	    lvMemberList.setItems(memberNames);
+	    lvMembersToAdd.setItems(memberNames);
 	    
 	    System.out.println(memberList.size());
 	    int size = memberList.size();
@@ -432,7 +430,7 @@ public class GUIeventsController implements Initializable
     void addMemberToEvent(ActionEvent event) 
     {
     	System.out.println("Add member to event");
-    	String newMember = lvMemberList.selectionModelProperty().getName();
+    	String newMember = lvMembersToAdd.selectionModelProperty().getName();
     	 
     	
     }
@@ -441,5 +439,17 @@ public class GUIeventsController implements Initializable
     void removeMemberFromEvent(ActionEvent event) 
     {
     	System.out.println("Remove member from event");
+    }
+    
+    @FXML
+    void addLecturerToEvent(ActionEvent event) 
+    {
+    	System.out.println("Add lecturer to event");
+    }
+    
+    @FXML
+    void removeLecturerFromEvent(ActionEvent event) 
+    {
+    	System.out.println("Remove lecturer from event");
     }
 }
