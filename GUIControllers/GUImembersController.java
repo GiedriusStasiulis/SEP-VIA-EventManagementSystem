@@ -43,6 +43,8 @@ import javafx.stage.Stage;
 
 public class GUImembersController implements Initializable 
 {
+	private VIAoms viaOms = new VIAoms();
+	
 	private Member member;
 	private Member selectedMember;
 	private MemberList memberList = new MemberList();
@@ -70,7 +72,8 @@ public class GUImembersController implements Initializable
 	@FXML private TableColumn<Member, String> tcMemberID, tcMemberName, tcMemberEmail,tcMembershipStatus;
 	
 	@FXML private ListView<Member> lvMemberSearchResults;
-	@FXML private ListView<String> lvMemberEmailList,lvUnpaidMembership;
+	@FXML private ListView<String> lvMemberEmailList;
+	@FXML private ListView<String> lvUnpaidMembership;
 	
 	@FXML private ComboBox<String> cbMemberSearchCriteria;
 	
@@ -166,7 +169,8 @@ public class GUImembersController implements Initializable
 	
 	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
 	{
-		memberList = memberFile.readMemberTextFile();
+		memberList = viaOms.getMemberList();
+		//memberList = memberFile.readMemberTextFile();
 
 		for (int i = 0; i < memberList.size(); i++) 
 		{
@@ -185,18 +189,18 @@ public class GUImembersController implements Initializable
 		
 		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
 		{
-			memberName = String.format("empty%d", memberList.size() + 1);
-			memberEmail = String.format("empty@empty%d", memberList.size() + 1);
+			memberName = String.format("Not defined%d", viaOms.getMemberList().size() + 1);
+			memberEmail = String.format("Not defined@empty%d", viaOms.getMemberList().size() + 1);
 		}		
 		
 		else if(tfEnterMemberName.getText().isEmpty())
 		{
-			memberName = String.format("empty%d", memberList.size() + 1);
+			memberName = String.format("Not defined%d", viaOms.getMemberList().size() + 1);
 		}
 		
 		else if(tfEnterMemberEmail.getText().isEmpty())
 		{
-			memberEmail = String.format("empty@empty%d", memberList.size() + 1);
+			memberEmail = String.format("Not defined@empty%d", viaOms.getMemberList().size() + 1);
 		}
 		
 		if(cbSetMembershipPaid.isSelected())
@@ -214,7 +218,7 @@ public class GUImembersController implements Initializable
 		{					
 			member = new Member(memberName, memberEmail, membershipStatus);	
 			
-			if(memberList.checkForDuplicates(memberList, member))
+			if(viaOms.checkForDuplicates(member))
 			{
 				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 				clearAddMemberTextFields(event);
@@ -223,13 +227,12 @@ public class GUImembersController implements Initializable
 			
 			else
 			{
-				memberList.addMemberToList(member);		
-				memberFile.writeMemberTextFile(memberList);		
+				viaOms.addMember(memberName, memberEmail, membershipStatus);
 				memberTable.getItems().add(member);
 				clearAddMemberTextFields(event);
 				cbSetMembershipPaid.setSelected(false);
 					
-				lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+				lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
 			}
 		}
 		
@@ -318,7 +321,7 @@ public class GUImembersController implements Initializable
 	@FXML
 	void saveEditMemberChanges(ActionEvent event) throws FileNotFoundException, ParseException 
 	{
-	    	int index = memberList.getMemberIndex(selectedMember);   
+			int index = viaOms.getMemberList().getMemberIndex(selectedMember);  
 	    	
 	    	String newMemberName = tfShowMemberName.getText();
 	    	String newMemberEmail = tfShowMemberEmail.getText();
@@ -348,7 +351,7 @@ public class GUImembersController implements Initializable
 	    	
 			if(newMemberEmail.contains("@"))
 			{
-				if(memberList.checkForDuplicates(memberList, tempMember) == true)
+				if(viaOms.checkForDuplicates(tempMember) == true)
 				{
 					JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 					
@@ -375,8 +378,7 @@ public class GUImembersController implements Initializable
 			    	selectedMember.setEmail(newMemberEmail);
 			    	selectedMember.setMembershipStatus(newMembershipStatus);
 
-			    	memberList.replaceMember(index,selectedMember);    	
-			    	memberFile.writeMemberTextFile(memberList);
+			    	viaOms.editMember(index, selectedMember);
 
 			    	memberTable.getItems().set(index, selectedMember);
 
@@ -423,7 +425,7 @@ public class GUImembersController implements Initializable
     {        
     	if(memberTable.getSelectionModel() != null)
     	{
-    		if(memberList.size() > 0)
+    		if(viaOms.getMemberList().size() > 0)
     		{
 	    		try 
 	    		{
@@ -439,18 +441,16 @@ public class GUImembersController implements Initializable
 	    			
 	    			if (n == JOptionPane.YES_OPTION) 
 	    			{
-	    				int index = memberList.getMemberIndex(selectedMember);
-	    				
-	    				System.out.println(index);
-	    				
-				    	memberList.deleteMember(index);
-				    	memberFile.writeMemberTextFile(memberList);
+	    				int index = viaOms.getMemberList().getMemberIndex(selectedMember);
+
+				    	viaOms.deleteMember(index);				    
+				    	
 				    	memberTable.getItems().remove(index);
 				    	
 				    	tfShowMemberName.setText("");
 				    	tfShowMemberEmail.setText("");	
 				    	
-				    	lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+				    	lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
 	    			} 	    	
 	    		}
 	    		catch(ArrayIndexOutOfBoundsException e)
@@ -470,13 +470,13 @@ public class GUImembersController implements Initializable
     }    
     
     @FXML
-    void generateMemberEmailList(ActionEvent event) 
+    void generateMemberEmailList(ActionEvent event) throws FileNotFoundException, ParseException 
     {    	    	
     	emailList.clear();
     	
-    	for(int i = 0; i < memberList.size(); i++)
+    	for(int i = 0; i < viaOms.getMemberList().size(); i++)
 		{
-    		emailList.add(memberList.getMember(i).getEmail());
+    		emailList.add(viaOms.getMemberList().getMember(i).getEmail());
 		}
     	
     	lvMemberEmailList.setItems(emailList);
@@ -498,19 +498,16 @@ public class GUImembersController implements Initializable
     }   
     
     @FXML 
-    void generateListNonPaidMembership(ActionEvent event)
+    void generateListNonPaidMembership(ActionEvent event) throws FileNotFoundException, ParseException
     {
     	unpaidMembershipList.clear();
     	
-    	for(int i = 0; i < memberList.size(); i++)
+    	for(int i = 0; i < viaOms.generateListNonPaidMembership().size(); i++)
     	{
-    		if (memberList.getMember(i).getMembershipStatus().contains("Not paid"))
-			{
-    			unpaidMembershipList.add(memberList.getMember(i).getName());
-			}
-    		
-    		lvUnpaidMembership.setItems(unpaidMembershipList);
+    		unpaidMembershipList.add(viaOms.generateListNonPaidMembership().getMember(i).getName());
     	}
+
+    	lvUnpaidMembership.setItems(unpaidMembershipList);
     }
     
     @FXML 

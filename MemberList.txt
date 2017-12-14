@@ -1,4 +1,7 @@
-Marius,ma@via.dk,Not paid
-Alin,fa@via.dk,Paid
-Giedrius,gs@via.dk,Not paid
-Justas,jb@via.dk,Not paid
+ccc,cc@,Paid
+ddd,dd@,Not paid
+fff,ff@hhh,Not paid
+ttt,tt@,Not paid
+Not defined5,aa@,Paid
+Not defined6,tt@,Paid
+bgtgtgt,gtgt@GRG,Paid

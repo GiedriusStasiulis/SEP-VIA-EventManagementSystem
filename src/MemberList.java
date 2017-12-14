@@ -48,6 +48,11 @@ public class MemberList
 		memberList.remove(index);
 	}
 	
+	public void clearMemberList()
+	{
+		memberList.clear();
+	}
+	
 	public boolean checkForDuplicates(MemberList memberList, Member member)
 	{
 		boolean status = false;

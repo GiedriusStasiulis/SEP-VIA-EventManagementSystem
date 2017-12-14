@@ -11,6 +11,12 @@ public class Member
 	private String email;
 	private String membershipStatus;
 
+	public Member()
+	{
+		
+	}
+	
+	
 	public Member(String name, String email, String membershipStatus) 
 	{
 		this.name = name;
