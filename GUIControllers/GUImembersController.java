@@ -351,7 +351,7 @@ public class GUImembersController implements Initializable
 	    	
 			if(newMemberEmail.contains("@"))
 			{
-				if(viaOms.checkForMemberDuplicates(tempMember) == true)
+				if(viaOms.checkForMemberDuplicates(tempMember))
 				{
 					JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 					

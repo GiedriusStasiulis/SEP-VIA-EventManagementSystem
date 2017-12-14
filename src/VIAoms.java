@@ -1,8 +1,20 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDate;
 
 public class VIAoms 
 {
+	private Event event;
+	private EventList eventList = new EventList();
+	private static final String EVENTSFILENAME = "EventList.txt";
+	private FileReaderWriter eventFile = new FileReaderWriter(EVENTSFILENAME);
+	private String filenameMembersEvent = "MemberListForEvent.txt";
+	private FileReaderWriter memberEventFile = new FileReaderWriter(filenameMembersEvent);
+	private String filenameNonMembersEvent = "NonMembersForEvent.txt";
+	private FileReaderWriter nonMemberEventFile = new FileReaderWriter(filenameNonMembersEvent);
+	
+	
 	private Lecturer lecturer;
 	private LecturerList lecturerList = new LecturerList();
 	private static final String LECTURERFILENAME = "LecturerList.txt";
@@ -20,9 +32,21 @@ public class VIAoms
 	private Member member;
 	private MemberList memberList = new MemberList();
 	private MemberList nonPaidMemberList = new MemberList();
-	private MemberList memberEmailList = new MemberList();
-	private static final String FILENAME = "MemberList.txt";
-	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);	
+	private static final String MEMBERFILENAME = "MemberList.txt";
+	private FileReaderWriter memberFile = new FileReaderWriter(MEMBERFILENAME);	
+	
+	public void createEvent(String eventTitle, String eventType, String eventCategory, String eventLecturer,
+			LocalDate eventStartDate, String eventStartTime, LocalDate eventEndDate, String eventEndTime, int eventNumberOfTickets,
+			double eventPrice, double eventDiscount, String eventStatus) throws IOException, ParseException
+	{
+		event = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate,eventStartTime,eventEndDate,eventEndTime,eventNumberOfTickets,eventPrice,eventDiscount,eventStatus);
+		eventList.clearEventList();
+		eventList = eventFile.readEventsTextFile();
+		eventList.addEventToList(event);
+		eventFile.writeEventTextFile(eventList);
+	}
+	
+	
 	
 	public void addLecturer(String lecturerName, String lecturerCategory, String lecturerEmail, String lecturerPhoneNumber) throws FileNotFoundException, ParseException
 	{
@@ -53,8 +77,13 @@ public class VIAoms
 	
 	
 	
-	
-	
+	public void editEvent(int index, Event event) throws ParseException, IOException
+	{
+		eventList.clearEventList();
+		eventList = eventFile.readEventsTextFile();
+		eventList.replaceEvent(index, event);
+		eventFile.writeEventTextFile(eventList);
+	}	
 		
 	public void editLecturer(int index, Lecturer lecturer) throws FileNotFoundException, ParseException
 	{
@@ -67,7 +96,7 @@ public class VIAoms
 	public void editSponsor(int index, Sponsor sponsor) throws FileNotFoundException, ParseException
 	{
 	   sponsorList.clearSponsorList();
-	   sponsorList =sponsorFile.readSponsorTextFile();
+	   sponsorList = sponsorFile.readSponsorTextFile();
 	   sponsorList.replaceSponsor(index, sponsor);
 	   sponsorFile.writeSponsorTextFile(sponsorList);
 	}
@@ -81,8 +110,13 @@ public class VIAoms
 	}	
 	
 	
-	
-	
+	public void deleteEvent(int index) throws ParseException, IOException
+	{
+		eventList.clearEventList();
+		eventList = eventFile.readEventsTextFile();
+		eventList.deleteEvent(index);
+		eventFile.writeEventTextFile(eventList);
+	}	
 		
 	public void deleteLecturer(int index) throws FileNotFoundException, ParseException
 	{
@@ -112,8 +146,12 @@ public class VIAoms
 	
 	
 	
-	
-	
+	public EventList getEventList() throws ParseException, IOException
+	{
+		eventList.clearEventList();
+		eventList = eventFile.readEventsTextFile();
+		return eventList;
+	}		
 	
 	
 	public LecturerList getLecturerList() throws FileNotFoundException, ParseException
@@ -136,6 +174,25 @@ public class VIAoms
 		memberList = memberFile.readMemberTextFile();
 		return memberList;
 	}
+	
+	public boolean checkForEventDuplicates(Event event) throws ParseException, IOException
+	{
+	   boolean status = false;
+	   
+	   eventList.clearEventList();
+	   eventList = eventFile.readEventsTextFile();
+	   
+	   for ( int i=0;i<eventList.size();i++)
+	   {
+	      if(event.equals(eventList.getEvent(i)))
+	      {
+	         status= true;
+	      }
+	   }
+	   return status;
+	         
+	}
+	
 	
 	public boolean checkForSponsorDuplicates(Sponsor sponsor) throws FileNotFoundException, ParseException
 	{

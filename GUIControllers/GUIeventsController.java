@@ -38,10 +38,10 @@ import javafx.scene.layout.HBox;
  * @author Group#2 *
  */
 
-public class GUIeventsController implements Initializable {
-	private File file;
+public class GUIeventsController implements Initializable 
+{
+	private VIAoms viaOms = new VIAoms();	
 
-	private Event eventObj;
 	private Event selectedEvent;
 	private EventList eventList = new EventList();
 	private MemberList memberList = new MemberList();
@@ -49,17 +49,12 @@ public class GUIeventsController implements Initializable {
 	private LecturerList lecturerList = new LecturerList();
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
 
-	private static final String FILENAME = "MemberList.txt";
-	private static final String FILENAMEEVENT = "EventList.txt";
-	private static final String LECTURERFILENAME = "LecturerList.txt";
-	private String filenameNonMembersEvent = "NonMembersForEvent.txt";
-	private String filenameMembersEvent = "MemberListForEvent.txt";
-
-	private FileReaderWriter eventFile = new FileReaderWriter(FILENAMEEVENT);
-	private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
-	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
-	private FileReaderWriter memberEventFile = new FileReaderWriter(filenameMembersEvent);
-	private FileReaderWriter nonMemberEventFile = new FileReaderWriter(filenameNonMembersEvent);
+	private static final String EVENTSFILENAME = "MemberList.txt";
+	
+	//private static final String LECTURERFILENAME = "LecturerList.txt";
+	
+	//private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
+	
 
 	private ObservableList<String> memberNames = FXCollections.observableArrayList();
 	// private ObservableList<String> emptyList=FXCollections.observableArrayList();
@@ -227,12 +222,6 @@ public class GUIeventsController implements Initializable {
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
 
-				try {
-
-					generateAllMemberNameList();
-				} catch (FileNotFoundException | ParseException e) {
-					e.printStackTrace();
-				}
 				;
 			}
 		});
@@ -312,7 +301,7 @@ public class GUIeventsController implements Initializable {
 	}
 	
 	public ObservableList<Event> getList() throws ParseException, IOException {
-		eventList = eventFile.readEventsTextFile();
+		eventList = viaOms.getEventList();
 
 		for (int i = 0; i < eventList.size(); i++) {
 			events.add(new Event(eventList.getEvent(i).getEventTitle(), eventList.getEvent(i).getEventType(),
@@ -326,7 +315,8 @@ public class GUIeventsController implements Initializable {
 	}
 
 	public ObservableList<String> getLecturerNames() throws FileNotFoundException, ParseException {
-		lecturerList = lecturerFile.readLecturerTextFile();
+		
+		lecturerList = viaOms.getLecturerList();
 
 		for (int i = 0; i < lecturerList.size(); i++) {
 			lecturerNames.add(lecturerList.getLecturer(i).getLecturerName());
@@ -335,7 +325,7 @@ public class GUIeventsController implements Initializable {
 		return lecturerNames;
 	}
 
-	public ObservableList<String> getMembersAdded() throws FileNotFoundException, ParseException 
+	/*public ObservableList<String> getMembersAdded() throws FileNotFoundException, ParseException 
 	{
 		membersAlreadyAddedtemp.clear();
 
@@ -355,7 +345,7 @@ public class GUIeventsController implements Initializable {
 
 	}
 
-	@FXML
+	/*@FXML
 	public void generateAllMemberNameList() throws FileNotFoundException, ParseException {
 
 		memberNames.clear();
@@ -393,29 +383,28 @@ public class GUIeventsController implements Initializable {
 		String eventLecturer = cbEventLecturer.getValue();
 
 		// DatePicker datePicker = new DatePicker();
-		LocalDate localStartDate = dpEventStartDate.getValue();
-		LocalDate localEndDate = dpEventEndDate.getValue();
+		LocalDate eventStartDate = dpEventStartDate.getValue();
+		LocalDate eventEndDate = dpEventEndDate.getValue();
 
-		String startTime = tfEventStartTime.getText();
-		String endTime = tfEventEndTime.getText();
-		double price = Double.parseDouble(tfEventPrice.getText());
-		double discount = Double.parseDouble(tfEventDiscount.getText());
-		int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
+		String eventStartTime = tfEventStartTime.getText();
+		String eventEndTime = tfEventEndTime.getText();
+		double eventPrice = Double.parseDouble(tfEventPrice.getText());
+		double eventDiscount = Double.parseDouble(tfEventDiscount.getText());
+		int eventNumberOfTickets = Integer.parseInt(tfEventNumberOfTickets.getText());
 
-		String finalized = "";
+		String eventStatus = "";
 
 		if (cbFinalizeEvent.isSelected()) {
-			finalized = "Finalized";
+			eventStatus = "Finalized";
 		}
 
 		else {
-			finalized = "Not finalized";
+			eventStatus = "Not finalized";
 		}
 
-		eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, localStartDate, startTime,
-				localEndDate, endTime, maxMembers, price, discount, finalized);
+		Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime, eventEndDate, eventEndTime, eventNumberOfTickets, eventPrice, eventDiscount, eventStatus);
 		
-		if(eventList.checkForDuplicates(eventList, eventObj))
+		if(viaOms.checkForEventDuplicates(eventObj))
 		{
 			JOptionPane.showMessageDialog(null, "Event already exists in the system!");
 			clearCreateEventTextFields(event);
@@ -423,12 +412,11 @@ public class GUIeventsController implements Initializable {
 		
 		else
 		{
-			eventList.addEventToList(eventObj);
-			eventFile.writeEventTextFile(eventList);
+			viaOms.createEvent(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime, eventEndDate, eventEndTime, eventNumberOfTickets, eventPrice, eventDiscount, eventStatus);
 			eventsTable.getItems().add(eventObj);
 
 			
-			lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+			//lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 			////////// create a file to store lecturer names for this event///////
 	/*
 			String filename = eventTitle + "LecturerListForEvent.txt";
@@ -446,6 +434,8 @@ public class GUIeventsController implements Initializable {
 			file3.createNewFile();
 
 			clearCreateEventTextFields(event);
+			
+			
 		}		
 	}
 
@@ -593,36 +583,35 @@ public class GUIeventsController implements Initializable {
 	{
 		int index = eventsTable.getSelectionModel().getSelectedIndex();
 
-		String newEventTitle = tfShowEventTitle.getText();
+		String eventTitle = tfShowEventTitle.getText();
 
-		String newEventType = cbShowEventType.getValue();
-		String newEventCategory = cbShowEventCategory.getValue();
-		String newEventLecturer = cbShowEventLecturer.getValue();
+		String eventType = cbShowEventType.getValue();
+		String eventCategory = cbShowEventCategory.getValue();
+		String eventLecturer = cbShowEventLecturer.getValue();
 
 		// DatePicker datePicker = new DatePicker();
-		LocalDate newLocalStartDate = dpShowEventStartDate.getValue();
-		LocalDate newLocalEndDate = dpShowEventEndDate.getValue();
+		LocalDate eventStartDate = dpShowEventStartDate.getValue();
+		LocalDate eventEndDate = dpShowEventEndDate.getValue();
 
-		String newStartTime = tfShowEventStartTime.getText();
-		String newEndTime = tfShowEventEndTime.getText();
-		double newPrice = Double.parseDouble(tfShowEventPrice.getText());
-		double newDiscount = Double.parseDouble(tfShowEventDiscount.getText());
-		int newMaxMembers = Integer.parseInt(tfShowEventNumberOfTickets.getText());
+		String eventStartTime = tfShowEventStartTime.getText();
+		String eventEndTime = tfShowEventEndTime.getText();
+		double eventPrice = Double.parseDouble(tfShowEventPrice.getText());
+		double eventDiscount = Double.parseDouble(tfShowEventDiscount.getText());
+		int eventNumberOfTickets = Integer.parseInt(tfShowEventNumberOfTickets.getText());
 
-		String newFinalized = "";
+		String eventStatus = "";
 
 		if (cbShowEventStatus.isSelected()) {
-			newFinalized = "Finalized";
+			eventStatus = "Finalized";
 		}
 
 		else {
-			newFinalized = "Not finalized";
+			eventStatus = "Not finalized";
 		}
 		
-		Event tempEvent = new Event(newEventTitle,newEventType,newEventCategory,newEventLecturer,newLocalStartDate,newStartTime,
-									newLocalEndDate,newEndTime,newMaxMembers,newPrice,newDiscount,newFinalized);	
+		Event tempEvent = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime, eventEndDate, eventEndTime, eventNumberOfTickets, eventPrice, eventDiscount, eventStatus);	
 		
-		if(eventList.checkForDuplicates(eventList, tempEvent))
+		if(viaOms.checkForEventDuplicates(tempEvent))
 		{
 			JOptionPane.showMessageDialog(null, "Event already exists in the system!");
 			
@@ -659,24 +648,25 @@ public class GUIeventsController implements Initializable {
 		}
 		
 		else
-		{
-			selectedEvent.setEventTitle(newEventTitle);
-			selectedEvent.setEventType(newEventType);
-			selectedEvent.setEventCategory(newEventCategory);
-			selectedEvent.setEventLecturer(newEventLecturer);
-			selectedEvent.setEventStartDate(newLocalStartDate);
-			selectedEvent.setEventEndDate(newLocalEndDate);
-			selectedEvent.setEventStartTime(newStartTime);
-			selectedEvent.setEventEndTime(newEndTime);
-			selectedEvent.setEventPrice(newPrice);
-			selectedEvent.setEventDiscount(newDiscount);
-			selectedEvent.setEventNumberOfTickets(newMaxMembers);
-			selectedEvent.setEventStatus(newFinalized);
+		{			
+			selectedEvent.setEventTitle(eventTitle);
+			selectedEvent.setEventType(eventTitle);
+			selectedEvent.setEventCategory(eventCategory);
+			selectedEvent.setEventLecturer(eventLecturer);
+			selectedEvent.setEventStartDate(eventStartDate);
+			selectedEvent.setEventEndDate(eventEndDate);
+			selectedEvent.setEventStartTime(eventStartTime);
+			selectedEvent.setEventEndTime(eventEndTime);
+			selectedEvent.setEventPrice(eventPrice);
+			selectedEvent.setEventDiscount(eventDiscount);
+			selectedEvent.setEventNumberOfTickets(eventNumberOfTickets);
+			selectedEvent.setEventStatus(eventStatus);
 
-			eventList.replaceEvent(index, eventsTable.getSelectionModel().getSelectedItem());
-			eventFile.writeEventTextFile(eventList);
+			viaOms.editEvent(index, selectedEvent);
+			//eventList.replaceEvent(index, eventsTable.getSelectionModel().getSelectedItem());
+			//eventFile.writeEventTextFile(eventList);
 
-			eventsTable.getItems().set(index, eventsTable.getSelectionModel().getSelectedItem());
+			eventsTable.getItems().set(index, selectedEvent);
 
 			hboxEventEditOptions.setVisible(false);
 			tfShowEventTitle.setEditable(false);
@@ -753,7 +743,7 @@ public class GUIeventsController implements Initializable {
 	}
 
 	@FXML
-	void deleteEvent(ActionEvent event) throws FileNotFoundException 
+	void deleteEvent(ActionEvent event) throws ParseException, IOException 
 	{
 		if (eventsTable.getSelectionModel() != null) 
 		{
@@ -767,12 +757,13 @@ public class GUIeventsController implements Initializable {
 
 					if (n == JOptionPane.YES_OPTION) {
 
-						int index = eventList.getEventIndex(selectedEvent);
+						int index = viaOms.getEventList().getEventIndex(selectedEvent);
 
-						eventList.deleteEvent(index);
-						eventFile.writeEventTextFile(eventList);
+						viaOms.deleteEvent(index);
+						//eventList.deleteEvent(index);
+						//eventFile.writeEventTextFile(eventList);
 						eventsTable.getItems().remove(index);
-						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+						//lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// e.printStackTrace();
@@ -799,8 +790,8 @@ public class GUIeventsController implements Initializable {
 			// membersRegisteredList.clear();
 			membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
 
-			memberEventFile.writeEventMemberFile(membersRegisteredList,
-					eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+			/*memberEventFile.writeEventMemberFile(membersRegisteredList,
+					eventsTable.getSelectionModel().getSelectedItem().getEventTitle());*/
 
 			lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
 		}
@@ -825,8 +816,8 @@ public class GUIeventsController implements Initializable {
 			if (membersRegisteredList.size() > 0) {
 				int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
 				membersRegisteredList.remove(index);
-				memberEventFile.writeEventMemberFile(membersRegisteredList,
-						eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
+				/*memberEventFile.writeEventMemberFile(membersRegisteredList,
+						eventsTable.getSelectionModel().getSelectedItem().getEventTitle());*/
 				lvMembersAddedToEvent.getItems().remove(index);
 			}
 		}
@@ -883,7 +874,7 @@ public class GUIeventsController implements Initializable {
 	         {
 	            nonMemberList.addNonMemberToList(nonMember);
 	            
-	            nonMemberEventFile.writeNonMemberTextFile(nonMemberList);     
+	            //nonMemberEventFile.writeNonMemberTextFile(nonMemberList);     
 	            
 	            for(int i=0;i<nonMemberList.size();i++)
 	            {
