@@ -137,6 +137,23 @@ public class VIAoms
 		return memberList;
 	}
 	
+	public boolean checkForSponsorDuplicates(Sponsor sponsor) throws FileNotFoundException, ParseException
+	{
+	   boolean status = false;
+	   
+	   sponsorList.clearSponsorList();
+	   sponsorList = sponsorFile.readSponsorTextFile();
+	   
+	   for ( int i=0;i<sponsorList.size();i++)
+	   {
+	      if(sponsor.equals(sponsorList.getSponsor(i)))
+	      {
+	         status= true;
+	      }
+	   }
+	   return status;
+	         
+	}
 	
 	
 	

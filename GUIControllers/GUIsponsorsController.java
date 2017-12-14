@@ -31,7 +31,7 @@ public class GUIsponsorsController implements Initializable
    private SponsorList sponsorList = new SponsorList();
    private static final String FILENAME = "SponsorList.txt";
    private FileReaderWriter sponsorFile = new FileReaderWriter(FILENAME);
-
+   private VIAoms viaOms= new VIAoms();
    private ObservableList<Sponsor> sponsors = FXCollections.observableArrayList();
    private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail", "Phone");
    
@@ -191,7 +191,7 @@ public class GUIsponsorsController implements Initializable
       {
          sponsor = new Sponsor(sponsorName, sponsorEmail, sponsorPhone);
 
-         if (sponsorList.checkForDuplicates(sponsorList, sponsor))
+         if (viaOms.checkForSponsorDuplicates(sponsor))
          {
             JOptionPane.showMessageDialog(null,"Sponsor already exists in the system!");
             clearAddSponsorTextFields(event);
@@ -199,8 +199,8 @@ public class GUIsponsorsController implements Initializable
 
          else
          {
-            sponsorList.addSponsorToList(sponsor);
-            sponsorFile.writeSponsorTextFile(sponsorList);
+            viaOms.addSponsor(sponsorName, sponsorEmail, sponsorPhone);
+            
             sponsorTable.getItems().add(sponsor);
             clearAddSponsorTextFields(event);
 
@@ -324,7 +324,7 @@ public class GUIsponsorsController implements Initializable
    @FXML
    void saveEditSponsorChanges(ActionEvent event) throws FileNotFoundException, ParseException 
    {
-     int index = sponsorList.getSponsorIndex(selectedSponsor);   
+     int index = viaOms.getSponsorList().getSponsorIndex(selectedSponsor);   
      
      String newSponsorName = tfShowSponsorName.getText();
      String newSponsorEmail = tfShowSponsorEmail.getText();
@@ -349,7 +349,7 @@ public class GUIsponsorsController implements Initializable
      {
     	 Sponsor tempSponsor = new Sponsor(newSponsorName,newSponsorEmail,newSponsorPhone);	 
      
-    	 if (sponsorList.checkForDuplicates(sponsorList, tempSponsor))
+    	 if (viaOms.checkForSponsorDuplicates(tempSponsor))
          {
             JOptionPane.showMessageDialog(null,"Sponsor already exists in the system!");
                         
@@ -450,7 +450,7 @@ public class GUIsponsorsController implements Initializable
               {
                  int index = sponsorList.getSponsorIndex(selectedSponsor);
                  
-                 sponsorList.deleteSponsor(index);
+                 viaOms.deleteSponsor(index);
                  sponsorFile.writeSponsorTextFile(sponsorList);
                  sponsorTable.getItems().remove(index);
                  

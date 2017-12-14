@@ -64,4 +64,5 @@ public class Sponsor
       String s = String.format("%s,%s,%s", getName(), getEmail(), getPhone());
       return s;
    }
+   
 }
