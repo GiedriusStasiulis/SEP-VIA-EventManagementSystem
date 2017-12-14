@@ -245,6 +245,8 @@ public class GUIeventsController implements Initializable {
 
 			}
 		});
+		
+		lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 	}
 
 	public void showEventDetailsFromTable() {
@@ -415,6 +417,8 @@ public class GUIeventsController implements Initializable {
 			eventFile.writeEventTextFile(eventList);
 			eventsTable.getItems().add(eventObj);
 
+			
+			lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 			////////// create a file to store lecturer names for this event///////
 	/*
 			String filename = eventTitle + "LecturerListForEvent.txt";
@@ -754,6 +758,7 @@ public class GUIeventsController implements Initializable {
 						eventList.deleteEvent(index);
 						eventFile.writeEventTextFile(eventList);
 						eventsTable.getItems().remove(index);
+						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// e.printStackTrace();

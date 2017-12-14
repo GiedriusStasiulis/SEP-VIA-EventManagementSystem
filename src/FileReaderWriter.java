@@ -304,8 +304,9 @@ public class FileReaderWriter
 
 				String memberName = lineToken[0].trim();
 				String memberEmail = lineToken[1].trim();
+				String membershipStatus = lineToken[2].trim();
 
-				Member member = new Member(memberName, memberEmail);
+				Member member = new Member(memberName, memberEmail, membershipStatus);
 				currentMemberList.addMemberToList(member);
 			}
 			return currentMemberList;
@@ -327,7 +328,7 @@ public class FileReaderWriter
 
 			for (int i = 0; i < memberList.size(); i++) 
 			{
-				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getEmail());
+				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getEmail() + "," + memberList.getMember(i).getMembershipStatus());
 			}
 			output.flush();
 		} 

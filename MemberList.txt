@@ -1,2 +1,4 @@
-aaaaaagggg,aaa@aaa
-ggggdddaaa,aaa@aaaaaaaa
+Marius,ma@via.dk,Not paid
+Alin,fa@via.dk,Not paid
+Giedrius,gs@via.dk,Not paid
+Justas,jb@via.dk,Not paid

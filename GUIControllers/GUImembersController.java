@@ -52,12 +52,13 @@ public class GUImembersController implements Initializable
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","E-mail");
 	private ObservableList<String> emailList = FXCollections.observableArrayList();	
+	private ObservableList<String> unpaidMembershipList = FXCollections.observableArrayList();
 
 	@FXML private BorderPane memberPage = new BorderPane();
 
 	@FXML private Button btnAddMember,btnClearAddMemberTextFields,btnSearchMembers,btnEditMember,btnDeleteMember,
 							btnSaveMemberEditChanges,btnClearEditMemberTextFields,btnCancelEditMember,
-							btnGenerateMemberEmailList,btnSelectAllMemberEmails,btnSendNewsletter;
+							btnGenerateMemberEmailList,btnSelectAllMemberEmails,btnSendNewsletter,btnGenerateListNonPaidMembership,btnSendReminder;
 
 	@FXML private TextField tfMemberID,tfEnterMemberName,tfEnterMemberEmail,tfEnterSearchKeywords,
 							tfShowMemberName,tfShowMemberEmail;
@@ -66,16 +67,17 @@ public class GUImembersController implements Initializable
 
 	@FXML private TableView<Member> memberTable; 
 
-	@FXML private TableColumn<Member, String> tcMemberID, tcMemberName, tcMemberEmail;
+	@FXML private TableColumn<Member, String> tcMemberID, tcMemberName, tcMemberEmail,tcMembershipStatus;
 	
 	@FXML private ListView<Member> lvMemberSearchResults;
-	@FXML private ListView<String> lvMemberEmailList;
+	@FXML private ListView<String> lvMemberEmailList,lvUnpaidMembership;
 	
 	@FXML private ComboBox<String> cbMemberSearchCriteria;
 	
     @FXML private HBox hboxMemberEditOptions;
     
-    @FXML private CheckBox cboxSelectAllMemberEmailList;
+    @FXML private CheckBox cboxSelectAllMemberEmailList,cbSetMembershipPaid,cbShowMembershipStatus,
+    						cbSelectAllNonPaidMembers;
     
     @FXML private ScrollPane spMemberTableScrollPane;
 
@@ -92,9 +94,13 @@ public class GUImembersController implements Initializable
 
 		tcMemberName.setCellValueFactory(new PropertyValueFactory<Member, String>("name"));
 		tcMemberEmail.setCellValueFactory(new PropertyValueFactory<Member, String>("email"));
+		tcMembershipStatus.setCellValueFactory(new PropertyValueFactory<Member, String>("membershipStatus"));
 
 		tcMemberName.setStyle("-fx-alignment: CENTER;");
 		tcMemberEmail.setStyle("-fx-alignment: CENTER;");
+		tcMembershipStatus.setStyle("-fx-alignment: CENTER;");
+		
+		cbShowMembershipStatus.setDisable(true);
 		
 		btnEditMember.setDisable(true);
 		btnDeleteMember.setDisable(true);
@@ -137,6 +143,15 @@ public class GUImembersController implements Initializable
 	        selectedMember = memberTable.getSelectionModel().getSelectedItem();
 	        tfShowMemberName.setText(selectedMember.getName());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
+	        if (selectedMember.getMembershipStatus().equals("Paid"))
+	        {
+	        	cbShowMembershipStatus.setSelected(true);
+	        }
+	        else
+	        {
+	        	cbShowMembershipStatus.setSelected(false);
+	        }
+	        
 	    }
 	}
 	
@@ -155,7 +170,7 @@ public class GUImembersController implements Initializable
 
 		for (int i = 0; i < memberList.size(); i++) 
 		{
-			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail()));
+			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail(), memberList.getMember(i).getMembershipStatus()));
 		}
 
 		return members;
@@ -166,6 +181,7 @@ public class GUImembersController implements Initializable
 	{				
 		String memberName = tfEnterMemberName.getText();
 		String memberEmail = tfEnterMemberEmail.getText();	
+		String membershipStatus = "";
 		
 		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
 		{
@@ -183,14 +199,26 @@ public class GUImembersController implements Initializable
 			memberEmail = String.format("empty@empty%d", memberList.size() + 1);
 		}
 		
+		if(cbSetMembershipPaid.isSelected())
+		{
+			membershipStatus = "Paid";
+		}
+		
+		else
+		{
+			membershipStatus = "Not paid";
+		}
+		
+				
 		if(memberEmail.contains("@"))
 		{					
-			member = new Member(memberName, memberEmail);	
+			member = new Member(memberName, memberEmail, membershipStatus);	
 			
 			if(memberList.checkForDuplicates(memberList, member))
 			{
 				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 				clearAddMemberTextFields(event);
+				cbSetMembershipPaid.setSelected(false);
 			}
 			
 			else
@@ -199,6 +227,7 @@ public class GUImembersController implements Initializable
 				memberFile.writeMemberTextFile(memberList);		
 				memberTable.getItems().add(member);
 				clearAddMemberTextFields(event);
+				cbSetMembershipPaid.setSelected(false);
 					
 				lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
 			}
@@ -279,6 +308,8 @@ public class GUImembersController implements Initializable
 	    	tfShowMemberName.setEditable(true);
 	    	tfShowMemberEmail.setEditable(true);
 	    	
+	    	cbShowMembershipStatus.setDisable(false);
+	    	
 	    	tfShowMemberName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
 	    	tfShowMemberEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
 		}		
@@ -291,6 +322,7 @@ public class GUImembersController implements Initializable
 	    	
 	    	String newMemberName = tfShowMemberName.getText();
 	    	String newMemberEmail = tfShowMemberEmail.getText();
+	    	String newMembershipStatus = "";
 	    	
 	    	if(tfShowMemberName.getText().isEmpty())
 			{
@@ -302,7 +334,17 @@ public class GUImembersController implements Initializable
 				newMemberEmail = "empty";
 			}	
 			
-			Member tempMember = new Member(newMemberName, newMemberEmail);
+			if(cbShowMembershipStatus.isSelected())
+			{
+				newMembershipStatus = "Paid";
+			}
+			
+			else
+			{
+				newMembershipStatus = "Not paid";
+			}			
+			
+			Member tempMember = new Member(newMemberName, newMemberEmail, newMembershipStatus);
 	    	
 			if(newMemberEmail.contains("@"))
 			{
@@ -323,12 +365,15 @@ public class GUImembersController implements Initializable
 			    	
 			    	btnEditMember.setDisable(true);
 			    	btnDeleteMember.setDisable(true);
+			    	
+			    	cbShowMembershipStatus.setDisable(true);
 				}
 				
 				else
 				{
 					selectedMember.setName(newMemberName);
 			    	selectedMember.setEmail(newMemberEmail);
+			    	selectedMember.setMembershipStatus(newMembershipStatus);
 
 			    	memberList.replaceMember(index,selectedMember);    	
 			    	memberFile.writeMemberTextFile(memberList);
@@ -341,6 +386,8 @@ public class GUImembersController implements Initializable
 			    	
 			    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
 			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			    	
+			    	cbShowMembershipStatus.setDisable(true);
 				}			
 			}
 			
@@ -427,7 +474,7 @@ public class GUImembersController implements Initializable
     {    	    	
     	emailList.clear();
     	
-    	for(int i = 0; i < memberList.size(); i ++)
+    	for(int i = 0; i < memberList.size(); i++)
 		{
     		emailList.add(memberList.getMember(i).getEmail());
 		}
@@ -449,4 +496,35 @@ public class GUImembersController implements Initializable
     		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + lvMemberEmailList.getSelectionModel().getSelectedItem());
     	}    	
     }   
+    
+    @FXML 
+    void generateListNonPaidMembership(ActionEvent event)
+    {
+    	unpaidMembershipList.clear();
+    	
+    	for(int i = 0; i < memberList.size(); i++)
+    	{
+    		if (memberList.getMember(i).getMembershipStatus().contains("Not paid"))
+			{
+    			unpaidMembershipList.add(memberList.getMember(i).getName());
+			}
+    		
+    		lvUnpaidMembership.setItems(unpaidMembershipList);
+    	}
+    }
+    
+    @FXML 
+    void sendReminder(ActionEvent event)
+    {
+    	if(cbSelectAllNonPaidMembers.isSelected())
+    	{
+    		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + unpaidMembershipList);
+    		cboxSelectAllMemberEmailList.setSelected(false);
+    	}
+    	
+    	else
+    	{
+    		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + lvUnpaidMembership.getSelectionModel().getSelectedItem());
+    	} 
+    }
 }
