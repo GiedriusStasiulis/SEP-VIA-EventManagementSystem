@@ -11,7 +11,7 @@ public class VIAoms
 	////////////////   SPONSOR  VARIABLES //////////////////
 	
 	private Sponsor sponsor;
-	private SponsorList sponsorList;
+	private SponsorList sponsorList = new SponsorList();
 	private static final String SPONSORFILENAME = "SponsorList.txt";
 	private FileReaderWriter sponsorFile = new FileReaderWriter(SPONSORFILENAME);
 		

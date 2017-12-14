@@ -451,7 +451,7 @@ public class GUIsponsorsController implements Initializable
                  int index = viaOms.getSponsorList().getSponsorIndex(selectedSponsor);
                  
                  viaOms.deleteSponsor(index);
-                 sponsorFile.writeSponsorTextFile(sponsorList);
+                 //sponsorFile.writeSponsorTextFile(sponsorList);
                  sponsorTable.getItems().remove(index);
                  
                  tfShowSponsorName.setText("");
