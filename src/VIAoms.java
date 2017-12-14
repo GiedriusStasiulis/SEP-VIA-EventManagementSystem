@@ -10,7 +10,24 @@ public class VIAoms
 	private static final String FILENAME = "MemberList.txt";
 	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
 	
+	////////////////   SPONSOR  VARIABLES //////////////////
 	
+	private Sponsor sponsor;
+	private SponsorList sponsorList;
+	private static final String SPONSORFILENAME = "SponsorList.txt";
+	private FileReaderWriter sponsorFile = new FileReaderWriter(SPONSORFILENAME);
+		
+	///////////////////////////////////////////////////////
+	
+	public void addSponsor(String name, String email, String phoneNumber) throws FileNotFoundException, ParseException
+	{
+	   sponsor = new Sponsor(name,email,phoneNumber);
+	   sponsorList.clearSponsorList();
+	   sponsorList = sponsorFile.readSponsorTextFile();
+	   sponsorList.addSponsorToList(sponsor);
+	   sponsorFile.writeSponsorTextFile(sponsorList);
+	   
+	}
 	public void addMember(String memberName, String memberEmail, String membershipStatus) throws FileNotFoundException, ParseException
 	{
 		member = new Member(memberName,memberEmail,membershipStatus);
@@ -28,12 +45,28 @@ public class VIAoms
 		memberFile.writeMemberTextFile(memberList);
 	}	
 	
+	public void editSponsor(int index, Sponsor sponsor) throws FileNotFoundException, ParseException
+	{
+	   sponsorList.clearSponsorList();
+	   sponsorList =sponsorFile.readSponsorTextFile();
+	   sponsorList.replaceSponsor(index, sponsor);
+	   sponsorFile.writeSponsorTextFile(sponsorList);
+	}
+	
 	public void deleteMember(int index) throws FileNotFoundException, ParseException
 	{
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
 		memberList.deleteMember(index);		
 		memberFile.writeMemberTextFile(memberList);
+	}
+	
+	public void deleteSponsor(int index) throws FileNotFoundException, ParseException
+	{
+	   sponsorList.clearSponsorList();
+      sponsorList =sponsorFile.readSponsorTextFile();
+      sponsorList.deleteSponsor(index);
+      sponsorFile.writeSponsorTextFile(sponsorList);
 	}
 	
 	public MemberList generateListNonPaidMembership() throws FileNotFoundException, ParseException
@@ -55,7 +88,14 @@ public class VIAoms
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
 		return memberList;
-	}	
+	}
+	
+	public SponsorList getSponsorList() throws FileNotFoundException, ParseException
+	{
+	   sponsorList.clearSponsorList();
+	   sponsorList=sponsorFile.readSponsorTextFile();
+	   return sponsorList;
+	}
 	
 	public boolean checkForDuplicates(Member member) throws FileNotFoundException, ParseException
 	{

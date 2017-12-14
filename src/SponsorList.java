@@ -66,4 +66,8 @@ public class SponsorList
       String s = String.format("%s", sponsorList);
       return s;
    }
+   public void clearSponsorList()
+   {
+      sponsorList.clear();
+   }
 }
