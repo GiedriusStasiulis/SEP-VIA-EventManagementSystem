@@ -448,7 +448,7 @@ public class GUIsponsorsController implements Initializable
               
               if (n == JOptionPane.YES_OPTION) 
               {
-                 int index = sponsorList.getSponsorIndex(selectedSponsor);
+                 int index = viaOms.getSponsorList().getSponsorIndex(selectedSponsor);
                  
                  viaOms.deleteSponsor(index);
                  sponsorFile.writeSponsorTextFile(sponsorList);
