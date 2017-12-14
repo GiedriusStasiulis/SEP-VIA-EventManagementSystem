@@ -42,7 +42,7 @@ public class GUIeventsController implements Initializable
 {
 	private File file;
 	
-	private Event eventToAdd;
+	private Event eventObj;
 	private Event selectedEvent;
 	private EventList eventList = new EventList();
 	private MemberList memberList = new MemberList();
@@ -107,6 +107,8 @@ public class GUIeventsController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		System.out.println("Event list size: " + memberList.size());
+		
 		eventsPage.setMaxHeight(Double.MAX_VALUE);
 		eventsPage.setMaxWidth(Double.MAX_VALUE);	
 		
@@ -204,6 +206,7 @@ public class GUIeventsController implements Initializable
 		try
 		{		   
 		   eventsTable.setItems(getList()); 
+		   //System.out.println(eventList);
 		}
 		catch (FileNotFoundException e)
 		{
@@ -225,6 +228,7 @@ public class GUIeventsController implements Initializable
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
+				System.out.println(selectedEvent);
 				try
             {
 					lvMembersAddedToEvent.setItems(getMembersAdded());
@@ -263,6 +267,16 @@ public class GUIeventsController implements Initializable
 				tpShowEventsPane.setExpanded(false);
 			}
 		}); */
+		
+		lvEventSearchResults.setOnMouseClicked((MouseEvent event) -> {
+			   if (event.getClickCount()==1) {
+				   showEventDetailsFromListView();
+				   tpShowEventsPane.setExpanded(true);
+				   btnEditEvent.setDisable(false);
+				   btnDeleteEvent.setDisable(false);
+				   System.out.println(selectedEvent);
+			   }
+			}); 
 	}	
 	
 	
@@ -289,7 +303,21 @@ public class GUIeventsController implements Initializable
 	
 	public void showEventDetailsFromListView()
 	{
-		
+		if (lvEventSearchResults.getSelectionModel().getSelectedItem() !=null)
+		{
+		   selectedEvent = lvEventSearchResults.getSelectionModel().getSelectedItem();
+		   tfShowEventTitle.setText(selectedEvent.getEventTitle());
+		   cbShowEventType.getSelectionModel().select(selectedEvent.getEventType());
+		   cbShowEventCategory.getSelectionModel().select(selectedEvent.getEventCategory());
+		   dpShowEventStartDate.setValue(selectedEvent.getEventStartDate());
+		   dpShowEventEndDate.setValue(selectedEvent.getEventEndDate());
+		   tfShowEventPrice.setText(Double.toString(selectedEvent.getPrice()));
+		   tfShowEventStartTime.setText(selectedEvent.getStartTime());
+		   tfShowEventEndTime.setText(selectedEvent.getEndTime());
+		   tfShowEventDiscount.setText(Double.toString(selectedEvent.getDiscount()));
+		   cbShowEventLecturer.getSelectionModel().select(selectedEvent.getEventLecturer());
+		   tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getMaxMembers()));		   
+		}
 	}
 	
 	public ObservableList<String> getLecturerNames() throws FileNotFoundException, ParseException
@@ -404,10 +432,10 @@ public class GUIeventsController implements Initializable
     		finalized = "Not finalized";
     	}
          	
-    	Event eventNew = new Event(eventTitle,eventType,eventCategory,eventLecturer,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount,finalized);
-    	eventList.addEventToList(eventNew);
+    	eventObj = new Event(eventTitle,eventType,eventCategory,eventLecturer,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount,finalized);
+    	eventList.addEventToList(eventObj);
     	eventFile.writeEventTextFile(eventList);
-    	eventsTable.getItems().add(eventNew);   	
+    	eventsTable.getItems().add(eventObj);   	
     	
     	//////////create a file to store lecturer names for this event///////
     	
@@ -593,7 +621,6 @@ public class GUIeventsController implements Initializable
     @FXML
     void cancelEditEvent(ActionEvent event) 
     {
-    	System.out.println("Cancel edit event");
     	hboxEventEditOptions.setVisible(false);
     	
 		tfShowEventTitle.setEditable(false);		
@@ -607,9 +634,47 @@ public class GUIeventsController implements Initializable
     }
 
     @FXML
-    void deleteEvent(ActionEvent event) 
+    void deleteEvent(ActionEvent event) throws FileNotFoundException 
     {
-    	System.out.println("Delete event");    	
+    	System.out.println(selectedEvent);
+    	System.out.println(eventList);
+    	
+    	if(eventsTable.getSelectionModel() != null)
+    	{
+    		System.out.println(eventsTable.getSelectionModel().getSelectedIndex());
+    		if(eventList.size() > 0)
+    		{
+	    		try 
+	    		{	  
+	    				int index = eventsTable.getSelectionModel().getSelectedIndex();
+	    				
+	    				System.out.println(index);
+	    				
+				    	eventList.deleteEvent(index);
+				    	eventFile.writeEventTextFile(eventList);
+				    	eventsTable.getItems().remove(index);
+				    	
+				    	//tfShowEventTitle.setText("");
+
+				    	
+				    	//lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+  	
+	    		}
+	    		catch(ArrayIndexOutOfBoundsException e)
+	    		{
+	    			//e.printStackTrace();
+	    			JOptionPane.showMessageDialog(null, "Please select an event from the table to delete");
+	    		}
+    		}    		
+    		else
+    		{
+    			JOptionPane.showMessageDialog(null, "No more events left to delete");
+    		}
+    	}    	
+    	else
+    	{
+    		JOptionPane.showMessageDialog(null, "Please select an event from the table to delete");
+    	}    	
     }
 
     @FXML

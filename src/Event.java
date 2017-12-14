@@ -533,6 +533,10 @@ public class Event {
 		//System.out.println(membersRegistered);
 	}
 	
+	public String toString() 
+	{
+		return this.eventTitle;
+	}
 	
 	
 	/*

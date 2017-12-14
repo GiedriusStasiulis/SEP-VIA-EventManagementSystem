@@ -82,6 +82,9 @@ public class GUImembersController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{		
+		
+		System.out.println("Member list size: " + memberList.size());
+		
 		memberPage.setMaxHeight(Double.MAX_VALUE);
 		memberPage.setMaxWidth(Double.MAX_VALUE);
 
@@ -370,6 +373,8 @@ public class GUImembersController implements Initializable
 	    			if (n == JOptionPane.YES_OPTION) 
 	    			{
 	    				int index = memberList.getMemberIndex(selectedMember);
+	    				
+	    				System.out.println(index);
 	    				
 				    	memberList.deleteMember(index);
 				    	memberFile.writeMemberTextFile(memberList);

@@ -24,6 +24,16 @@ public class EventList
       return eventList.get(index);
    }
    
+   public void deleteEvent(int index)
+	{
+	   eventList.remove(index);
+	}
+   
+   public int getEventIndex(Event event)
+	{
+		return eventList.indexOf(event);
+	}
+   
    public String toString()
    {
       String s = String.format("%s", eventList);
