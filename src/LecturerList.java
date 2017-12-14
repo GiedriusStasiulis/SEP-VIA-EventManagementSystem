@@ -39,6 +39,11 @@ public class LecturerList
 		lecturerList.remove(index);
 	}
 	
+	public void clearLecturerList()
+	{
+		lecturerList.clear();
+	}
+	
 	public boolean checkForDuplicates(LecturerList lecturerList, Lecturer lecturer)
 	{
 		boolean status = false;

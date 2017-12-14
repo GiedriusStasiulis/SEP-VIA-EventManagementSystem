@@ -1,7 +1,2 @@
-ccc,cc@,Paid
-ddd,dd@,Not paid
-fff,ff@hhh,Not paid
-ttt,tt@,Not paid
-Not defined5,aa@,Paid
-Not defined6,tt@,Paid
-bgtgtgt,gtgt@GRG,Paid
+aaaa,aa@,Paid
+abbbb,bbb@,Not paid

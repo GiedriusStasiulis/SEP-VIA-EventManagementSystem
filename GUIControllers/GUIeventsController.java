@@ -329,7 +329,7 @@ public class GUIeventsController implements Initializable {
 		lecturerList = lecturerFile.readLecturerTextFile();
 
 		for (int i = 0; i < lecturerList.size(); i++) {
-			lecturerNames.add(lecturerList.getLecturer(i).getName());
+			lecturerNames.add(lecturerList.getLecturer(i).getLecturerName());
 		}
 
 		return lecturerNames;

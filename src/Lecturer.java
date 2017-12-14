@@ -1,46 +1,46 @@
 public class Lecturer {
-	private String name;
-	private String category;
-	private String phoneNumber;
-	private String email;
+	private String lecturerName;
+	private String lecturerCategory;
+	private String lecturerEmail;
+	private String lecturerPhoneNumber;
 
-	public Lecturer(String name, String category, String phoneNumber, String email) {
-		this.name = name;
-		this.category = category;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
+	public Lecturer(String lecturerName, String lecturerCategory, String lecturerEmail, String lecturerPhoneNumber) {
+		this.lecturerName = lecturerName;
+		this.lecturerCategory = lecturerCategory;
+		this.lecturerEmail = lecturerEmail;
+		this.lecturerPhoneNumber = lecturerPhoneNumber;
 	}
 
-	public String getName() {
-		return name;
+	public String getLecturerName() {
+		return lecturerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLecturerName(String lecturerName) {
+		this.lecturerName = lecturerName;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getLecturerCategory() {
+		return lecturerCategory;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setLecturerCategory(String lecturerCategory) {
+		this.lecturerCategory = lecturerCategory;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getLecturerEmail() {
+		return lecturerEmail;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setLecturerEmail(String lecturerEmail) {
+		this.lecturerEmail = lecturerEmail;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getLecturerPhoneNumber() {
+		return lecturerPhoneNumber;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLecturerPhoneNumber(String lecturerPhoneNumber) {
+		this.lecturerPhoneNumber = lecturerPhoneNumber;
 	}
 
 	public boolean equals(Object obj) {
@@ -49,12 +49,12 @@ public class Lecturer {
 		}
 
 		Lecturer other = (Lecturer) obj;
-		return name.equals(other.name) && email.equals(other.email) && phoneNumber.equals(other.phoneNumber)
-				&& category.equals(other.category);
+		return lecturerName.equals(other.lecturerName) && lecturerEmail.equals(other.lecturerEmail) && lecturerPhoneNumber.equals(other.lecturerPhoneNumber)
+				&& lecturerCategory.equals(other.lecturerCategory);
 	}
 
 	public String toString() {
-		String s = String.format("%s,%s,%s,%s", getName(), getCategory(), getPhoneNumber(), getEmail());
+		String s = String.format("%s,%s,%s,%s", getLecturerName(), getLecturerCategory(), getLecturerEmail(), getLecturerPhoneNumber());
 		return s;
 	}
 }

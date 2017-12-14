@@ -243,19 +243,18 @@ public class FileReaderWriter
 		try 
 		{
 			input = new Scanner(file);
-			int lineNumber = 0;
+
 			while (input.hasNext()) 
 			{
 				String line = input.nextLine();
 				String[] lineToken = line.split(",");
-				lineNumber++;
 
 				String lecturerName = lineToken[0].trim();
 				String lecturerCategory = lineToken[1].trim();
-				String lecturerPhoneNumber = lineToken[2].trim();
-				String lecturerEmail = lineToken[3].trim();
+				String lecturerEmail = lineToken[2].trim();
+				String lecturerPhoneNumber = lineToken[3].trim();
 
-				Lecturer lecturer = new Lecturer(lecturerName, lecturerCategory, lecturerPhoneNumber, lecturerEmail);
+				Lecturer lecturer = new Lecturer(lecturerName, lecturerCategory, lecturerEmail, lecturerPhoneNumber);
 				currentLecturerList.addLecturerToList(lecturer);
 			}
 			return currentLecturerList;
@@ -276,9 +275,9 @@ public class FileReaderWriter
 
 			for (int i = 0; i < lecturerList.size(); i++) 
 			{
-				output.println(lecturerList.getLecturer(i).getName() + "," + lecturerList.getLecturer(i).getCategory()
-						+ "," + lecturerList.getLecturer(i).getPhoneNumber() + ","
-						+ lecturerList.getLecturer(i).getEmail());
+				output.println(lecturerList.getLecturer(i).getLecturerName() + "," + lecturerList.getLecturer(i).getLecturerCategory()
+						+ "," + lecturerList.getLecturer(i).getLecturerEmail() + ","
+						+ lecturerList.getLecturer(i).getLecturerPhoneNumber());
 			}
 			output.flush();
 		} 

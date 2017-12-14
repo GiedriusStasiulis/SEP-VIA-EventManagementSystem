@@ -218,7 +218,7 @@ public class GUImembersController implements Initializable
 		{					
 			member = new Member(memberName, memberEmail, membershipStatus);	
 			
-			if(viaOms.checkForDuplicates(member))
+			if(viaOms.checkForMemberDuplicates(member))
 			{
 				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 				clearAddMemberTextFields(event);
@@ -351,7 +351,7 @@ public class GUImembersController implements Initializable
 	    	
 			if(newMemberEmail.contains("@"))
 			{
-				if(viaOms.checkForDuplicates(tempMember) == true)
+				if(viaOms.checkForMemberDuplicates(tempMember) == true)
 				{
 					JOptionPane.showMessageDialog(null, "Member already exists in the system!");
 					
@@ -390,6 +390,9 @@ public class GUImembersController implements Initializable
 			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
 			    	
 			    	cbShowMembershipStatus.setDisable(true);
+			    	
+			    	btnEditMember.setDisable(true);
+					btnDeleteMember.setDisable(true);
 				}			
 			}
 			
@@ -449,6 +452,9 @@ public class GUImembersController implements Initializable
 				    	
 				    	tfShowMemberName.setText("");
 				    	tfShowMemberEmail.setText("");	
+				    	
+				    	btnEditMember.setDisable(true);
+						btnDeleteMember.setDisable(true);
 				    	
 				    	lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
 	    			} 	    	

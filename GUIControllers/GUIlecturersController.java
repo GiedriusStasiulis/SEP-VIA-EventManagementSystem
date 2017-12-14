@@ -26,7 +26,8 @@ import javafx.scene.layout.HBox;
 
 public class GUIlecturersController implements Initializable 
 {
-	private Lecturer lecturer;
+	private VIAoms viaOms = new VIAoms();
+	
 	private Lecturer selectedLecturer;
 	private LecturerList lecturerList = new LecturerList();
 	private static final String FILENAME = "LecturerList.txt";
@@ -81,15 +82,15 @@ public class GUIlecturersController implements Initializable
 		tfShowLecturerEmail.setEditable(false);
 		tfShowLecturerPhoneNumber.setEditable(false);
 
-		tcLecturerName.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("name"));
-		tcLecturerCategory.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("category"));
-		tcLecturerPhoneNumber.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("phoneNumber"));
-		tcLecturerEmail.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("email"));
+		tcLecturerName.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("lecturerName"));
+		tcLecturerCategory.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("lecturerCategory"));
+		tcLecturerEmail.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("lecturerEmail"));
+		tcLecturerPhoneNumber.setCellValueFactory(new PropertyValueFactory<Lecturer, String>("lecturerPhoneNumber"));
 
 		tcLecturerName.setStyle("-fx-alignment: CENTER;");
 		tcLecturerCategory.setStyle("-fx-alignment: CENTER;");
-		tcLecturerPhoneNumber.setStyle("-fx-alignment: CENTER;");
 		tcLecturerEmail.setStyle("-fx-alignment: CENTER;");
+		tcLecturerPhoneNumber.setStyle("-fx-alignment: CENTER;");
 
 		btnEditLecturer.setDisable(true);
 		btnDeleteLecturer.setDisable(true);
@@ -133,28 +134,28 @@ public class GUIlecturersController implements Initializable
 		if (lecturerTable.getSelectionModel().getSelectedItem() != null) 
 		{
 			selectedLecturer = lecturerTable.getSelectionModel().getSelectedItem();
-			tfShowLecturerName.setText(selectedLecturer.getName());
-			tfShowLecturerEmail.setText(selectedLecturer.getEmail());
-			tfShowLecturerPhoneNumber.setText(selectedLecturer.getPhoneNumber());
+			tfShowLecturerName.setText(selectedLecturer.getLecturerName());
+			tfShowLecturerEmail.setText(selectedLecturer.getLecturerEmail());
+			tfShowLecturerPhoneNumber.setText(selectedLecturer.getLecturerPhoneNumber());
 
 			int tempIndex = 0;
 
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Dream Interpretation")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Dream Interpretation")) {
 				tempIndex = 0;
 			}
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Healing")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Healing")) {
 				tempIndex = 1;
 			}
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Astrology")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Astrology")) {
 				tempIndex = 2;
 			}
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Reincarnation")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Reincarnation")) {
 				tempIndex = 3;
 			}
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Karma")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Karma")) {
 				tempIndex = 4;
 			}
-			if (selectedLecturer.getCategory().equalsIgnoreCase("Alternative Health-Care")) {
+			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Alternative Health-Care")) {
 				tempIndex = 5;
 			}
 
@@ -168,8 +169,9 @@ public class GUIlecturersController implements Initializable
 		{
 			selectedLecturer = lvLecturerSearchResults.getSelectionModel().getSelectedItem();
 			System.out.println(selectedLecturer);
-			tfShowLecturerName.setText(selectedLecturer.getName());
-			tfShowLecturerEmail.setText(selectedLecturer.getEmail());
+			tfShowLecturerName.setText(selectedLecturer.getLecturerName());
+			tfShowLecturerEmail.setText(selectedLecturer.getLecturerEmail());
+			tfShowLecturerPhoneNumber.setText(selectedLecturer.getLecturerPhoneNumber());
 		}
 	}
 	
@@ -179,8 +181,8 @@ public class GUIlecturersController implements Initializable
 
 		for (int i = 0; i < lecturerList.size(); i++) {
 
-			lecturers.add(new Lecturer(lecturerList.getLecturer(i).getName(), lecturerList.getLecturer(i).getCategory(),
-					lecturerList.getLecturer(i).getPhoneNumber(), lecturerList.getLecturer(i).getEmail()));
+			lecturers.add(new Lecturer(lecturerList.getLecturer(i).getLecturerName(), lecturerList.getLecturer(i).getLecturerCategory(),
+					lecturerList.getLecturer(i).getLecturerEmail(),lecturerList.getLecturer(i).getLecturerPhoneNumber()));
 		}
 		return lecturers;
 	}
@@ -190,14 +192,15 @@ public class GUIlecturersController implements Initializable
 	{
 		String lecturerName = tfEnterLecturerName.getText();
 		String lecturerCategory = cbSelectLecturerCategory.getSelectionModel().getSelectedItem();
-		String lecturerPhoneNumber = tfEnterLecturerPhoneNumber.getText();
 		String lecturerEmail = tfEnterLecturerEmail.getText();
+		String lecturerPhoneNumber = tfEnterLecturerPhoneNumber.getText();
 
 		if (tfEnterLecturerName.getText().isEmpty() && tfEnterLecturerPhoneNumber.getText().isEmpty()
 				&& tfEnterLecturerEmail.getText().isEmpty()) {
 			lecturerName = String.format("empty%d", lecturerList.size() + 1);
-			lecturerPhoneNumber = String.format("empty%d", lecturerList.size() + 1);
+			
 			lecturerEmail = String.format("empty@empty%d", lecturerList.size() + 1);
+			lecturerPhoneNumber = String.format("empty%d", lecturerList.size() + 1);
 		}
 
 		else if (tfEnterLecturerName.getText().isEmpty()) 
@@ -217,9 +220,9 @@ public class GUIlecturersController implements Initializable
 
 		if (lecturerEmail.contains("@")) 
 		{
-			lecturer = new Lecturer(lecturerName, lecturerCategory, lecturerPhoneNumber, lecturerEmail);
+			Lecturer lecturer = new Lecturer(lecturerName, lecturerCategory, lecturerEmail, lecturerPhoneNumber);
 
-			if (lecturerList.checkForDuplicates(lecturerList, lecturer)) 
+			if (viaOms.checkForLecturerDuplicates(lecturer)) 
 			{
 				JOptionPane.showMessageDialog(null, "Lecturer already exists in the system!");
 				clearAddLecturerTextFields(event);
@@ -227,12 +230,11 @@ public class GUIlecturersController implements Initializable
 
 			else 
 			{
-				lecturerList.addLecturerToList(lecturer);
-				lecturerFile.writeLecturerTextFile(lecturerList);
+				viaOms.addLecturer(lecturerName, lecturerCategory, lecturerEmail, lecturerPhoneNumber);
 				lecturerTable.getItems().add(lecturer);
 				clearAddLecturerTextFields(event);
-
-				lblLecturerCount.setText(String.format("Lecturer count: %d", lecturerList.size()));
+				
+				lblLecturerCount.setText(String.format("Lecturer count: %d", viaOms.getLecturerList().size()));
 			}
 		}
 
@@ -266,7 +268,7 @@ public class GUIlecturersController implements Initializable
 
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getName().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerName().toLowerCase().contains(searchKeyword)) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -284,7 +286,7 @@ public class GUIlecturersController implements Initializable
 
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getCategory().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerCategory().toLowerCase().contains(searchKeyword)) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -302,7 +304,7 @@ public class GUIlecturersController implements Initializable
 			
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerPhoneNumber().toLowerCase().contains(searchKeyword)) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -320,7 +322,7 @@ public class GUIlecturersController implements Initializable
 			
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getEmail().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerEmail().toLowerCase().contains(searchKeyword)) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -361,12 +363,12 @@ public class GUIlecturersController implements Initializable
 	@FXML
 	void saveEditLecturerChanges(ActionEvent event) throws FileNotFoundException, ParseException 
 	{
-		int index = lecturerList.getLecturerIndex(selectedLecturer);
+		int index = viaOms.getLecturerList().getLecturerIndex(selectedLecturer); 
 
 		String newLecturerName = tfShowLecturerName.getText();
-		String newLecturerEmail = tfShowLecturerEmail.getText();
-		String newLecturerPhone = tfShowLecturerPhoneNumber.getText();
 		String newLecturerCategory = cbShowLecturerCategory.getSelectionModel().getSelectedItem();
+		String newLecturerEmail = tfShowLecturerEmail.getText();
+		String newLecturerPhone = tfShowLecturerPhoneNumber.getText();		
 
 		if (tfShowLecturerName.getText().isEmpty()) 
 		{
@@ -381,14 +383,13 @@ public class GUIlecturersController implements Initializable
 		if (tfShowLecturerPhoneNumber.getText().isEmpty()) 
 		{
 			newLecturerPhone = "empty";
-		}
-		
+		}		
 		
 		if(newLecturerEmail.contains("@"))
 		{	
-			Lecturer tempLecturer = new Lecturer(newLecturerName,newLecturerCategory,newLecturerPhone,newLecturerEmail);
+			Lecturer tempLecturer = new Lecturer(newLecturerName,newLecturerCategory,newLecturerEmail,newLecturerPhone);
 			
-			if (lecturerList.checkForDuplicates(lecturerList, tempLecturer) == true) 
+			if (viaOms.checkForLecturerDuplicates(tempLecturer)) 
 			{
 				JOptionPane.showMessageDialog(null, "Lecturer already exists in the system!");
 				
@@ -414,14 +415,13 @@ public class GUIlecturersController implements Initializable
 
 			else 
 			{
-				selectedLecturer.setName(newLecturerName);
-				selectedLecturer.setEmail(newLecturerEmail);
-				selectedLecturer.setPhoneNumber(newLecturerPhone);
-				selectedLecturer.setCategory(newLecturerCategory);
+				selectedLecturer.setLecturerName(newLecturerName);
+				selectedLecturer.setLecturerCategory(newLecturerCategory);
+				selectedLecturer.setLecturerEmail(newLecturerEmail);
+				selectedLecturer.setLecturerPhoneNumber(newLecturerPhone);
 		
-				lecturerList.replaceLecturer(index, selectedLecturer);
-				lecturerFile.writeLecturerTextFile(lecturerList);
-		
+				viaOms.editLecturer(index, selectedLecturer);
+						
 				lecturerTable.getItems().set(index, selectedLecturer);
 		
 				hboxLecturerEditOptions.setVisible(false);
@@ -431,6 +431,9 @@ public class GUIlecturersController implements Initializable
 				tfShowLecturerName.setEditable(false);
 				tfShowLecturerEmail.setEditable(false);
 				tfShowLecturerPhoneNumber.setEditable(false);
+				
+				btnEditLecturer.setDisable(true);
+				btnDeleteLecturer.setDisable(true);
 		
 				tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
@@ -472,7 +475,7 @@ public class GUIlecturersController implements Initializable
 	}	
 
 	@FXML
-	void deleteLecturer(ActionEvent event) throws FileNotFoundException 
+	void deleteLecturer(ActionEvent event) throws FileNotFoundException, ParseException 
 	{
 		if (lecturerTable.getSelectionModel() != null) 
 		{
@@ -488,17 +491,20 @@ public class GUIlecturersController implements Initializable
 
 					if (n == JOptionPane.YES_OPTION) 
 					{
-						int index = lecturerList.getLecturerIndex(selectedLecturer);
+						int index = viaOms.getLecturerList().getLecturerIndex(selectedLecturer);
 
-						lecturerList.deleteLecturer(index);
-						lecturerFile.writeLecturerTextFile(lecturerList);
+						viaOms.deleteLecturer(index);
+						
 						lecturerTable.getItems().remove(index);
-
+	
 						tfShowLecturerName.setText("");
 						tfShowLecturerEmail.setText("");
-						tfShowLecturerPhoneNumber.setText("");
+						tfShowLecturerPhoneNumber.setText(""); 
+						
+						btnEditLecturer.setDisable(true);
+						btnDeleteLecturer.setDisable(true);
 
-						lblLecturerCount.setText(String.format("lecturer count: %d", lecturerList.size()));
+						lblLecturerCount.setText(String.format("lecturer count: %d", viaOms.getLecturerList().size()));
 					}
 				} 
 				

@@ -86,8 +86,6 @@ public class GUIsponsorsController implements Initializable
       tfShowSponsorEmail.setEditable(false);
       tfShowSponsorPhoneNumber.setEditable(false);
 
-      //spSponsorsTableScrollPane.setStyle("-fx-font-size: 13px;");
-      
       try
       {
          sponsorTable.setItems(getList());
@@ -389,6 +387,9 @@ public class GUIsponsorsController implements Initializable
              tfShowSponsorEmail.setEditable(false);
              tfShowSponsorPhoneNumber.setEditable(false);
              
+             btnEditSponsor.setDisable(true);
+             btnDeleteSponsor.setDisable(true);
+             
              tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
              tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
              tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;"); 
@@ -456,6 +457,9 @@ public class GUIsponsorsController implements Initializable
                  tfShowSponsorName.setText("");
                  tfShowSponsorEmail.setText("");   
                  tfShowSponsorPhoneNumber.setText("");   
+                 
+                 btnEditSponsor.setDisable(true);
+                 btnDeleteSponsor.setDisable(true);
                  
                  lblSponsorCount.setText(String.format("Sponsor count: %d", sponsorList.size()));
               }        
