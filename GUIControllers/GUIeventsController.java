@@ -646,6 +646,19 @@ public class GUIeventsController implements Initializable
     		{
 	    		try 
 	    		{	  
+	    			String[] options = {"Delete","Cancel"}; 
+	    	    	int n = JOptionPane.showOptionDialog(null,
+	    	                "Are you sure you want to delete member:\n" + eventsTable.getSelectionModel().getSelectedItem() + " ?",
+	    	                "Delete a member",
+	    	                JOptionPane.YES_NO_OPTION,
+	    	                JOptionPane.QUESTION_MESSAGE,
+	    	                null,
+	    	                options,
+	    	                options[0]);	    			
+	    			
+	    			if (n == JOptionPane.YES_OPTION) 
+	    			{
+	    			
 	    				int index = eventsTable.getSelectionModel().getSelectedIndex();
 	    				
 	    				System.out.println(index);
@@ -658,7 +671,7 @@ public class GUIeventsController implements Initializable
 
 				    	
 				    	//lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
-  	
+	    			}
 	    		}
 	    		catch(ArrayIndexOutOfBoundsException e)
 	    		{
