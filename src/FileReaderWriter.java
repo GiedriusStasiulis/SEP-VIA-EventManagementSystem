@@ -338,4 +338,23 @@ public class FileReaderWriter
 			output.close();
 		}
 	}
+	public void writeNonMemberTextFile(NonMemberList nonMemberList) throws FileNotFoundException 
+   {
+      PrintWriter output = null;
+      try 
+      {
+         output = new PrintWriter(file);
+
+         for (int i = 0; i < nonMemberList.size(); i++) 
+         {
+            output.println(nonMemberList.getNonMember(i).getName() + "," + nonMemberList.getNonMember(i).getPhoneNumber());
+         }
+         output.flush();
+      } 
+      
+      finally 
+      {
+         output.close();
+      }
+   }
 }

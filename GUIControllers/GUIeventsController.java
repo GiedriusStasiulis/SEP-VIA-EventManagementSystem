@@ -45,18 +45,21 @@ public class GUIeventsController implements Initializable {
 	private Event selectedEvent;
 	private EventList eventList = new EventList();
 	private MemberList memberList = new MemberList();
+	private NonMemberList nonMemberList = new NonMemberList();
 	private LecturerList lecturerList = new LecturerList();
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
 
 	private static final String FILENAME = "MemberList.txt";
 	private static final String FILENAMEEVENT = "EventList.txt";
 	private static final String LECTURERFILENAME = "LecturerList.txt";
+	private String filenameNonMembersEvent = "NonMembersForEvent.txt";
 	private String filenameMembersEvent = "MemberListForEvent.txt";
 
 	private FileReaderWriter eventFile = new FileReaderWriter(FILENAMEEVENT);
 	private FileReaderWriter lecturerFile = new FileReaderWriter(LECTURERFILENAME);
 	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
 	private FileReaderWriter memberEventFile = new FileReaderWriter(filenameMembersEvent);
+	private FileReaderWriter nonMemberEventFile = new FileReaderWriter(filenameNonMembersEvent);
 
 	private ObservableList<String> memberNames = FXCollections.observableArrayList();
 	// private ObservableList<String> emptyList=FXCollections.observableArrayList();
@@ -78,13 +81,13 @@ public class GUIeventsController implements Initializable {
 	@FXML
 	private Button btnCreateEvent, btnDeleteEvent, btnCancelEditEvent, btnEditEvent, btnClearTextFields,
 			btnSearchEvents, btnSaveEventEditChanges, btnClearEditEventTextFields, btnAddMemberToEvent,
-			btnRemoveMemberFromEvent, btnAddCategoryToEvent, btnRemoveCategoryFromEvent;
+			btnRemoveMemberFromEvent, btnAddCategoryToEvent, btnRemoveCategoryFromEvent, btnRemoveNonMemberFromEvent, btnAddNonMemberToEvent;
 
 	@FXML
 	private TextField tfEnterSearchKeywords, tfEventEndTime, tfShowEventPrice, tfShowEventNumberOfTickets,
 			tfShowEventEndTime, tfEventNumberOfTickets, tfEventPrice, tfShowEventDiscount, tfEnterEventTitle,
 			tfEventStartTime, tfEventDiscount, tfShowEventTicketsRemaining, tfShowEventStartTime, tfSelectedEvent,
-			tfShowEventTitle;
+			tfShowEventTitle,tfSelectedEventNonMember, tfNonMemberName, tfNonMemberPhoneNumber;
 
 	@FXML
 	private ComboBox<String> cbEventLecturer, cbEventCategory, cbEventSearchCriteria, cbShowEventCategory, cbEventType,
@@ -111,6 +114,8 @@ public class GUIeventsController implements Initializable {
 
 	@FXML
 	private ListView<Event> lvEventSearchResults;
+	@FXML
+   private ListView<NonMember> lvNonMembersAddedToEvent;
 	@FXML
 	private ListView<String> lvMembersToAdd, lvMembersAddedToEvent, lvCategoriesToAdd, lvCategoriesAddedToEvent;
 
@@ -148,6 +153,8 @@ public class GUIeventsController implements Initializable {
 		tfShowEventPrice.setEditable(false);
 		tfShowEventDiscount.setEditable(false);
 		cbShowEventStatus.setDisable(true);
+		tfSelectedEventNonMember.setEditable(false);
+		
 
 		cbEventType.setItems(typeChoices);
 		cbEventType.getSelectionModel().select(0);
@@ -264,6 +271,7 @@ public class GUIeventsController implements Initializable {
 			tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getEventNumberOfTickets()));
 			tfShowEventPrice.setText(Double.toString(selectedEvent.getEventPrice()));
 			tfShowEventDiscount.setText(Double.toString(selectedEvent.getEventDiscount()));
+			tfSelectedEventNonMember.setText(selectedEvent.getEventTitle());
 
 			if (selectedEvent.getEventStatus().equals("Finalized")) {
 				cbShowEventStatus.setSelected(true);
@@ -290,6 +298,8 @@ public class GUIeventsController implements Initializable {
 			tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getEventNumberOfTickets()));
 			tfShowEventPrice.setText(Double.toString(selectedEvent.getEventPrice()));
 			tfShowEventDiscount.setText(Double.toString(selectedEvent.getEventDiscount()));
+			tfSelectedEventNonMember.setText(selectedEvent.getEventTitle());
+			
 
 			if (selectedEvent.getEventStatus().equals("Finalized")) {
 				cbShowEventStatus.setSelected(true);
@@ -428,8 +438,12 @@ public class GUIeventsController implements Initializable {
 	*/
 			/////////// Create a file to store members for this event///////////
 			String filename2 = eventTitle + "MemberListForEvent.txt";
+			String filename3 =eventTitle + "NonMembersForEvent.txt";
 			File file2 = new File(filename2);
 			file2.createNewFile();
+			
+			File file3 = new File(filename3);
+			file3.createNewFile();
 
 			clearCreateEventTextFields(event);
 		}		
@@ -827,4 +841,63 @@ public class GUIeventsController implements Initializable {
 	void removeCategoryFromEvent(ActionEvent event) {
 		System.out.println("Remove lecturer from event");
 	}
+	 @FXML
+    void addNonMemberToEvent(ActionEvent event) throws FileNotFoundException {
+	    lvNonMembersAddedToEvent.getItems().clear();
+	      NonMember nonMember=new NonMember(tfNonMemberName.getText(),tfNonMemberPhoneNumber.getText());
+	      /*nonMemberList.addNonMemberToList(nonMember);
+	      for(int i=0;i<nonMemberList.size();i++)
+	      {
+	      lvNonMembersAddedToEvent.getItems().add(nonMemberList.getNonMember(i).toString());
+	      }
+	      */
+	      
+	      String nonMemberName = tfNonMemberName.getText();
+	      String nonMemberPhoneNumber = tfNonMemberPhoneNumber.getText(); 
+	      
+	      if(tfNonMemberName.getText().isEmpty() && tfNonMemberPhoneNumber.getText().isEmpty())
+	      {
+	         nonMemberName = String.format("empty%d", nonMemberList.size() + 1);
+	         nonMemberPhoneNumber = String.format("empty@empty%d", nonMemberList.size() + 1);
+	      }     
+	      
+	      else if(tfNonMemberName.getText().isEmpty())
+	      {
+	         nonMemberName = String.format("empty%d", nonMemberList.size() + 1);
+	      }
+	      
+	      else if(tfNonMemberPhoneNumber.getText().isEmpty())
+	      {
+	         nonMemberPhoneNumber = String.format("empty@empty%d", nonMemberList.size() + 1);
+	      }
+	      
+	         
+	         
+	         if(nonMemberList.checkForDuplicates(nonMemberList, nonMember))
+	         {
+	            JOptionPane.showMessageDialog(null, "NonMember already exists in the system!");
+	            
+	         }
+	         
+	         else
+	         {
+	            nonMemberList.addNonMemberToList(nonMember);
+	            
+	            nonMemberEventFile.writeNonMemberTextFile(nonMemberList);     
+	            
+	            for(int i=0;i<nonMemberList.size();i++)
+	            {
+	               lvNonMembersAddedToEvent.getItems().add(nonMemberList.getNonMember(i));
+	            }  
+	           
+	         }
+	         tfNonMemberName.clear();
+	         tfNonMemberPhoneNumber.clear();
+
+    }
+
+    @FXML
+    void removeNonMemberFromEvent(ActionEvent event) {
+
+    }
 }

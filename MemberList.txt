@@ -1,4 +1,4 @@
 Marius,ma@via.dk,Not paid
-Alin,fa@via.dk,Not paid
+Alin,fa@via.dk,Paid
 Giedrius,gs@via.dk,Not paid
 Justas,jb@via.dk,Not paid
