@@ -62,8 +62,8 @@ public class GUIeventsController implements Initializable {
 	// private ObservableList<String> emptyList=FXCollections.observableArrayList();
 	private ObservableList<String> typeChoices = FXCollections.observableArrayList("Lecture", "Seminar", "Workshop",
 			"Journey");
-	private ObservableList<String> categoryChoices = FXCollections.observableArrayList("Astrology", "Therapy",
-			"Fortune-telling");
+	private ObservableList<String> categoryChoices = FXCollections.observableArrayList("Dream Interpretation", "Healing",
+			"Astrology", "Reincarnation", "Karma", "Alternative Health-Care");
 	private ObservableList<Event> events = FXCollections.observableArrayList();
 	private ObservableList<String> lecturerNames = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Title", "Type", "Category",
@@ -674,19 +674,7 @@ public class GUIeventsController implements Initializable {
 			tfShowEventDiscount.setEditable(false);
 			cbShowEventStatus.setDisable(true);
 			
-			tfShowEventTitle.setText("");
-			cbShowEventType.getSelectionModel().select(0);
-			cbShowEventCategory.getSelectionModel().select(0);
-			cbShowEventLecturer.getSelectionModel().select(0);
-			dpShowEventStartDate.getEditor().clear();
-			dpShowEventStartDate.setValue(null);
-			dpShowEventEndDate.getEditor().clear();
-			dpShowEventEndDate.setValue(null);
-			tfShowEventStartTime.setText("");
-			tfShowEventEndTime.setText("");
-			tfShowEventNumberOfTickets.setText("");
-			tfShowEventPrice.setText("");
-			tfShowEventDiscount.setText("");
+			clearEditEventTextFields(event);
 			
 			btnEditEvent.setDisable(true);
 			btnDeleteEvent.setDisable(true);
@@ -696,8 +684,19 @@ public class GUIeventsController implements Initializable {
 	@FXML
 	void clearEditEventTextFields(ActionEvent event) 
 	{
-
-
+		tfShowEventTitle.setText("");
+		cbShowEventType.getSelectionModel().select(0);
+		cbShowEventCategory.getSelectionModel().select(0);
+		cbShowEventLecturer.getSelectionModel().select(0);
+		dpShowEventStartDate.getEditor().clear();
+		dpShowEventStartDate.setValue(null);
+		dpShowEventEndDate.getEditor().clear();
+		dpShowEventEndDate.setValue(null);
+		tfShowEventStartTime.setText("");
+		tfShowEventEndTime.setText("");
+		tfShowEventNumberOfTickets.setText("");
+		tfShowEventPrice.setText("");
+		tfShowEventDiscount.setText("");
 	}
 
 	@FXML
@@ -823,5 +822,4 @@ public class GUIeventsController implements Initializable {
 	void removeCategoryFromEvent(ActionEvent event) {
 		System.out.println("Remove lecturer from event");
 	}
-
 }
