@@ -96,7 +96,7 @@ public class GUIeventsController implements Initializable
 	@FXML private ListView<Event> lvEventSearchResults;
 	@FXML private ListView<String> lvMembersToAdd,lvMembersAddedToEvent,lvCategoriesToAdd,lvCategoriesAddedToEvent;
 	
-	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove,cbFinalizeEvent;
+	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove,cbFinalizeEvent,cbShowEventStatus;
 	
 	@FXML private DatePicker dpShowEventEndDate,dpShowEventStartDate,dpEventStartDate,dpEventEndDate;
 	
@@ -114,18 +114,21 @@ public class GUIeventsController implements Initializable
 		
 		hboxEventEditOptions.setVisible(false);			
 		
-		/*
-		dpShowEventStartDate.setDisable(true);
-		dpShowEventEndDate.setDisable(true);		
-		
-		tfShowEventTitle.setEditable(false);		
-		tfShowEventStartTime.setEditable(false);
-		tfShowEventEndTime.setEditable(false);
-		tfShowEventNumberOfTickets.setEditable(false);
-		tfShowEventTicketsRemaining.setEditable(false);
-		tfShowEventPrice.setEditable(false);
-		tfShowEventDiscount.setEditable(false);
-		*/
+		hboxEventEditOptions.setVisible(false);
+    	tfShowEventTitle.setEditable(false);
+    	cbShowEventType.setDisable(true);
+    	cbShowEventCategory.setDisable(true);
+    	cbShowEventLecturer.setDisable(true);
+    	dpShowEventStartDate.setDisable(true);
+    	dpShowEventEndDate.setDisable(true);
+    	tfShowEventStartTime.setEditable(false);
+    	tfShowEventEndTime.setEditable(false);
+    	tfShowEventNumberOfTickets.setEditable(false);
+    	tfShowEventPrice.setEditable(false);
+    	tfShowEventDiscount.setEditable(false);
+    	
+    	cbShowEventStatus.setDisable(true);
+    	
 		//initialize combobox
 		
 		cbEventType.setItems(typeChoices);
@@ -231,7 +234,7 @@ public class GUIeventsController implements Initializable
 				System.out.println(selectedEvent);
 				try
             {
-					lvMembersAddedToEvent.setItems(getMembersAdded());
+					//lvMembersAddedToEvent.setItems(getMembersAdded());
 					
 			//System.out.println(getMembersAdded());
 				//lvMembersAddedToEvent.setItems(memberEventFile.readEventMemberFile();   
@@ -296,7 +299,13 @@ public class GUIeventsController implements Initializable
 		   tfShowEventEndTime.setText(selectedEvent.getEndTime());
 		   tfShowEventDiscount.setText(Double.toString(selectedEvent.getDiscount()));
 		   cbShowEventLecturer.getSelectionModel().select(selectedEvent.getEventLecturer());
-		   tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getMaxMembers()));		   
+		   tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getMaxMembers()));	
+		   
+		   if(selectedEvent.getStatus().equals("Finalized"))
+		   {
+			   cbShowEventStatus.setSelected(true);
+		   }
+		   
 		}
 	}
 	
@@ -592,30 +601,107 @@ public class GUIeventsController implements Initializable
     @FXML
     void editEvent(ActionEvent event) 
     {
-    	System.out.println("Edit event");
-    	hboxEventEditOptions.setVisible(true);
-
-		tfShowEventTitle.setEditable(true);		
-		dpShowEventStartDate.setEditable(true);
-		dpShowEventEndDate.setEditable(true);
-		tfShowEventStartTime.setEditable(true);
-		tfShowEventEndTime.setEditable(true);
-		tfShowEventNumberOfTickets.setEditable(true);
-		tfShowEventTicketsRemaining.setEditable(true);
-		tfShowEventDiscount.setEditable(true);
+    	if(eventsTable.getSelectionModel() != null)
+		{
+			System.out.println(eventsTable.getSelectionModel());
+			
+			hboxEventEditOptions.setVisible(true);
+	    	tfShowEventTitle.setEditable(true);
+	    	cbShowEventType.setDisable(false);
+	    	cbShowEventCategory.setDisable(false);
+	    	cbShowEventLecturer.setDisable(false);
+	    	dpShowEventStartDate.setDisable(false);
+	    	dpShowEventEndDate.setDisable(false);
+	    	tfShowEventStartTime.setEditable(true);
+	    	tfShowEventEndTime.setEditable(true);
+	    	tfShowEventNumberOfTickets.setEditable(true);
+	    	tfShowEventPrice.setEditable(true);
+	    	tfShowEventDiscount.setEditable(true);
+	    	cbShowEventStatus.setDisable(false);
+	    	
+	    	//tfShowMemberName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+	    	//tfShowMemberEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+		}	
 
     }
     
     @FXML
-    void saveEditEventChanges(ActionEvent event) 
+    void saveEditEventChanges(ActionEvent event) throws FileNotFoundException, ParseException
     {
-    	System.out.println("Save edit changes");
+ 	int index = eventsTable.getSelectionModel().getSelectedIndex();
+    	
+    	String newEventTitle = tfShowEventTitle.getText();
+    	
+    	String newEventType = cbShowEventType.getValue();
+    	String newEventCategory = cbShowEventCategory.getValue();
+    	String newEventLecturer = cbShowEventLecturer.getValue();
+    	
+    	//DatePicker datePicker = new DatePicker();
+    	LocalDate newLocalStartDate = dpShowEventStartDate.getValue();
+    	LocalDate newLocalEndDate = dpShowEventEndDate.getValue();
+    	
+    	String newStartTime = tfShowEventStartTime.getText();
+    	String newEndTime = tfShowEventEndTime.getText();
+    	double newPrice = Double.parseDouble(tfShowEventPrice.getText());
+    	double newDiscount = Double.parseDouble(tfShowEventDiscount.getText());
+    	int newMaxMembers = Integer.parseInt(tfShowEventNumberOfTickets.getText());
+    	
+    	String newFinalized = "";
+    	
+    	if(cbShowEventStatus.isSelected())
+    	{
+    		newFinalized = "Finalized";
+    	}
+    	
+    	else
+    	{
+    		newFinalized = "Not finalized";
+    	}
+    	
+    	eventsTable.getSelectionModel().getSelectedItem().setEventTitle(newEventTitle);
+    	eventsTable.getSelectionModel().getSelectedItem().setEventType(newEventType);
+    	eventsTable.getSelectionModel().getSelectedItem().setEventCategory(newEventCategory);
+    	eventsTable.getSelectionModel().getSelectedItem().setEventLecturer(newEventLecturer);
+    	eventsTable.getSelectionModel().getSelectedItem().setEventStartDate(newLocalStartDate);
+    	eventsTable.getSelectionModel().getSelectedItem().setEventEndDate(newLocalEndDate);
+    	eventsTable.getSelectionModel().getSelectedItem().setStartTime(newStartTime);
+    	eventsTable.getSelectionModel().getSelectedItem().setEndTime(newEndTime);
+    	eventsTable.getSelectionModel().getSelectedItem().setPrice(newPrice);
+    	eventsTable.getSelectionModel().getSelectedItem().setDiscount(newDiscount);
+    	eventsTable.getSelectionModel().getSelectedItem().setMaxMembers(newMaxMembers);
+    	eventsTable.getSelectionModel().getSelectedItem().setStatus(newFinalized);
+    	
+
+	    	eventList.replaceEvent(index,eventsTable.getSelectionModel().getSelectedItem());    	
+	    	eventFile.writeEventTextFile(eventList);
+
+	    	eventsTable.getItems().set(index, eventsTable.getSelectionModel().getSelectedItem());
+
+	    	hboxEventEditOptions.setVisible(false);
+	    	tfShowEventTitle.setEditable(false);
+	    	cbShowEventType.setDisable(false);
+	    	cbShowEventCategory.setDisable(true);
+	    	cbShowEventLecturer.setDisable(true);
+	    	dpShowEventStartDate.setDisable(true);
+	    	dpShowEventEndDate.setDisable(true);
+	    	tfShowEventStartTime.setEditable(false);
+	    	tfShowEventEndTime.setEditable(false);
+	    	tfShowEventNumberOfTickets.setEditable(false);
+	    	tfShowEventPrice.setEditable(false);
+	    	tfShowEventDiscount.setEditable(false);
+	    	cbShowEventStatus.setDisable(true);
     }
 
     @FXML
-    void clearEditEventTextFields(ActionEvent event) 
+    void clearEditEventTextFields(ActionEvent event)
     {
-    	System.out.println("Clear edit event text fields");
+   
+
+		/*
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
+		}*/
     }
 
     @FXML
@@ -688,6 +774,7 @@ public class GUIeventsController implements Initializable
     	{
     		JOptionPane.showMessageDialog(null, "Please select an event from the table to delete");
     	}    	
+    	
     }
 
     @FXML

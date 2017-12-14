@@ -1,1 +1,4 @@
-aaaaa,Lecture,Astrology,Jerry Smith,2017-12-15,aaaa,2017-12-16,aaa,150,150.0,150.0,2,Finalized
+aaaaaaa,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
+bbbbbb,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
+cccccc,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
+ffffff,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized

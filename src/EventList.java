@@ -29,6 +29,11 @@ public class EventList
 	   eventList.remove(index);
 	}
    
+   public void replaceEvent(int index, Event event)
+	{
+		eventList.set(index, event);
+	}
+   
    public int getEventIndex(Event event)
 	{
 		return eventList.indexOf(event);

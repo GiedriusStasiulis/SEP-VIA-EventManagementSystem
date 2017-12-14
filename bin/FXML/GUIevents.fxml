@@ -134,7 +134,7 @@
                                                 <TextField fx:id="tfShowEventPrice" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="115.0" />
                                                 <Label text="Discount:" translateX="10.0" translateY="120.0" />
                                                 <TextField fx:id="tfShowEventDiscount" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="125.0" />
-                                                <CheckBox mnemonicParsing="false" text="Finalized" translateX="10.0" translateY="140.0" />
+                                                <CheckBox fx:id="cbShowEventStatus" mnemonicParsing="false" text="Finalized" translateX="10.0" translateY="140.0" />
                                                 <HBox fx:id="hboxEventEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="160.0">
                                                    <children>
                                                       <Button fx:id="btnSaveEventEditChanges" mnemonicParsing="false" onAction="#saveEditEventChanges" prefWidth="80.0" text="Save" translateX="10.0" />
