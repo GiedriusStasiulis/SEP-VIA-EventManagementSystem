@@ -82,9 +82,6 @@ public class GUImembersController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{		
-		
-		System.out.println("Member list size: " + memberList.size());
-		
 		memberPage.setMaxHeight(Double.MAX_VALUE);
 		memberPage.setMaxWidth(Double.MAX_VALUE);
 
@@ -101,8 +98,6 @@ public class GUImembersController implements Initializable
 		
 		btnEditMember.setDisable(true);
 		btnDeleteMember.setDisable(true);
-		
-		//spMemberTableScrollPane.setStyle("-fx-font-size: 13px;");
 
 		try 
 		{
@@ -279,9 +274,7 @@ public class GUImembersController implements Initializable
     void editMember(ActionEvent event) 
     {    	
 		if(memberTable.getSelectionModel() != null)
-		{
-			System.out.println(memberTable.getSelectionModel());
-			
+		{		
 			hboxMemberEditOptions.setVisible(true);
 	    	tfShowMemberName.setEditable(true);
 	    	tfShowMemberEmail.setEditable(true);
@@ -308,23 +301,47 @@ public class GUImembersController implements Initializable
 			{
 				newMemberEmail = "empty";
 			}	
+			
+			Member tempMember = new Member(newMemberName, newMemberEmail);
 	    	
 			if(newMemberEmail.contains("@"))
 			{
-				selectedMember.setName(newMemberName);
-		    	selectedMember.setEmail(newMemberEmail);
+				if(memberList.checkForDuplicates(memberList, tempMember) == true)
+				{
+					JOptionPane.showMessageDialog(null, "Member already exists in the system!");
+					
+					hboxMemberEditOptions.setVisible(false);
 
-		    	memberList.replaceMember(index,selectedMember);    	
-		    	memberFile.writeMemberTextFile(memberList);
+					tfShowMemberName.setText("");
+					tfShowMemberEmail.setText("");
+					
+			    	tfShowMemberName.setEditable(false);
+			    	tfShowMemberEmail.setEditable(false);
+			    	
+			    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			    	
+			    	btnEditMember.setDisable(true);
+			    	btnDeleteMember.setDisable(true);
+				}
+				
+				else
+				{
+					selectedMember.setName(newMemberName);
+			    	selectedMember.setEmail(newMemberEmail);
 
-		    	memberTable.getItems().set(index, selectedMember);
+			    	memberList.replaceMember(index,selectedMember);    	
+			    	memberFile.writeMemberTextFile(memberList);
 
-		    	hboxMemberEditOptions.setVisible(false);
-		    	tfShowMemberName.setEditable(false);
-		    	tfShowMemberEmail.setEditable(false);
-		    	
-		    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
-		    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			    	memberTable.getItems().set(index, selectedMember);
+
+			    	hboxMemberEditOptions.setVisible(false);
+			    	tfShowMemberName.setEditable(false);
+			    	tfShowMemberEmail.setEditable(false);
+			    	
+			    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+				}			
 			}
 			
 			else
@@ -349,6 +366,9 @@ public class GUImembersController implements Initializable
     	
     	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
     	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+    	
+    	btnEditMember.setDisable(true);
+    	btnDeleteMember.setDisable(true);
     } 
 
     @FXML

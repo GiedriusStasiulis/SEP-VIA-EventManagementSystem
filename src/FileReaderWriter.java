@@ -112,9 +112,7 @@ public class FileReaderWriter
     {
        input.close();
     }
-   }
-	
-	
+   }	
 	
 	public void writeEventTextFile(EventList eventList) throws FileNotFoundException
 	{
@@ -124,7 +122,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getEventType()+","+eventList.getEvent(i).getEventCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getEventDuration()+","+eventList.getEvent(i).getStatus());
+            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getEventType()+","+eventList.getEvent(i).getEventCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getEventStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEventEndTime()+","+eventList.getEvent(i).getEventNumberOfTickets()+","+eventList.getEvent(i).getEventPrice()+","+eventList.getEvent(i).getEventDiscount()+","+eventList.getEvent(i).getEventDuration()+","+eventList.getEvent(i).getEventStatus());
          }
          output.flush();
          

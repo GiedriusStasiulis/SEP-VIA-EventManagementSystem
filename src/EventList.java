@@ -39,6 +39,19 @@ public class EventList
 		return eventList.indexOf(event);
 	}
    
+   public boolean checkForDuplicates(EventList eventList, Event event)
+	{
+		boolean status = false;
+		
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			if(event.equals(eventList.getEvent(i)))
+				return true;
+		}
+		
+		return status;
+	}
+   
    public String toString()
    {
       String s = String.format("%s", eventList);

@@ -46,7 +46,10 @@ public class LecturerList
 		for(int i = 0; i < lecturerList.size(); i++)
 		{
 			if(lecturer.equals(lecturerList.getLecturer(i)))
+
 				return true;
+			else
+				return false;
 		}
 		
 		return status;

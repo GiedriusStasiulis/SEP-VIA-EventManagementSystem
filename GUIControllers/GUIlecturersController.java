@@ -219,8 +219,6 @@ public class GUIlecturersController implements Initializable
 		{
 			lecturer = new Lecturer(lecturerName, lecturerCategory, lecturerPhoneNumber, lecturerEmail);
 
-			System.out.println(lecturer);
-
 			if (lecturerList.checkForDuplicates(lecturerList, lecturer)) 
 			{
 				JOptionPane.showMessageDialog(null, "Lecturer already exists in the system!");
@@ -346,7 +344,6 @@ public class GUIlecturersController implements Initializable
 	{
 		if (lecturerTable.getSelectionModel() != null) 
 		{
-			System.out.println(lecturerTable.getSelectionModel());
 			hboxLecturerEditOptions.setVisible(true);
 
 			cbShowLecturerCategory.setDisable(false);
@@ -385,30 +382,60 @@ public class GUIlecturersController implements Initializable
 		{
 			newLecturerPhone = "empty";
 		}
-
+		
+		
 		if(newLecturerEmail.contains("@"))
-		{		
-			selectedLecturer.setName(newLecturerName);
-			selectedLecturer.setEmail(newLecturerEmail);
-			selectedLecturer.setPhoneNumber(newLecturerPhone);
-			selectedLecturer.setCategory(newLecturerCategory);
-	
-			lecturerList.replaceLecturer(index, selectedLecturer);
-			lecturerFile.writeLecturerTextFile(lecturerList);
-	
-			lecturerTable.getItems().set(index, selectedLecturer);
-	
-			hboxLecturerEditOptions.setVisible(false);
+		{	
+			Lecturer tempLecturer = new Lecturer(newLecturerName,newLecturerCategory,newLecturerPhone,newLecturerEmail);
 			
-			cbShowLecturerCategory.setDisable(true);
-			
-			tfShowLecturerName.setEditable(false);
-			tfShowLecturerEmail.setEditable(false);
-			tfShowLecturerPhoneNumber.setEditable(false);
-	
-			tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
-			tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
-			tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+			if (lecturerList.checkForDuplicates(lecturerList, tempLecturer) == true) 
+			{
+				JOptionPane.showMessageDialog(null, "Lecturer already exists in the system!");
+				
+				hboxLecturerEditOptions.setVisible(false);
+				
+				tfShowLecturerName.setText("");
+				tfShowLecturerEmail.setText("");
+				tfShowLecturerPhoneNumber.setText("");
+				
+				cbShowLecturerCategory.setDisable(true);
+				
+				tfShowLecturerName.setEditable(false);
+				tfShowLecturerEmail.setEditable(false);
+				tfShowLecturerPhoneNumber.setEditable(false);
+		
+				tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+				tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+				
+				btnEditLecturer.setDisable(true);
+				btnDeleteLecturer.setDisable(true);
+			}
+
+			else 
+			{
+				selectedLecturer.setName(newLecturerName);
+				selectedLecturer.setEmail(newLecturerEmail);
+				selectedLecturer.setPhoneNumber(newLecturerPhone);
+				selectedLecturer.setCategory(newLecturerCategory);
+		
+				lecturerList.replaceLecturer(index, selectedLecturer);
+				lecturerFile.writeLecturerTextFile(lecturerList);
+		
+				lecturerTable.getItems().set(index, selectedLecturer);
+		
+				hboxLecturerEditOptions.setVisible(false);
+				
+				cbShowLecturerCategory.setDisable(true);
+				
+				tfShowLecturerName.setEditable(false);
+				tfShowLecturerEmail.setEditable(false);
+				tfShowLecturerPhoneNumber.setEditable(false);
+		
+				tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
+				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
+				tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+			}		
 		}
 		
 		else
@@ -439,6 +466,9 @@ public class GUIlecturersController implements Initializable
 		tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+		
+		btnEditLecturer.setDisable(true);
+		btnDeleteLecturer.setDisable(true);
 	}	
 
 	@FXML

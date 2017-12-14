@@ -1,2 +1,3 @@
-Jerry Smith,Astrology,53447789,jsmith@ght.dk
-Rick Sanchez,Healing,53996587,ricksan@rnm.com
+Harry Krishna,Astrology,8596328888,hkrishna@via.dk
+jjkjjdwedw123456,Astrology,8596328888,hkrishna@via.dk
+Jerry Smith,Dream Interpretation,45678912,jsmith@via.dk

@@ -1,4 +1,7 @@
-aaaaaaa,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
-bbbbbb,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
-cccccc,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
-ffffff,Lecture,Astrology,Rick Sanchez,2017-12-15,aaaa,2017-12-16,aaaa,200,200.0,200.0,2,Finalized
+aaaaa,Lecture,Astrology,Jerry Smith,2017-12-11,aaa,2017-12-22,aaa,150,150.0,150.0,12,Finalized
+aaaaayy,Lecture,Astrology,Jerry Smith,2017-12-11,aaa,2017-12-22,aaa,150,150.0,150.0,3,Finalized
+jjjjjjjjjj,Lecture,Astrology,Jerry Smith,2017-12-14,aaaa,2017-12-16,aaaa,150,150.0,150.0,3,Finalized
+kkkkkkkkkkk,Lecture,Astrology,Jerry Smith,2017-12-14,aaaa,2017-12-16,aaaa,150,150.0,150.0,3,Finalized
+Shayalana,Workshop,Therapy,Rick Sanchez,2017-12-19,aaaa,2017-12-23,aaa,150,150.0,150.0,5,Finalized
+kkkkkkk,Journey,Fortune-telling,Rick Sanchez,2017-12-13,aaaa,2017-12-30,aaaa,150,150.0,150.0,18,Finalized
+aa,Lecture,Astrology,Harry Krishna,2017-12-19,aaa,2017-12-15,aaa,120,120.0,120.0,-3,Finalized

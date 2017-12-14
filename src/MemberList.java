@@ -55,7 +55,9 @@ public class MemberList
 		for(int i = 0; i < memberList.size(); i++)
 		{
 			if(member.equals(memberList.getMember(i)))
+			{
 				return true;
+			}
 		}
 		
 		return status;

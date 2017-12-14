@@ -193,8 +193,6 @@ public class GUIsponsorsController implements Initializable
       {
          sponsor = new Sponsor(sponsorName, sponsorEmail, sponsorPhone);
 
-         System.out.println(sponsor);
-
          if (sponsorList.checkForDuplicates(sponsorList, sponsor))
          {
             JOptionPane.showMessageDialog(null,"Sponsor already exists in the system!");
@@ -351,23 +349,50 @@ public class GUIsponsorsController implements Initializable
      
      if(newSponsorEmail.contains("@"))
      {
-     selectedSponsor.setName(newSponsorName);
-     selectedSponsor.setEmail(newSponsorEmail);
-     selectedSponsor.setPhone(newSponsorPhone);
-
-     sponsorList.replaceSponsor(index,selectedSponsor);       
-     sponsorFile.writeSponsorTextFile(sponsorList);
-
-     sponsorTable.getItems().set(index, selectedSponsor);
-
-     hboxSponsorEditOptions.setVisible(false);
-     tfShowSponsorName.setEditable(false);
-     tfShowSponsorEmail.setEditable(false);
-     tfShowSponsorPhoneNumber.setEditable(false);
+    	 Sponsor tempSponsor = new Sponsor(newSponsorName,newSponsorEmail,newSponsorPhone);	 
      
-     tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
-     tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
-     tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
+    	 if (sponsorList.checkForDuplicates(sponsorList, tempSponsor))
+         {
+            JOptionPane.showMessageDialog(null,"Sponsor already exists in the system!");
+                        
+            hboxSponsorEditOptions.setVisible(false);
+            
+            tfShowSponsorName.setText("");
+            tfShowSponsorEmail.setText("");
+            tfShowSponsorPhoneNumber.setText("");
+            
+            tfShowSponsorName.setEditable(false);
+            tfShowSponsorEmail.setEditable(false);
+            tfShowSponsorPhoneNumber.setEditable(false);
+            
+            tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
+            tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
+            tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");   
+            
+            btnEditSponsor.setDisable(true);
+	    	btnDeleteSponsor.setDisable(true);
+         }
+
+         else
+         {
+        	 selectedSponsor.setName(newSponsorName);
+             selectedSponsor.setEmail(newSponsorEmail);
+             selectedSponsor.setPhone(newSponsorPhone);
+
+             sponsorList.replaceSponsor(index,selectedSponsor);       
+             sponsorFile.writeSponsorTextFile(sponsorList);
+
+             sponsorTable.getItems().set(index, selectedSponsor);
+             
+             hboxSponsorEditOptions.setVisible(false);
+             tfShowSponsorName.setEditable(false);
+             tfShowSponsorEmail.setEditable(false);
+             tfShowSponsorPhoneNumber.setEditable(false);
+             
+             tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
+             tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
+             tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;"); 
+         }    
      }
      
      else
@@ -396,6 +421,9 @@ public class GUIsponsorsController implements Initializable
       tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
       tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
       tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
+      
+      btnEditSponsor.setDisable(true);
+  	  btnDeleteSponsor.setDisable(true);
    }
 
    @FXML
