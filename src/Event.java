@@ -16,15 +16,12 @@ public class Event {
 	
 	private String eventLecturer;
 	private LocalDate eventStartDate, eventEndDate;
-	private boolean isFinalized;
+	private String status;
 	private String startTime, endTime;
 	private int maxMembers;
 	private double price, discount;
 	
-	private String eventType;
-	
-	
-	
+	private String eventType;	
 
 	private String eventCategory;
 	
@@ -35,13 +32,13 @@ public class Event {
 	
 	
 	
-	public Event(String eventTitle,String eventType,String eventCategory,String eventLecturer, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount) throws IOException 
+	public Event(String eventTitle,String eventType,String eventCategory,String eventLecturer, LocalDate eventStartDate, String startTime, LocalDate eventEndDate, String endTime,int maxMembers, double price, double discount, String status) throws IOException 
 	{
 		this.eventTitle = eventTitle;
 		this.eventType=eventType;
 		this.eventCategory=eventCategory;
 		this.eventLecturer = eventLecturer;
-		// this.isFinalized=false;
+		this.status=status;
 		this.eventStartDate = eventStartDate;
 		this.eventEndDate = eventEndDate;
 		this.startTime = startTime;
@@ -55,91 +52,471 @@ public class Event {
 		calculateDuration();		
 	}
 
-	public LocalDate getEventStartDate() 
-	{
-		return this.eventStartDate;
-	}
 
-	public void setEventStartDate(LocalDate eventStartDate) 
-	{
-		this.eventStartDate = eventStartDate;
-	}
 
-	public LocalDate getEventEndDate() 
-	{
-		return this.eventEndDate;
-	}
 
-	public void setEventEndDate(LocalDate eventEndDate) 
-	{
-		this.eventEndDate = eventEndDate;
-	}
 
-	public String getEventTitle() 
-	{
+	
+
+
+	
+
+
+	
+	public String getEventTitle() {
 		return eventTitle;
 	}
 
-	public void setEventTitle(String eventTitle) 
-	{
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
 	}
 
-	public String getMemberByIndex(int index) 
-	{
-		return membersRegistered.get(index);
-	}
 
-	public String toString() 
-	{
-		return this.eventTitle + " " + this.isFinalized;
-	}
 
-	public String getStartTime() 
-	{
-		return this.startTime;
-	}
 
-	public String getEndTime() 
-	{
-		return this.endTime;
-	}
 
-	public int getMaxMembers() 
-	{
-		return this.maxMembers;
-	}
 
-	public double getPrice() 
-	{
-		return this.price;
-	}
 
-	public double getDiscount() 
-	{
-		return this.discount;
-	}
-	public String getCategory()
-	{
-	   return this.eventCategory;
-	}
-	public String getType()
-	{
-	   return this.eventType;
-	}
-	public int getDuration()
-	{
-	   return this.eventDuration;
-	}
-	
+
+
+
+
+
 	public String getEventLecturer() {
 		return eventLecturer;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setEventLecturer(String eventLecturer) {
 		this.eventLecturer = eventLecturer;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+	public LocalDate getEventStartDate() {
+		return eventStartDate;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventStartDate(LocalDate eventStartDate) {
+		this.eventStartDate = eventStartDate;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public LocalDate getEventEndDate() {
+		return eventEndDate;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventEndDate(LocalDate eventEndDate) {
+		this.eventEndDate = eventEndDate;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public int getMaxMembers() {
+		return maxMembers;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setMaxMembers(int maxMembers) {
+		this.maxMembers = maxMembers;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public double getDiscount() {
+		return discount;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getEventType() {
+		return eventType;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getEventCategory() {
+		return eventCategory;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventCategory(String eventCategory) {
+		this.eventCategory = eventCategory;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public int getEventDuration() {
+		return eventDuration;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setEventDuration(int eventDuration) {
+		this.eventDuration = eventDuration;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public ArrayList<String> getMembersRegistered() {
+		return membersRegistered;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setMembersRegistered(ArrayList<String> membersRegistered) {
+		this.membersRegistered = membersRegistered;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public ArrayList<Member> getTempMembersRegistered() {
+		return tempMembersRegistered;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setTempMembersRegistered(ArrayList<Member> tempMembersRegistered) {
+		this.tempMembersRegistered = tempMembersRegistered;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getMemberByIndex(int index) 
+	{
+		return membersRegistered.get(index);
+	}
 	
 
 	public void calculateDuration()

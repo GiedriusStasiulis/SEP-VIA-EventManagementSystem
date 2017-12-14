@@ -67,7 +67,7 @@
                                           <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="485.0" prefWidth="260.0" />
                                           <Label layoutX="10.0" layoutY="515.0" text="Discount:" />
                                           <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="535.0" prefWidth="260.0" />
-                                          <CheckBox layoutX="10.0" layoutY="570.0" mnemonicParsing="false" text="Set finalized" />
+                                          <CheckBox fx:id="cbFinalizeEvent" layoutX="10.0" layoutY="570.0" mnemonicParsing="false" text="Set finalized" />
                                        </children>
                                     </AnchorPane>
                                  </content>

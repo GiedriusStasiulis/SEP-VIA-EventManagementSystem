@@ -93,10 +93,14 @@ public class FileReaderWriter
           double price = Double.parseDouble(lineItems[9].trim());
           double discount = Double.parseDouble(lineItems[10].trim());
           
+          int duration = Integer.parseInt(lineItems[11].trim());
+          
+          String status = lineItems[12].trim();
+          
           //LocalDate eventStart = LocalDate.parse(date);
           //LocalDate eventEnd = LocalDate.parse(eventEndDate);
           
-          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount);
+          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,price,discount,status);
           
           currentEventList.addEventToList(eventToAdd);
           
@@ -120,7 +124,7 @@ public class FileReaderWriter
          output = new PrintWriter(file);
          for (int i = 0; i < eventList.size(); i++)
          {
-            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getType()+","+eventList.getEvent(i).getCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getDuration());
+            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getEventType()+","+eventList.getEvent(i).getEventCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEndTime()+","+eventList.getEvent(i).getMaxMembers()+","+eventList.getEvent(i).getPrice()+","+eventList.getEvent(i).getDiscount()+","+eventList.getEvent(i).getEventDuration()+","+eventList.getEvent(i).getStatus());
          }
          output.flush();
          

@@ -65,6 +65,7 @@ public class GUIeventsController implements Initializable
 	private ObservableList<String> categoryChoices =FXCollections.observableArrayList("Astrology","Therapy","Fortune-telling");
 	private ObservableList<Event>  events = FXCollections.observableArrayList();
 	private ObservableList<String> lecturerNames = FXCollections.observableArrayList();
+	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Title","Type","Category","Lecturer","Status");
 	
 	private ObservableList<String> membersAlreadyAdded = FXCollections.observableArrayList();
 	private ObservableList<String> membersAlreadyAddedtemp = FXCollections.observableArrayList();
@@ -92,10 +93,10 @@ public class GUIeventsController implements Initializable
 	
 	@FXML private Label lblEventCount;
 	
-	@FXML private ListView<String> lvEventSearchResults;
+	@FXML private ListView<Event> lvEventSearchResults;
 	@FXML private ListView<String> lvMembersToAdd,lvMembersAddedToEvent,lvCategoriesToAdd,lvCategoriesAddedToEvent;
 	
-	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove;
+	@FXML private CheckBox cbSelectAllMembersToAdd,cbSelectAllMembersToRemove,cbFinalizeEvent;
 	
 	@FXML private DatePicker dpShowEventEndDate,dpShowEventStartDate,dpEventStartDate,dpEventEndDate;
 	
@@ -142,8 +143,8 @@ public class GUIeventsController implements Initializable
 		//////////////////
 		
 		
-		tcEventType.setCellValueFactory(new PropertyValueFactory<Event,String>("Type"));
-		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("Category"));
+		tcEventType.setCellValueFactory(new PropertyValueFactory<Event,String>("eventType"));
+		tcEventCategory.setCellValueFactory(new PropertyValueFactory<Event,String>("eventCategory"));
 		tcEventLecturer.setCellValueFactory(new PropertyValueFactory<Event,String>("eventLecturer"));
 		
 		
@@ -155,7 +156,8 @@ public class GUIeventsController implements Initializable
 		tcEventPrice.setCellValueFactory(new PropertyValueFactory<Event, String>("price"));
 		tcEventDiscount.setCellValueFactory(new PropertyValueFactory<Event, String>("discount"));
 		tcEventNumberOfTickets.setCellValueFactory(new PropertyValueFactory<Event, String>("maxMembers"));
-		tcEventDuration.setCellValueFactory(new PropertyValueFactory<Event,String>("Duration"));
+		tcEventDuration.setCellValueFactory(new PropertyValueFactory<Event,String>("eventDuration"));
+		tcEventStatus.setCellValueFactory(new PropertyValueFactory<Event,String>("status"));
 		
 		tcEventType.setStyle("-fx-alignment: CENTER;");
 		tcEventCategory.setStyle("-fx-alignment: CENTER;");
@@ -169,7 +171,10 @@ public class GUIeventsController implements Initializable
 		tcEventNumberOfTickets.setStyle("-fx-alignment: CENTER;");	
 		tcEventLecturer.setStyle("-fx-alignment: CENTER;");	
 		tcEventDuration.setStyle("-fx-alignment: CENTER;");	
+		tcEventStatus.setStyle("-fx-alignment: CENTER;");	
 		
+		cbEventSearchCriteria.setItems(searchCriteria);
+		cbEventSearchCriteria.getSelectionModel().select(0);
 		
 		//spEventsTableScrollPane.setStyle("-fx-font-size: 13px;");
 		
@@ -268,8 +273,8 @@ public class GUIeventsController implements Initializable
 		{
 		   selectedEvent = eventsTable.getSelectionModel().getSelectedItem();
 		   tfShowEventTitle.setText(selectedEvent.getEventTitle());
-		   cbShowEventType.getSelectionModel().select(selectedEvent.getType());
-		   cbShowEventCategory.getSelectionModel().select(selectedEvent.getCategory());
+		   cbShowEventType.getSelectionModel().select(selectedEvent.getEventType());
+		   cbShowEventCategory.getSelectionModel().select(selectedEvent.getEventCategory());
 		   dpShowEventStartDate.setValue(selectedEvent.getEventStartDate());
 		   dpShowEventEndDate.setValue(selectedEvent.getEventEndDate());
 		   tfShowEventPrice.setText(Double.toString(selectedEvent.getPrice()));
@@ -386,8 +391,20 @@ public class GUIeventsController implements Initializable
     	double price = Double.parseDouble(tfEventPrice.getText());
     	double discount = Double.parseDouble(tfEventDiscount.getText());
     	int maxMembers = Integer.parseInt(tfEventNumberOfTickets.getText());
+    	
+    	String finalized = "";
+    	
+    	if(cbFinalizeEvent.isSelected())
+    	{
+    		finalized = "Finalized";
+    	}
+    	
+    	else
+    	{
+    		finalized = "Not finalized";
+    	}
          	
-    	Event eventNew = new Event(eventTitle,eventType,eventCategory,eventLecturer,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount);
+    	Event eventNew = new Event(eventTitle,eventType,eventCategory,eventLecturer,localStartDate,startTime,localEndDate,endTime,maxMembers,price,discount,finalized);
     	eventList.addEventToList(eventNew);
     	eventFile.writeEventTextFile(eventList);
     	eventsTable.getItems().add(eventNew);   	
@@ -407,7 +424,7 @@ public class GUIeventsController implements Initializable
       
       
     	///testing////
-    	System.out.println(eventNew.getCategory());
+    	//System.out.println(eventNew.getEventCategory());
     	
     	
     	//////////////
@@ -420,7 +437,7 @@ public class GUIeventsController implements Initializable
        
        for ( int i=0; i<eventList.size(); i++)
        {
-          events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getType(),eventList.getEvent(i).getCategory(),eventList.getEvent(i).getEventLecturer(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount()));
+          events.add(new Event(eventList.getEvent(i).getEventTitle(),eventList.getEvent(i).getEventType(),eventList.getEvent(i).getEventCategory(),eventList.getEvent(i).getEventLecturer(),eventList.getEvent(i).getEventStartDate(),eventList.getEvent(i).getStartTime(),eventList.getEvent(i).getEventEndDate(),eventList.getEvent(i).getEndTime(),eventList.getEvent(i).getMaxMembers(),eventList.getEvent(i).getPrice(),eventList.getEvent(i).getDiscount(),eventList.getEvent(i).getStatus()));
        }
        //System.out.println("From Controller getList() method, get category -: "+eventList.getEvent(0).getCategory() );
        return events;
@@ -448,6 +465,100 @@ public class GUIeventsController implements Initializable
     void searchEvents(ActionEvent event) 
     {
     	System.out.println("Search event");
+    	ObservableList<Event> searchResults = FXCollections.observableArrayList();
+    	int searchCriteriaComboBoxSelection = cbEventSearchCriteria.getSelectionModel().getSelectedIndex();
+    	String searchKeyword = tfEnterSearchKeywords.getText();	
+    	tfEnterSearchKeywords.setText("");
+    	
+    	switch(searchCriteriaComboBoxSelection)
+    	{
+    	case 0:
+    		
+    		for(int i = 0; i < events.size(); i ++)
+			{
+				if (events.get(i).getEventTitle().toLowerCase().contains(searchKeyword))
+				{
+					searchResults.add(events.get(i));
+				}
+			}
+			
+			if(searchResults.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+			}
+    		
+    		break;
+    		
+    	case 1:
+    		
+    		for(int i = 0; i < events.size(); i ++)
+			{
+				if (events.get(i).getEventType().toLowerCase().contains(searchKeyword))
+				{
+					searchResults.add(events.get(i));
+				}
+			}
+			
+			if(searchResults.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+			}    		
+    		
+    		break;
+    		
+    	case 2:
+    		
+    		for(int i = 0; i < events.size(); i ++)
+			{
+				if (events.get(i).getEventCategory().toLowerCase().contains(searchKeyword))
+				{
+					searchResults.add(events.get(i));
+				}
+			}
+			
+			if(searchResults.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+			}    		    		
+    		
+    		break;
+    		
+    	case 3:
+    		
+    		for(int i = 0; i < events.size(); i ++)
+			{
+				if (events.get(i).getEventLecturer().toLowerCase().contains(searchKeyword))
+				{
+					searchResults.add(events.get(i));
+				}
+			}
+			
+			if(searchResults.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+			}    
+    		
+    		break;
+    		
+    	case 4:
+    		
+    		for(int i = 0; i < events.size(); i ++)
+			{
+				if (events.get(i).getStatus().toLowerCase().contains(searchKeyword))
+				{
+					searchResults.add(events.get(i));
+				}
+			}
+			
+			if(searchResults.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+			} 
+    		
+    		break;
+    	}
+    	
+    	lvEventSearchResults.setItems(searchResults);
     }
 
     @FXML
