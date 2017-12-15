@@ -977,7 +977,8 @@ public class GUIeventsController implements Initializable {
 	@FXML
 	void addNonMemberToEvent(ActionEvent event) throws FileNotFoundException {
 
-		
+		ArrayList<String> nonMembers = new ArrayList<String>();
+		nonMembers = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
 		
 		String nonMemberName = tfNonMemberName.getText();
 		String nonMemberPhoneNumber = tfNonMemberPhoneNumber.getText();
@@ -997,11 +998,10 @@ public class GUIeventsController implements Initializable {
 
 		String nonMember = String.format("%s,%s", nonMemberName, nonMemberPhoneNumber);
 
-		ArrayList<String> nonMembers = new ArrayList<String>();
-
 		nonMembers.add(nonMember);
 
 		viaOms.writeNonMembersToFile(nonMembers, selectedEvent.getEventTitle());
+		nonMembersAlreadyAdded.add(nonMember);
 
 	}
 
