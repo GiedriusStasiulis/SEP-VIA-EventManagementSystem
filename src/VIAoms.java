@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class VIAoms 
 {
@@ -267,4 +268,68 @@ public class VIAoms
 		return nonPaidMemberList;
 	}
 	
+
+	public void writeMembersToFile(ArrayList<String> memberList, String eventTitle) throws FileNotFoundException
+	{
+		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
+		memberEventFile.writeEventMemberFile(memberList, eventTitle);
+	}
+	
+	
+	
+	
+	public ArrayList<String> readMembersFromFile(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> membersAdded;
+		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
+		membersAdded = memberEventFile.readEventMemberFile();
+		
+		return membersAdded;
+	}
+	
+	
+	
+	
+	public void writeNonMembersToFile(ArrayList<String> nonMemberList, String eventTitle) throws FileNotFoundException
+	{
+		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");
+		nonMemberEventFile.writeNonMemberTextFile(nonMemberList,eventTitle);
+	}
+	
+	
+	
+	
+	
+	public ArrayList<String> readNonMembersFromFile(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> nonMemberList;
+		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");
+		
+		nonMemberList = nonMemberEventFile.readNonMemberTextFile(eventTitle);
+				
+		return nonMemberList;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

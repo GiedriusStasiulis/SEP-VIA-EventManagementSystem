@@ -2,3 +2,4 @@ aaa,Lecture,Dream Interpretation,wwwwww,2017-12-13,aaa,2017-12-23,aaa,123,123.0,
 aaaa,Lecture,Dream Interpretation,wwwwww,2017-12-13,aaa,2017-12-23,aaa,123,123.0,123.0,11,Not finalized
 aaa,Lecture,Dream Interpretation,aaaaeee,2017-12-23,aaaa,2017-12-23,aaaa,123,123.0,123.0,1,Not finalized
 aaa,Journey,Dream Interpretation,aaaaeee,2017-12-13,aaa,2017-12-26,aaa,123,123.0,0.0,14,Not finalized
+eeee,Workshop,Karma,rdggdrdrg,2017-12-17,18:30,2017-12-17,20:30,120,120.0,50.0,1,Not finalized

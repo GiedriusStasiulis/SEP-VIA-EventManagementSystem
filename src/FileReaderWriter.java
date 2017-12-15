@@ -39,6 +39,7 @@ public class FileReaderWriter
 	
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
 	private ArrayList<String> membersAlreadyRegistered = new ArrayList<String>();
+	private ArrayList<String> embersAlreadyRegistered = new ArrayList<String>();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -155,34 +156,7 @@ public class FileReaderWriter
 		   
 	}
 	
-	public ArrayList<String> readEventMemberFile() throws FileNotFoundException
-	{
-		membersAlreadyRegistered.clear();
-		Scanner input = null;
-		
-		//String file = filenamememberevent+"MemberListForEvent.txt";
-		//System.out.println(filename);
-		try
-		{
-			input = new Scanner(file);
-			
-			int lineNumber = 0;
-			while(input.hasNext())
-			{
-				String line = input.nextLine();
-				lineNumber++;
-				membersAlreadyRegistered.add(line);
-			}
-			//System.out.println(membersAlreadyRegistered);
-			return membersAlreadyRegistered;
-		}
-		
-		finally 
-		{
-			input.close();
-		}
-		
-	}
+
 	
 	
 	public SponsorList readSponsorTextFile() throws FileNotFoundException, ParseException 
@@ -337,7 +311,7 @@ public class FileReaderWriter
 			output.close();
 		}
 	}
-	public void writeNonMemberTextFile(NonMemberList nonMemberList) throws FileNotFoundException 
+	public void writeNonMemberTextFile(ArrayList<String> nonMemberList, String eventTitle) throws FileNotFoundException 
    {
       PrintWriter output = null;
       try 
@@ -345,9 +319,10 @@ public class FileReaderWriter
          output = new PrintWriter(file);
 
          for (int i = 0; i < nonMemberList.size(); i++) 
-         {
-            output.println(nonMemberList.getNonMember(i).getName() + "," + nonMemberList.getNonMember(i).getPhoneNumber());
-         }
+			{
+				output.println(nonMemberList.get(i));
+			}
+             
          output.flush();
       } 
       
@@ -356,4 +331,66 @@ public class FileReaderWriter
          output.close();
       }
    }
+	
+	public ArrayList<String> readNonMemberTextFile(String eventTitle) throws FileNotFoundException
+	{
+		Scanner input = null;
+		membersAlreadyRegistered.clear();
+		
+		try
+		{
+			input = new Scanner(file);
+			
+			while (input.hasNext())
+			{
+				String line = input.nextLine();
+
+				membersAlreadyRegistered.add(line);
+			}
+			
+			return membersAlreadyRegistered;
+		}
+		
+		finally
+		{
+			input.close();
+		}
+	}
+	
+	public ArrayList<String> readEventMemberFile() throws FileNotFoundException
+	{
+		membersAlreadyRegistered.clear();
+		Scanner input = null;
+		
+		try
+		{
+			input = new Scanner(file);
+
+			while(input.hasNext())
+			{
+				String line = input.nextLine();
+				membersAlreadyRegistered.add(line);
+			}
+			return membersAlreadyRegistered;
+		}
+		
+		finally 
+		{
+			input.close();
+		}
+		
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
