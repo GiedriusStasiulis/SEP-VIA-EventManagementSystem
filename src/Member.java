@@ -98,7 +98,7 @@ public class Member
 		}
 
 		Member other = (Member) obj;
-		return name.equals(other.name) && email.equals(other.email) && membershipStatus.equals(other.membershipStatus);
+		return name.equals(other.name) && address.equals(other.address) && phoneNumber.equals(other.phoneNumber) && email.equals(other.email) && memberSince.equals(other.memberSince) && membershipStatus.equals(other.membershipStatus);
 	}
 
 	public String toString() 

@@ -869,8 +869,8 @@ public class GUIeventsController implements Initializable {
 	}
 
 	@FXML
-	void searchEvents(ActionEvent event) {
-		System.out.println("Search event");
+	void searchEvents(ActionEvent event) 
+	{
 		ObservableList<Event> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbEventSearchCriteria.getSelectionModel().getSelectedIndex();
 		String searchKeyword = tfEnterSearchKeywords.getText();

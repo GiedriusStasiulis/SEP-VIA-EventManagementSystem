@@ -118,13 +118,13 @@
                         <Label text="Name:" translateX="10.0" translateY="40.0" />
                         <TextField fx:id="tfShowMemberName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="220.0" translateX="10.0" translateY="45.0" />
                         <Label text="Address:" translateX="10.0" translateY="50.0" />
-                        <TextField fx:id="tfShowMemberAddress" maxWidth="260.0" translateX="10.0" translateY="55.0" />
+                        <TextField fx:id="tfShowMemberAddress" editable="false" maxWidth="260.0" translateX="10.0" translateY="55.0" />
                         <Label text="Phone number:" translateX="10.0" translateY="60.0" />
-                        <TextField fx:id="tfShowMemberPhone" maxWidth="260.0" translateX="10.0" translateY="65.0" />
+                        <TextField fx:id="tfShowMemberPhone" editable="false" maxWidth="260.0" translateX="10.0" translateY="65.0" />
                         <Label text="E-mail:" translateX="10.0" translateY="70.0" />
                         <TextField fx:id="tfShowMemberEmail" editable="false" maxWidth="260.0" translateX="10.0" translateY="75.0" />
                         <Label text="Member since:" translateX="10.0" translateY="80.0" />
-                        <DatePicker fx:id="dpShowMemberSince" maxWidth="260.0" translateX="10.0" translateY="85.0" />
+                        <DatePicker fx:id="dpShowMemberSince" disable="true" editable="false" maxWidth="260.0" translateX="10.0" translateY="85.0" />
                         <CheckBox fx:id="cbShowMembershipStatus" mnemonicParsing="false" text="Membership paid" translateX="10.0" translateY="95.0" />
                         <HBox fx:id="hboxMemberEditOptions" prefHeight="30.0" prefWidth="200.0" translateY="105.0">
                            <children>

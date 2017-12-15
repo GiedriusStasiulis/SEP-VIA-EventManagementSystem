@@ -1,3 +1,5 @@
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.acl.Group;
@@ -25,11 +27,28 @@ import javafx.stage.Stage;
 
 public class GUImainController implements Initializable 
 {
+	
+	@FXML private Button btnOpenUserGuide;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		// TODO Auto-generated method stub		
 	}
+	
+	@FXML 
+	public void openUserGuide()
+	{
+		if (Desktop.isDesktopSupported()) {
+		    try {
+		        File myFile = new File("VIA user guide.pdf");
+		        Desktop.getDesktop().open(myFile);
+		    } catch (IOException ex) {
+		        // no application registered for PDFs
+		    }
+		}
+	}	
+	
 }
 
 

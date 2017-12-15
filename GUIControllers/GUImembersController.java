@@ -54,7 +54,7 @@ public class GUImembersController implements Initializable
 	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Member> members = FXCollections.observableArrayList();
-	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","E-mail");
+	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","Address","Phone number","E-mail");
 	private ObservableList<String> emailList = FXCollections.observableArrayList();	
 	private ObservableList<String> unpaidMembershipList = FXCollections.observableArrayList();
 
@@ -156,7 +156,10 @@ public class GUImembersController implements Initializable
 	    if (memberTable.getSelectionModel().getSelectedItem() != null) {
 	        selectedMember = memberTable.getSelectionModel().getSelectedItem();
 	        tfShowMemberName.setText(selectedMember.getName());
+	        tfShowMemberAddress.setText(selectedMember.getAddress());
+	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
+	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
 	        if (selectedMember.getMembershipStatus().equals("Paid"))
 	        {
 	        	cbShowMembershipStatus.setSelected(true);
@@ -174,7 +177,10 @@ public class GUImembersController implements Initializable
 	    if (lvMemberSearchResults.getSelectionModel().getSelectedItem() != null) {
 	        selectedMember = lvMemberSearchResults.getSelectionModel().getSelectedItem();
 	        tfShowMemberName.setText(selectedMember.getName());
+	        tfShowMemberAddress.setText(selectedMember.getAddress());
+	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
+	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
 	    }
 	}	
 	
@@ -295,6 +301,40 @@ public class GUImembersController implements Initializable
 				
 				for(int i = 0; i < members.size(); i ++)
 				{
+					if (members.get(i).getAddress().toLowerCase().contains(searchKeyword.toLowerCase()))
+					{
+						searchResults.add(members.get(i));
+					}
+				}
+				
+				if(searchResults.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
+				}				
+				
+				break;
+				
+			case 2:
+				
+				for(int i = 0; i < members.size(); i ++)
+				{
+					if (members.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase()))
+					{
+						searchResults.add(members.get(i));
+					}
+				}
+				
+				if(searchResults.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
+				}
+				
+				break;
+				
+			case 3:
+				
+				for(int i = 0; i < members.size(); i ++)
+				{
 					if (members.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase()))
 					{
 						searchResults.add(members.get(i));
@@ -322,12 +362,22 @@ public class GUImembersController implements Initializable
 		{		
 			hboxMemberEditOptions.setVisible(true);
 	    	tfShowMemberName.setEditable(true);
+	    	tfShowMemberAddress.setEditable(true);
+	    	tfShowMemberPhone.setEditable(true);
 	    	tfShowMemberEmail.setEditable(true);
+	    	dpShowMemberSince.setDisable(false);
+	    	dpShowMemberSince.setEditable(true);
 	    	
 	    	cbShowMembershipStatus.setDisable(false);
 	    	
 	    	tfShowMemberName.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 	    	tfShowMemberEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	tfShowMemberAddress.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	tfShowMemberPhone.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	tfShowMemberEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	dpShowMemberSince.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	
+	    	btnDeleteMember.setDisable(true);
 		}		
     }
     
@@ -374,13 +424,25 @@ public class GUImembersController implements Initializable
 					hboxMemberEditOptions.setVisible(false);
 
 					tfShowMemberName.setText("");
-					tfShowMemberEmail.setText("");
+			    	tfShowMemberAddress.setText("");
+			    	tfShowMemberPhone.setText("");
+			    	tfShowMemberEmail.setText("");
+			    	
+			    	dpShowMemberSince.getEditor().clear();
+			    	dpShowMemberSince.setValue(null);
 					
 			    	tfShowMemberName.setEditable(false);
+			    	tfShowMemberAddress.setEditable(false);
+			    	tfShowMemberPhone.setEditable(false);
 			    	tfShowMemberEmail.setEditable(false);
 			    	
+			    	dpShowMemberSince.setDisable(true);
+			    	
 			    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberAddress.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberPhone.setStyle("-fx-border-width: 0px ;");
 			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			    	dpShowMemberSince.setStyle("-fx-border-width: 0px ;");
 			    	
 			    	btnEditMember.setDisable(true);
 			    	btnDeleteMember.setDisable(true);
@@ -391,7 +453,10 @@ public class GUImembersController implements Initializable
 				else
 				{
 					selectedMember.setName(newMemberName);
+					selectedMember.setAddress(newMemberAddress);
+					selectedMember.setPhoneNumber(newMemberPhoneNumber);
 			    	selectedMember.setEmail(newMemberEmail);
+			    	selectedMember.setMemberSince(newMemberSince);
 			    	selectedMember.setMembershipStatus(newMembershipStatus);
 
 			    	viaOms.editMember(index, selectedMember);
@@ -403,9 +468,16 @@ public class GUImembersController implements Initializable
 			    	tfShowMemberEmail.setEditable(false);
 			    	
 			    	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberAddress.setStyle("-fx-border-width: 0px ;");
+			    	tfShowMemberPhone.setStyle("-fx-border-width: 0px ;");
 			    	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+			    	dpShowMemberSince.setStyle("-fx-border-width: 0px ;");
 			    	
 			    	cbShowMembershipStatus.setDisable(true);
+			    	
+			    	dpShowMemberSince.setDisable(true);
+			    	dpShowMemberSince.getEditor().clear();
+			    	dpShowMemberSince.setValue(null);
 			    	
 			    	btnEditMember.setDisable(true);
 					btnDeleteMember.setDisable(true);
@@ -422,7 +494,12 @@ public class GUImembersController implements Initializable
     void clearEditMemberTextFields(ActionEvent event) 
     {
     	tfShowMemberName.setText("");
+    	tfShowMemberAddress.setText("");
+    	tfShowMemberPhone.setText("");
     	tfShowMemberEmail.setText("");
+    	
+    	dpShowMemberSince.getEditor().clear();
+    	dpShowMemberSince.setValue(null);
     }		
 	
 	@FXML
@@ -430,10 +507,28 @@ public class GUImembersController implements Initializable
     {
     	hboxMemberEditOptions.setVisible(false);
     	tfShowMemberName.setEditable(false);
+    	tfShowMemberAddress.setEditable(false);
+    	tfShowMemberPhone.setEditable(false);
     	tfShowMemberEmail.setEditable(false);
     	
+    	dpShowMemberSince.setDisable(true);
+    	dpShowMemberSince.setEditable(false);
+    	
+    	tfShowMemberName.setText("");
+    	tfShowMemberAddress.setText("");
+    	tfShowMemberPhone.setText("");
+    	tfShowMemberEmail.setText("");
+    	
+    	dpShowMemberSince.getEditor().clear();
+    	dpShowMemberSince.setValue(null);
+    	
+    	cbShowMembershipStatus.setDisable(true);
+    	
     	tfShowMemberName.setStyle("-fx-border-width: 0px ;");
+    	tfShowMemberAddress.setStyle("-fx-border-width: 0px ;");
+    	tfShowMemberPhone.setStyle("-fx-border-width: 0px ;");
     	tfShowMemberEmail.setStyle("-fx-border-width: 0px ;");
+    	dpShowMemberSince.setStyle("-fx-border-width: 0px ;");
     	
     	btnEditMember.setDisable(true);
     	btnDeleteMember.setDisable(true);
@@ -537,13 +632,13 @@ public class GUImembersController implements Initializable
     {
     	if(cbSelectAllNonPaidMembers.isSelected())
     	{
-    		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + unpaidMembershipList);
+    		JOptionPane.showMessageDialog(null, "Sent reminder to: \n" + unpaidMembershipList);
     		cboxSelectAllMemberEmailList.setSelected(false);
     	}
     	
     	else
     	{
-    		JOptionPane.showMessageDialog(null, "Sent newsletter to: \n" + lvUnpaidMembership.getSelectionModel().getSelectedItem());
+    		JOptionPane.showMessageDialog(null, "Sent reminder to: \n" + lvUnpaidMembership.getSelectionModel().getSelectedItem());
     	} 
     }
 }

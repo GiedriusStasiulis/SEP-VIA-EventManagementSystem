@@ -252,9 +252,6 @@ public class VIAoms
 	}	
 	
 	
-	
-	
-	
 	public MemberList generateListNonPaidMembership() throws FileNotFoundException, ParseException
 	{
 		nonPaidMemberList.clearMemberList();
