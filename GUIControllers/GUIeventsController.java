@@ -47,6 +47,8 @@ public class GUIeventsController implements Initializable {
 	// private NonMemberList nonMemberList = new NonMemberList();
 	private LecturerList lecturerList = new LecturerList();
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
+	
+	ArrayList<String> nonMembers = new ArrayList<String>();
 
 	private static final String EVENTSFILENAME = "MemberList.txt";
 
@@ -977,7 +979,7 @@ public class GUIeventsController implements Initializable {
 	@FXML
 	void addNonMemberToEvent(ActionEvent event) throws FileNotFoundException {
 
-		ArrayList<String> nonMembers = new ArrayList<String>();
+		
 		nonMembers = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
 		
 		String nonMemberName = tfNonMemberName.getText();
@@ -1003,20 +1005,18 @@ public class GUIeventsController implements Initializable {
 		viaOms.writeNonMembersToFile(nonMembers, selectedEvent.getEventTitle());
 		nonMembersAlreadyAdded.add(nonMember);
 
+		tfNonMemberName.setText("");
+		tfNonMemberPhoneNumber.setText("");
 	}
 
 	@FXML
 	void removeMemberFromEvent(ActionEvent event) throws FileNotFoundException {
-		System.out.println("Remove member from event");
 
 		if (lvMembersAddedToEvent.getSelectionModel() != null) {
 			if (membersRegisteredList.size() > 0) {
 				int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
 				membersRegisteredList.remove(index);
-				/*
-				 * memberEventFile.writeEventMemberFile(membersRegisteredList,
-				 * eventsTable.getSelectionModel().getSelectedItem().getEventTitle());
-				 */
+
 				lvMembersAddedToEvent.getItems().remove(index);
 			}
 		}
@@ -1033,7 +1033,19 @@ public class GUIeventsController implements Initializable {
 	}
 
 	@FXML
-	void removeNonMemberFromEvent(ActionEvent event) {
+	void removeNonMemberFromEvent(ActionEvent event) throws FileNotFoundException {
+		
+		nonMembers = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
+		
+		if (lvNonMembersAddedToEvent.getSelectionModel() != null) {
 
+			if (nonMembers.size() > 0) {
+				int index = lvNonMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+				System.out.println(index);
+				nonMembers.remove(index);
+
+				lvNonMembersAddedToEvent.getItems().remove(index);
+			}
+		}
 	}
 }
