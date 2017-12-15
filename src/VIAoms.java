@@ -65,9 +65,9 @@ public class VIAoms
 	   sponsorFile.writeSponsorTextFile(sponsorList);
 	   
 	}
-	public void addMember(String memberName, String memberEmail, String membershipStatus) throws FileNotFoundException, ParseException
+	public void addMember(String memberName, String memberAddress, String memberPhoneNumber, String memberEmail, LocalDate memberSince, String membershipStatus) throws FileNotFoundException, ParseException
 	{
-		member = new Member(memberName,memberEmail,membershipStatus);
+		member = new Member(memberName,memberAddress,memberPhoneNumber,memberEmail,memberSince,membershipStatus);
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
 		memberList.addMemberToList(member);

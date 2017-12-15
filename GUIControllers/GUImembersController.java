@@ -101,11 +101,17 @@ public class GUImembersController implements Initializable
 		cbMemberSearchCriteria.getSelectionModel().select(0);
 
 		tcMemberName.setCellValueFactory(new PropertyValueFactory<Member, String>("name"));
+		tcMemberAddress.setCellValueFactory(new PropertyValueFactory<Member, String>("address"));
+		tcMemberPhoneNumber.setCellValueFactory(new PropertyValueFactory<Member, String>("phoneNumber"));
 		tcMemberEmail.setCellValueFactory(new PropertyValueFactory<Member, String>("email"));
+		tcMemberSince.setCellValueFactory(new PropertyValueFactory<Member, LocalDate>("memberSince"));
 		tcMembershipStatus.setCellValueFactory(new PropertyValueFactory<Member, String>("membershipStatus"));
 
 		tcMemberName.setStyle("-fx-alignment: CENTER;");
+		tcMemberAddress.setStyle("-fx-alignment: CENTER;");
+		tcMemberPhoneNumber.setStyle("-fx-alignment: CENTER;");
 		tcMemberEmail.setStyle("-fx-alignment: CENTER;");
+		tcMemberSince.setStyle("-fx-alignment: CENTER;");
 		tcMembershipStatus.setStyle("-fx-alignment: CENTER;");
 		
 		cbShowMembershipStatus.setDisable(true);
@@ -178,7 +184,7 @@ public class GUImembersController implements Initializable
 		
 		for (int i = 0; i < memberList.size(); i++) 
 		{
-			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail(), memberList.getMember(i).getMembershipStatus()));
+			members.add(new Member(memberList.getMember(i).getName(),memberList.getMember(i).getAddress(),memberList.getMember(i).getPhoneNumber(),memberList.getMember(i).getEmail(),memberList.getMember(i).getMemberSince(),memberList.getMember(i).getMembershipStatus()));
 		}
 
 		return members;
@@ -188,7 +194,10 @@ public class GUImembersController implements Initializable
 	void addMember(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
 	{				
 		String memberName = tfEnterMemberName.getText();
+		String memberAddress = tfEnterMemberAddress.getText();
+		String memberPhoneNumber = tfEnterMemberPhoneNumber.getText();
 		String memberEmail = tfEnterMemberEmail.getText();	
+		LocalDate memberSince = dpEnterMemberSince.getValue();
 		String membershipStatus = "";
 		
 		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
@@ -220,18 +229,18 @@ public class GUImembersController implements Initializable
 				
 		if(memberEmail.contains("@"))
 		{					
-			member = new Member(memberName, memberEmail, membershipStatus);	
+			member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);	
 			
 			if(viaOms.checkForMemberDuplicates(member))
 			{
 				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
-				clearAddMemberTextFields(event);
+				//clearAddMemberTextFields(event);
 				cbSetMembershipPaid.setSelected(false);
 			}
 			
 			else
 			{
-				viaOms.addMember(memberName, memberEmail, membershipStatus);
+				viaOms.addMember(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);
 				memberTable.getItems().add(member);
 				clearAddMemberTextFields(event);
 				cbSetMembershipPaid.setSelected(false);
@@ -328,7 +337,10 @@ public class GUImembersController implements Initializable
 			int index = viaOms.getMemberList().getMemberIndex(selectedMember);  
 	    	
 	    	String newMemberName = tfShowMemberName.getText();
+	    	String newMemberAddress = tfShowMemberAddress.getText();
+	    	String newMemberPhoneNumber = tfShowMemberPhone.getText();
 	    	String newMemberEmail = tfShowMemberEmail.getText();
+	    	LocalDate newMemberSince = dpShowMemberSince.getValue();
 	    	String newMembershipStatus = "";
 	    	
 	    	if(tfShowMemberName.getText().isEmpty())
@@ -351,7 +363,7 @@ public class GUImembersController implements Initializable
 				newMembershipStatus = "Not paid";
 			}			
 			
-			Member tempMember = new Member(newMemberName, newMemberEmail, newMembershipStatus);
+			Member tempMember = new Member(newMemberName, newMemberAddress, newMemberPhoneNumber, newMemberEmail, newMemberSince, newMembershipStatus);
 	    	
 			if(newMemberEmail.contains("@"))
 			{

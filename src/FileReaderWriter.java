@@ -91,9 +91,6 @@ public class FileReaderWriter
           
           String status = lineItems[13].trim();
           
-          //LocalDate eventStart = LocalDate.parse(date);
-          //LocalDate eventEnd = LocalDate.parse(eventEndDate);
-          
           Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,ticketsRemaining,price,discount,status);
           
           currentEventList.addEventToList(eventToAdd);
@@ -262,17 +259,18 @@ public class FileReaderWriter
 		try 
 		{
 			input = new Scanner(file);
-			int lineNumber = 0;
 			while (input.hasNext()) {
 				String line = input.nextLine();
 				String[] lineToken = line.split(",");
-				lineNumber++;
 
 				String memberName = lineToken[0].trim();
-				String memberEmail = lineToken[1].trim();
-				String membershipStatus = lineToken[2].trim();
+				String memberAddress = lineToken[1].trim();
+				String memberPhoneNumber = lineToken[2].trim();
+				String memberEmail = lineToken[3].trim();
+				LocalDate memberSince = LocalDate.parse(lineToken[4].trim()); 
+				String membershipStatus = lineToken[5].trim();
 
-				Member member = new Member(memberName, memberEmail, membershipStatus);
+				Member member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);
 				currentMemberList.addMemberToList(member);
 			}
 			return currentMemberList;
@@ -294,7 +292,7 @@ public class FileReaderWriter
 
 			for (int i = 0; i < memberList.size(); i++) 
 			{
-				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getEmail() + "," + memberList.getMember(i).getMembershipStatus());
+				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getAddress() + "," + memberList.getMember(i).getPhoneNumber() + "," + memberList.getMember(i).getEmail() + "," + memberList.getMember(i).getMemberSince() + "," + memberList.getMember(i).getMembershipStatus());
 			}
 			output.flush();
 		} 
