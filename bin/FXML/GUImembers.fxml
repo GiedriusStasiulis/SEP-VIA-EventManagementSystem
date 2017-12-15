@@ -14,7 +14,10 @@
                   <TableView fx:id="memberTable" prefHeight="1100.0" prefWidth="1375.0">
                     <columns>
                       <TableColumn fx:id="tcMemberName" minWidth="50.0" prefWidth="150.0" text="Name" />
+                        <TableColumn fx:id="tcMemberAddress" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Address" />
+                        <TableColumn fx:id="tcMemberPhoneNumber" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Phone number" />
                       <TableColumn fx:id="tcMemberEmail" minWidth="50.0" prefWidth="150.0" text="E-mail" />
+                        <TableColumn fx:id="tcMemberSince" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Member since" />
                         <TableColumn fx:id="tcMembershipStatus" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Membership status" />
                     </columns>
                   </TableView>
@@ -30,15 +33,21 @@
                         <content>
                               <ScrollPane prefViewportHeight="524.0" prefViewportWidth="278.0">
                                  <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="265.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="337.0" prefWidth="265.0">
                                        <children>
                                           <Label layoutX="10.0" layoutY="15.0" text="Name:" />
                                           <TextField fx:id="tfEnterMemberName" layoutX="10.0" layoutY="35.0" prefWidth="255.0" />
-                                          <Label layoutX="10.0" layoutY="65.0" text="E-mail:" />
-                                          <TextField fx:id="tfEnterMemberEmail" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
-                                          <Button fx:id="btnAddMember" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#addMember" prefWidth="120.0" text="Add" />
-                                          <Button fx:id="btnClearAddMemberTextFields" layoutX="145.0" layoutY="160.0" mnemonicParsing="false" onAction="#clearAddMemberTextFields" prefWidth="120.0" text="Clear fields" />
-                                          <CheckBox fx:id="cbSetMembershipPaid" layoutX="10.0" layoutY="127.0" mnemonicParsing="false" text="Membership paid" />
+                                          <Label layoutX="10.0" layoutY="165.0" text="E-mail:" />
+                                          <TextField fx:id="tfEnterMemberEmail" layoutX="10.0" layoutY="185.0" prefWidth="255.0" />
+                                          <Button fx:id="btnAddMember" layoutX="10.0" layoutY="300.0" mnemonicParsing="false" onAction="#addMember" prefWidth="120.0" text="Add" />
+                                          <Button fx:id="btnClearAddMemberTextFields" layoutX="145.0" layoutY="300.0" mnemonicParsing="false" onAction="#clearAddMemberTextFields" prefWidth="120.0" text="Clear fields" />
+                                          <CheckBox fx:id="cbSetMembershipPaid" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" text="Membership paid" />
+                                          <Label layoutX="10.0" layoutY="65.0" text="Address:" />
+                                          <TextField fx:id="tfEnterMemberAddress" layoutX="10.0" layoutY="85.0" prefWidth="255.0" />
+                                          <Label layoutX="10.0" layoutY="115.0" text="Phone number:" />
+                                          <TextField fx:id="tfEnterMemberPhoneNumber" layoutX="10.0" layoutY="135.0" prefWidth="255.0" />
+                                          <Label layoutX="10.0" layoutY="215.0" text="Member since:" />
+                                          <DatePicker fx:id="dpEnterMemberSince" layoutX="10.0" layoutY="235.0" prefWidth="255.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -103,22 +112,28 @@
          <right>
             <ScrollPane maxWidth="295.0" prefViewportHeight="778.0" prefViewportWidth="295.0">
                <content>
-                  <VBox prefHeight="314.0" prefWidth="270.0" BorderPane.alignment="CENTER">
+                  <VBox prefHeight="450.0" prefWidth="270.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label text="Selected member details:" translateX="10.0" translateY="10.0" />
                         <Label text="Name:" translateX="10.0" translateY="40.0" />
                         <TextField fx:id="tfShowMemberName" editable="false" maxWidth="260.0" prefHeight="25.0" prefWidth="220.0" translateX="10.0" translateY="45.0" />
-                        <Label text="E-mail:" translateX="10.0" translateY="50.0" />
-                        <TextField fx:id="tfShowMemberEmail" editable="false" maxWidth="260.0" translateX="10.0" translateY="55.0" />
-                        <CheckBox fx:id="cbShowMembershipStatus" mnemonicParsing="false" text="Membership paid" translateX="10.0" translateY="70.0" />
-                        <HBox fx:id="hboxMemberEditOptions" prefHeight="30.0" prefWidth="200.0" translateY="85.0">
+                        <Label text="Address:" translateX="10.0" translateY="50.0" />
+                        <TextField fx:id="tfShowMemberAddress" maxWidth="260.0" translateX="10.0" translateY="55.0" />
+                        <Label text="Phone number:" translateX="10.0" translateY="60.0" />
+                        <TextField fx:id="tfShowMemberPhone" maxWidth="260.0" translateX="10.0" translateY="65.0" />
+                        <Label text="E-mail:" translateX="10.0" translateY="70.0" />
+                        <TextField fx:id="tfShowMemberEmail" editable="false" maxWidth="260.0" translateX="10.0" translateY="75.0" />
+                        <Label text="Member since:" translateX="10.0" translateY="80.0" />
+                        <DatePicker fx:id="dpShowMemberSince" maxWidth="260.0" translateX="10.0" translateY="85.0" />
+                        <CheckBox fx:id="cbShowMembershipStatus" mnemonicParsing="false" text="Membership paid" translateX="10.0" translateY="95.0" />
+                        <HBox fx:id="hboxMemberEditOptions" prefHeight="30.0" prefWidth="200.0" translateY="105.0">
                            <children>
                               <Button fx:id="btnSaveMemberEditChanges" mnemonicParsing="false" onAction="#saveEditMemberChanges" prefHeight="25.0" prefWidth="80.0" text="Save" translateX="10.0" />
                               <Button fx:id="btnClearEditMemberTextFields" mnemonicParsing="false" onAction="#clearEditMemberTextFields" prefHeight="25.0" prefWidth="80.0" text="Clear fields" translateX="20.0" />
                               <Button fx:id="btnCancelEditMember" mnemonicParsing="false" onAction="#cancelEditMember" prefHeight="25.0" prefWidth="80.0" text="Cancel" translateX="30.0" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="30.0" prefWidth="200.0" translateY="95.0">
+                        <HBox prefHeight="30.0" prefWidth="200.0" translateY="110.0">
                            <children>
                               <Button fx:id="btnEditMember" mnemonicParsing="false" onAction="#editMember" prefHeight="25.0" prefWidth="125.0" text="Edit" translateX="10.0" />
                               <Button fx:id="btnDeleteMember" mnemonicParsing="false" onAction="#deleteMember" prefHeight="25.0" prefWidth="125.0" text="Delete" translateX="20.0" />

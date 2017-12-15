@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -63,13 +65,14 @@ public class GUImembersController implements Initializable
 							btnGenerateMemberEmailList,btnSelectAllMemberEmails,btnSendNewsletter,btnGenerateListNonPaidMembership,btnSendReminder;
 
 	@FXML private TextField tfMemberID,tfEnterMemberName,tfEnterMemberEmail,tfEnterSearchKeywords,
-							tfShowMemberName,tfShowMemberEmail;
+							tfShowMemberName,tfShowMemberEmail,tfEnterMemberAddress,tfEnterMemberPhoneNumber,tfShowMemberAddress,tfShowMemberPhone;
 	
 	@FXML private Label lblMemberCount;
 
 	@FXML private TableView<Member> memberTable; 
 
-	@FXML private TableColumn<Member, String> tcMemberID, tcMemberName, tcMemberEmail,tcMembershipStatus;
+	@FXML private TableColumn<Member, String> tcMemberID, tcMemberName, tcMemberEmail,tcMembershipStatus,tcMemberAddress,tcMemberPhoneNumber;
+	@FXML private TableColumn<Member, LocalDate> tcMemberSince;
 	
 	@FXML private ListView<Member> lvMemberSearchResults;
 	@FXML private ListView<String> lvMemberEmailList;
@@ -83,6 +86,8 @@ public class GUImembersController implements Initializable
     						cbSelectAllNonPaidMembers;
     
     @FXML private ScrollPane spMemberTableScrollPane;
+    
+    @FXML private DatePicker dpEnterMemberSince,dpShowMemberSince;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -204,7 +209,7 @@ public class GUImembersController implements Initializable
 		
 		if(cbSetMembershipPaid.isSelected())
 		{
-			membershipStatus = "Paid";
+			membershipStatus = "2017";
 		}
 		
 		else
@@ -338,7 +343,7 @@ public class GUImembersController implements Initializable
 			
 			if(cbShowMembershipStatus.isSelected())
 			{
-				newMembershipStatus = "Paid";
+				newMembershipStatus = "2017";
 			}
 			
 			else
