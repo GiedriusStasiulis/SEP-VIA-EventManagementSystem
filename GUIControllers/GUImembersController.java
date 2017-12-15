@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -195,6 +196,12 @@ public class GUImembersController implements Initializable
 
 		return members;
 	}
+	
+	public static final LocalDate LOCAL_DATE (String dateString){
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dateString, formatter);
+	    return localDate;
+	}	
 
 	@FXML
 	void addMember(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
@@ -206,20 +213,30 @@ public class GUImembersController implements Initializable
 		LocalDate memberSince = dpEnterMemberSince.getValue();
 		String membershipStatus = "";
 		
+		if(tfEnterMemberAddress.getText().isEmpty())
+		{
+			memberAddress = "Not defined";
+		}
+		
+		if(tfEnterMemberPhoneNumber.getText().isEmpty())
+		{
+			memberPhoneNumber = "Not defined";
+		}
+		
 		if(tfEnterMemberName.getText().isEmpty() && tfEnterMemberEmail.getText().isEmpty())
 		{
 			memberName = String.format("Not defined%d", viaOms.getMemberList().size() + 1);
-			memberEmail = String.format("Not defined@empty%d", viaOms.getMemberList().size() + 1);
+			memberEmail = "Not defined@";
 		}		
 		
 		else if(tfEnterMemberName.getText().isEmpty())
 		{
-			memberName = String.format("Not defined%d", viaOms.getMemberList().size() + 1);
+			memberName = "Not defined";
 		}
 		
 		else if(tfEnterMemberEmail.getText().isEmpty())
 		{
-			memberEmail = String.format("Not defined@empty%d", viaOms.getMemberList().size() + 1);
+			memberEmail = "Not defined@";
 		}
 		
 		if(cbSetMembershipPaid.isSelected())
@@ -230,6 +247,15 @@ public class GUImembersController implements Initializable
 		else
 		{
 			membershipStatus = "Not paid";
+		}
+		
+		if(dpEnterMemberSince.getValue() == null)
+		{
+			try {
+				dpEnterMemberSince.setValue(LOCAL_DATE("2001-01-01"));
+				memberSince = dpEnterMemberSince.getValue();
+		    } catch (NullPointerException e) {
+		    }
 		}
 		
 				
@@ -265,7 +291,12 @@ public class GUImembersController implements Initializable
 	void clearAddMemberTextFields(ActionEvent event) 
 	{
 		tfEnterMemberName.setText("");
+		tfEnterMemberAddress.setText("");
+		tfEnterMemberPhoneNumber.setText("");
 		tfEnterMemberEmail.setText("");
+		
+		dpEnterMemberSince.getEditor().clear();
+		dpEnterMemberSince.setValue(null);
 	}
 	
 	@FXML
