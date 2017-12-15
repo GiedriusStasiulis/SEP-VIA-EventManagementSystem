@@ -1,6 +1,5 @@
 Aa,Seminar,Healing,fsfefsefs,2017-12-16,aaa,2017-12-16,aaa,50,49,20.0,15.0,1,Finalized
 BBB,Workshop,Astrology,hftfththtf,2017-12-13,aaa,2017-12-13,aaa,150,150,50.0,15.0,1,Not finalized
-Ccc,Seminar,Reincarnation,ttrtttt,2017-12-20,aaa,2017-12-20,aaa,150,150,60.0,12.0,1,Not finalized
 Not specified17,Journey,Reincarnation,None,2001-01-01,aaa,2001-01-01,aaa,130,130,150.0,0.0,1,Not finalized
 Not specified17,Workshop,Reincarnation,None,2001-01-01,aaa,2001-01-01,aaa,300,300,20.0,20.0,1,Not finalized
 Not specified17,Workshop,Healing,fsfefsefs,2001-01-01,aaa,2001-01-01,aaa,150,149,20.0,20.0,1,Finalized

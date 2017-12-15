@@ -264,7 +264,7 @@ public class GUImembersController implements Initializable
 				
 				for(int i = 0; i < members.size(); i ++)
 				{
-					if (members.get(i).getName().toLowerCase().contains(searchKeyword))
+					if (members.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase()))
 					{
 						searchResults.add(members.get(i));
 					}
@@ -281,7 +281,7 @@ public class GUImembersController implements Initializable
 				
 				for(int i = 0; i < members.size(); i ++)
 				{
-					if (members.get(i).getEmail().toLowerCase().contains(searchKeyword))
+					if (members.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase()))
 					{
 						searchResults.add(members.get(i));
 					}
@@ -312,8 +312,8 @@ public class GUImembersController implements Initializable
 	    	
 	    	cbShowMembershipStatus.setDisable(false);
 	    	
-	    	tfShowMemberName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-	    	tfShowMemberEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+	    	tfShowMemberName.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+	    	tfShowMemberEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 		}		
     }
     

@@ -218,7 +218,7 @@ public class GUIsponsorsController implements Initializable
 		case 0:
 
 			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword)) {
+				if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(sponsors.get(i));
 				}
 			}
@@ -233,7 +233,7 @@ public class GUIsponsorsController implements Initializable
 		case 1:
 
 			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword)) {
+				if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(sponsors.get(i));
 				}
 			}
@@ -248,7 +248,7 @@ public class GUIsponsorsController implements Initializable
 		case 2:
 
 			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getPhone().toLowerCase().contains(searchKeyword)) {
+				if (sponsors.get(i).getPhone().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(sponsors.get(i));
 				}
 			}
@@ -277,9 +277,9 @@ public class GUIsponsorsController implements Initializable
 			tfShowSponsorEmail.setEditable(true);
 			tfShowSponsorPhoneNumber.setEditable(true);
 
-			tfShowSponsorName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowSponsorEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowSponsorPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowSponsorName.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowSponsorEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowSponsorPhoneNumber.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 		}
 	}
 

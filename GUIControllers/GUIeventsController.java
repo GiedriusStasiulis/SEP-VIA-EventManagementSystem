@@ -130,6 +130,11 @@ public class GUIeventsController implements Initializable {
 		eventsPage.setMaxWidth(Double.MAX_VALUE);
 
 		hboxEventEditOptions.setVisible(false);
+		
+		tpShowEventsPane.setDisable(true);
+		tpAddEventCategory.setDisable(true);
+		tpAddMembersToEvent.setDisable(true);
+		tpAddNonMembersToEvent.setDisable(true);
 
 		cbEventLecturer.setVisible(false);
 		dpEventStartDate.setVisible(false);
@@ -226,7 +231,7 @@ public class GUIeventsController implements Initializable {
 			if (event.getClickCount() == 1) {
 				showEventDetailsFromTable();
 				try {
-
+					tpShowEventsPane.setDisable(false);
 					lvMembersAddedToEvent.setItems(getMembersAdded());
 					lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
 					tfSelectedEvent1.setText(selectedEvent.getEventTitle());
@@ -299,6 +304,7 @@ public class GUIeventsController implements Initializable {
 		lvEventSearchResults.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
 				showEventDetailsFromListView();
+				tpShowEventsPane.setDisable(false);
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
@@ -565,10 +571,6 @@ public class GUIeventsController implements Initializable {
 		return categoriesAdded;
 	}
 
-	@FXML
-	public void clearMemberListView() {
-
-	}
 
 	public void generateAllMemberNameList() throws FileNotFoundException, ParseException {
 
@@ -585,11 +587,6 @@ public class GUIeventsController implements Initializable {
 		for (int i = 0; i < size; i++) {
 			memberList.deleteMember(0);
 		}
-	}
-
-	@FXML
-	public String returnType() {
-		return cbEventType.getValue();
 	}
 
 	public static final LocalDate LOCAL_DATE (String dateString){
@@ -883,7 +880,7 @@ public class GUIeventsController implements Initializable {
 		case 0:
 
 			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventTitle().toLowerCase().contains(searchKeyword)) {
+				if (events.get(i).getEventTitle().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(events.get(i));
 				}
 			}
@@ -897,7 +894,7 @@ public class GUIeventsController implements Initializable {
 		case 1:
 
 			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventType().toLowerCase().contains(searchKeyword)) {
+				if (events.get(i).getEventType().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(events.get(i));
 				}
 			}
@@ -911,7 +908,7 @@ public class GUIeventsController implements Initializable {
 		case 2:
 
 			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventCategory().toLowerCase().contains(searchKeyword)) {
+				if (events.get(i).getEventCategory().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(events.get(i));
 				}
 			}
@@ -925,7 +922,7 @@ public class GUIeventsController implements Initializable {
 		case 3:
 
 			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventLecturer().toLowerCase().contains(searchKeyword)) {
+				if (events.get(i).getEventLecturer().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(events.get(i));
 				}
 			}
@@ -939,7 +936,7 @@ public class GUIeventsController implements Initializable {
 		case 4:
 
 			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventStatus().toLowerCase().contains(searchKeyword)) {
+				if (events.get(i).getEventStatus().toLowerCase().contains(searchKeyword.toLowerCase())) {
 					searchResults.add(events.get(i));
 				}
 			}
@@ -972,18 +969,18 @@ public class GUIeventsController implements Initializable {
 			cbShowEventStatus.setDisable(false);
 
 			
-			tfShowEventTitle.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			cbShowEventType.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			cbShowEventCategory.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			cbShowEventLecturer.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			dpShowEventStartDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			dpShowEventEndDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventStartTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventEndTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventNumberOfTickets.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventPrice.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventDiscount.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowEventTicketsRemaining.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventTitle.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			cbShowEventType.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			cbShowEventCategory.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			cbShowEventLecturer.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			dpShowEventStartDate.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			dpShowEventEndDate.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventStartTime.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventEndTime.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventNumberOfTickets.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventPrice.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventDiscount.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowEventTicketsRemaining.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 			
 			btnDeleteEvent.setDisable(true);
 		}

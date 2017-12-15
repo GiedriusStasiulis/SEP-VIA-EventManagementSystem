@@ -268,7 +268,7 @@ public class GUIlecturersController implements Initializable
 
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getLecturerName().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerName().toLowerCase().contains(searchKeyword.toLowerCase())) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -286,7 +286,7 @@ public class GUIlecturersController implements Initializable
 
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getLecturerCategory().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerCategory().toLowerCase().contains(searchKeyword.toLowerCase())) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -304,7 +304,7 @@ public class GUIlecturersController implements Initializable
 			
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getLecturerPhoneNumber().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -322,7 +322,7 @@ public class GUIlecturersController implements Initializable
 			
 			for (int i = 0; i < lecturers.size(); i++) 
 			{
-				if (lecturers.get(i).getLecturerEmail().toLowerCase().contains(searchKeyword)) 
+				if (lecturers.get(i).getLecturerEmail().toLowerCase().contains(searchKeyword.toLowerCase())) 
 				{
 					searchResults.add(lecturers.get(i));
 				}
@@ -354,9 +354,10 @@ public class GUIlecturersController implements Initializable
 			tfShowLecturerEmail.setEditable(true);
 			tfShowLecturerPhoneNumber.setEditable(true);
 
-			tfShowLecturerName.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowLecturerEmail.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
-			tfShowLecturerPhoneNumber.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowLecturerName.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowLecturerEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			tfShowLecturerPhoneNumber.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
+			cbShowLecturerCategory.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 		}
 	}
 
@@ -408,6 +409,7 @@ public class GUIlecturersController implements Initializable
 				tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+				cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
 				
 				btnEditLecturer.setDisable(true);
 				btnDeleteLecturer.setDisable(true);
@@ -438,6 +440,7 @@ public class GUIlecturersController implements Initializable
 				tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+				cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
 			}		
 		}
 		
@@ -469,6 +472,7 @@ public class GUIlecturersController implements Initializable
 		tfShowLecturerName.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 		tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
+		cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
 		
 		btnEditLecturer.setDisable(true);
 		btnDeleteLecturer.setDisable(true);
