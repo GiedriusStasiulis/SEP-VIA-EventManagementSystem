@@ -170,8 +170,7 @@ public class GUImembersController implements Initializable
 	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
 	{
 		memberList = viaOms.getMemberList();
-		//memberList = memberFile.readMemberTextFile();
-
+		
 		for (int i = 0; i < memberList.size(); i++) 
 		{
 			members.add(new Member(memberList.getMember(i).getName(), memberList.getMember(i).getEmail(), memberList.getMember(i).getMembershipStatus()));

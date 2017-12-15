@@ -140,7 +140,6 @@ public class GUIeventsController implements Initializable {
 		tfEventPrice.setVisible(false);
 		tfEventDiscount.setVisible(false);
 
-		lblEventCount.setVisible(false);
 		lblEventLecturer.setVisible(false);
 		lblEventStartDate.setVisible(false);
 		lblEventEndDate.setVisible(false);
@@ -258,9 +257,7 @@ public class GUIeventsController implements Initializable {
 
 					e.printStackTrace();
 				} catch (ParseException e) {
-
-					System.out.println("Parse exeption");
-					// e.printStackTrace();
+					e.printStackTrace();
 				}
 				tpShowEventsPane.setExpanded(true);
 				btnEditEvent.setDisable(false);
@@ -281,7 +278,6 @@ public class GUIeventsController implements Initializable {
 				tfEventPrice.setVisible(false);
 				tfEventDiscount.setVisible(false);
 
-				lblEventCount.setVisible(false);
 				lblEventLecturer.setVisible(false);
 				lblEventStartDate.setVisible(false);
 				lblEventEndDate.setVisible(false);
@@ -496,7 +492,7 @@ public class GUIeventsController implements Initializable {
 			file4.createNewFile();
 
 			clearCreateEventTextFields(event);
-
+			lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 		}
 	}
 
@@ -610,7 +606,6 @@ public class GUIeventsController implements Initializable {
 		tfEventPrice.setVisible(true);
 		tfEventDiscount.setVisible(true);
 
-		lblEventCount.setVisible(true);
 		lblEventLecturer.setVisible(true);
 		lblEventStartDate.setVisible(true);
 		lblEventEndDate.setVisible(true);
@@ -910,10 +905,8 @@ public class GUIeventsController implements Initializable {
 						int index = viaOms.getEventList().getEventIndex(selectedEvent);
 
 						viaOms.deleteEvent(index);
-						// eventList.deleteEvent(index);
-						// eventFile.writeEventTextFile(eventList);
 						eventsTable.getItems().remove(index);
-						// lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// e.printStackTrace();
@@ -954,17 +947,32 @@ public class GUIeventsController implements Initializable {
 
 		}
 	}
+	
+	@FXML
+	void removeMemberFromEvent(ActionEvent event) throws ParseException, IOException {
 
-	public boolean checkForDuplicates(ArrayList<String> memberList, String member) {
-		boolean status = false;
+		
+		if (lvMembersAddedToEvent.getSelectionModel() != null) 
+		{
+			if (membersRegisteredList.size() > 0) 
+			{
+				int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+				
+				membersRegisteredList.remove(lvMembersAddedToEvent.getSelectionModel().getSelectedIndex());
 
-		for (int i = 0; i < memberList.size(); i++) {
-			if (member.equals(memberList.get(i)))
-				return true;
+				viaOms.editEvent(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
+				eventsTable.getItems().set(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
+				
+				viaOms.writeMembersToFile(membersRegisteredList, selectedEvent.getEventTitle());
+				
+				lvMembersAddedToEvent.getItems().remove(index);
+				selectedEvent.setEventTicketsRemaining(selectedEvent.calculateTicketsRemaining(
+						selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
+			}
 		}
-
-		return status;
 	}
+
+
 
 	@FXML
 	void addNonMemberToEvent(ActionEvent event) throws ParseException, IOException {
@@ -1006,30 +1014,29 @@ public class GUIeventsController implements Initializable {
 		tfNonMemberPhoneNumber.setText("");
 	}
 
+	
+	
 	@FXML
-	void removeMemberFromEvent(ActionEvent event) throws ParseException, IOException {
+	void removeNonMemberFromEvent(ActionEvent event) throws FileNotFoundException {
 
-		
-		if (lvMembersAddedToEvent.getSelectionModel() != null) 
-		{
-			if (membersRegisteredList.size() > 0) 
-			{
-				int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
-				
-				membersRegisteredList.remove(index);
+		nonMembers = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
 
-				lvMembersAddedToEvent.getItems().remove(index);
-				selectedEvent.setEventTicketsRemaining(selectedEvent.calculateTicketsRemaining(
-						selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
+		if (lvNonMembersAddedToEvent.getSelectionModel() != null) {
 
-				//viaOms.editEvent(index, selectedEvent);
-				//eventsTable.getItems().set(index, selectedEvent);
-				
-				viaOms.writeMembersToFile(membersRegisteredList, selectedEvent.getEventTitle());
+			if (nonMembers.size() > 0) {
+				int index = lvNonMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+
+				nonMembers.remove(index);
+
+				lvNonMembersAddedToEvent.getItems().remove(index);
+				viaOms.writeNonMembersToFile(nonMembers, selectedEvent.getEventTitle());
 			}
 		}
 	}
-
+	
+	
+	
+	
 	@FXML
 	void addCategoryToEvent(ActionEvent event) throws FileNotFoundException {
 		eventCategories = viaOms.readCategoriesFromFile(selectedEvent.getEventTitle());
@@ -1065,22 +1072,16 @@ public class GUIeventsController implements Initializable {
 
 		viaOms.writeCategoriesToFile(eventCategories, selectedEvent.getEventTitle());
 	}
+	
+	public boolean checkForDuplicates(ArrayList<String> memberList, String member) {
+		boolean status = false;
 
-	@FXML
-	void removeNonMemberFromEvent(ActionEvent event) throws FileNotFoundException {
-
-		nonMembers = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
-
-		if (lvNonMembersAddedToEvent.getSelectionModel() != null) {
-
-			if (nonMembers.size() > 0) {
-				int index = lvNonMembersAddedToEvent.getSelectionModel().getSelectedIndex();
-
-				nonMembers.remove(index);
-
-				lvNonMembersAddedToEvent.getItems().remove(index);
-				viaOms.writeNonMembersToFile(nonMembers, selectedEvent.getEventTitle());
-			}
+		for (int i = 0; i < memberList.size(); i++) {
+			if (member.equals(memberList.get(i)))
+				return true;
 		}
+
+		return status;
 	}
+	
 }
