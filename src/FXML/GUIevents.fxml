@@ -67,7 +67,7 @@
                                           <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="507.0" prefWidth="260.0" />
                                           <Label fx:id="lblEventDiscount" layoutX="10.0" layoutY="535.0" text="Discount:" />
                                           <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="555.0" prefWidth="260.0" />
-                                          <Button fx:id="btnContinueCreateEvent" layoutX="190.0" layoutY="165.0" maxHeight="5.0" mnemonicParsing="false" onAction="#continueCreateEvent" prefWidth="80.0" text="Continue" />
+                                          <Button fx:id="btnContinueCreateEvent" layoutX="190.0" layoutY="170.0" maxHeight="5.0" mnemonicParsing="false" onAction="#continueCreateEvent" prefWidth="80.0" text="Continue" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -156,60 +156,28 @@
                               </ScrollPane>
                         </content>
                       </TitledPane>
-                      <TitledPane prefWidth="295.0" text="Add members to event">
-                        <content>
-                              <ScrollPane prefViewportHeight="753.0" prefViewportWidth="293.0">
-                                 <content>
-                                <AnchorPane maxHeight="1500.0" minHeight="0.0" minWidth="0.0" prefHeight="751.0" prefWidth="270.0">
-                                       <children>
-                                          <VBox prefHeight="753.0" prefWidth="280.0">
-                                             <children>
-                                                <Label text="Selected event:" translateX="10.0" translateY="10.0" />
-                                                <TextField fx:id="tfSelectedEvent" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
-                                                <Label text="Add members to event:" translateX="10.0" translateY="20.0" />
-                                                <ListView fx:id="lvMembersToAdd" maxWidth="260.0" prefHeight="278.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
-                                                   <children>
-                                                      <CheckBox fx:id="cbSelectAllMembersToAdd" mnemonicParsing="false" text="Select all" translateX="10.0" translateY="4.0" />
-                                                      <Button fx:id="btnAddMemberToEvent" mnemonicParsing="false" onAction="#addMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
-                                                   </children>
-                                                </HBox>
-                                                <Label text="Members already added:" translateX="10.0" translateY="45.0" />
-                                                <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="278.0" prefWidth="200.0" translateX="10.0" translateY="50.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
-                                                   <children>
-                                                      <CheckBox fx:id="cbSelectAllMembersToRemove" mnemonicParsing="false" text="Select all" translateX="10.0" translateY="4.0" />
-                                                      <Button fx:id="btnRemoveMemberFromEvent" mnemonicParsing="false" onAction="#removeMemberFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </ScrollPane>
-                        </content>
-                      </TitledPane>
-                        <TitledPane animated="false" prefWidth="295.0" text="Add categories to event">
+                        <TitledPane fx:id="tpAddEventCategory" animated="false" prefWidth="295.0" text="Add other categories to seminar or workshop">
                           <content>
                               <ScrollPane prefViewportHeight="754.0" prefViewportWidth="293.0">
                                  <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="749.0" prefWidth="271.0">
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="726.0" prefWidth="271.0">
                                        <children>
                                           <VBox prefHeight="753.0" prefWidth="280.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="0.0">
                                              <children>
                                                 <Label text="Selected event:" translateX="10.0" translateY="10.0" />
-                                                <TextField fx:id="tfSelectedEvent" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
-                                                <Label text="Add category to event:" translateX="10.0" translateY="20.0" />
-                                                <ListView fx:id="lvCategoriesToAdd" maxWidth="260.0" prefHeight="278.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
+                                                <TextField fx:id="tfSelectedEvent1" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
+                                                <Label text="Selected event category:" translateX="10.0" translateY="20.0" />
+                                                <TextField fx:id="tfSelectedEventCategory" editable="false" maxWidth="260.0" translateX="10.0" translateY="25.0" />
+                                                <Label text="Add more categories:" translateX="10.0" translateY="40.0" />
+                                                <ListView fx:id="lvCategoriesToAdd" maxWidth="260.0" prefHeight="220.0" prefWidth="200.0" translateX="10.0" translateY="45.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="55.0">
                                                    <children>
                                                       <Button fx:id="btnAddCategoryToEvent" mnemonicParsing="false" onAction="#addCategoryToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="Categories already added:" translateX="10.0" translateY="45.0" />
-                                                <ListView fx:id="lvCategoriesAddedToEvent" maxWidth="260.0" prefHeight="278.0" prefWidth="260.0" translateX="10.0" translateY="50.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
+                                                <Label text="Categories already added:" translateX="10.0" translateY="70.0" />
+                                                <ListView fx:id="lvCategoriesAddedToEvent" maxWidth="260.0" prefHeight="220.0" prefWidth="260.0" translateX="10.0" translateY="75.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="85.0">
                                                    <children>
                                                       <Button fx:id="btnRemoveCategoryFromEvent" mnemonicParsing="false" onAction="#removeCategoryFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
                                                    </children>
@@ -222,11 +190,43 @@
                               </ScrollPane>
                           </content>
                         </TitledPane>
-                        <TitledPane animated="false" text="Add non-member to event">
+                      <TitledPane fx:id="tpAddMembersToEvent" prefWidth="295.0" text="Add members to event">
+                        <content>
+                              <ScrollPane prefViewportHeight="753.0" prefViewportWidth="293.0">
+                                 <content>
+                                <AnchorPane maxHeight="1500.0" minHeight="0.0" minWidth="0.0" prefHeight="724.0" prefWidth="277.0">
+                                       <children>
+                                          <VBox prefHeight="753.0" prefWidth="280.0">
+                                             <children>
+                                                <Label text="Selected event:" translateX="10.0" translateY="10.0" />
+                                                <TextField fx:id="tfSelectedEvent2" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
+                                                <Label text="Add members to event:" translateX="10.0" translateY="20.0" />
+                                                <ListView fx:id="lvMembersToAdd" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
+                                                   <children>
+                                                      <Button fx:id="btnAddMemberToEvent" mnemonicParsing="false" onAction="#addMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
+                                                   </children>
+                                                </HBox>
+                                                <Label text="Members already added:" translateX="10.0" translateY="45.0" />
+                                                <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="50.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
+                                                   <children>
+                                                      <Button fx:id="btnRemoveMemberFromEvent" mnemonicParsing="false" onAction="#removeMemberFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                        </content>
+                      </TitledPane>
+                        <TitledPane fx:id="tpAddNonMembersToEvent" animated="false" text="Add non-member to event">
                            <content>
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
-                                    <AnchorPane prefHeight="749.0" prefWidth="271.0">
+                                    <AnchorPane prefHeight="649.0" prefWidth="271.0">
                                        <children>
                                           <VBox layoutX="6.0" layoutY="14.0" prefHeight="753.0" prefWidth="280.0" AnchorPane.bottomAnchor="-18.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="14.0">
                                              <children>
@@ -236,14 +236,14 @@
                                                 <TextField fx:id="tfNonMemberName" maxWidth="260.0" prefWidth="260.0" />
                                                 <Label text="Phone number" />
                                                 <TextField fx:id="tfNonMemberPhoneNumber" maxWidth="260.0" prefWidth="260.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0">
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="10.0">
                                                    <children>
                                                       <Button fx:id="btnAddNonMemberToEvent" mnemonicParsing="false" onAction="#addNonMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="Non-members added:" />
-                                                <ListView fx:id="lvNonMembersAddedToEvent" maxWidth="260.0" prefHeight="389.0" prefWidth="260.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0">
+                                                <Label text="Non-members added:" translateY="25.0" />
+                                                <ListView fx:id="lvNonMembersAddedToEvent" maxWidth="260.0" prefHeight="390.0" prefWidth="260.0" translateY="30.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="40.0">
                                                    <children>
                                                       <Button fx:id="btnRemoveNonMemberFromEvent" mnemonicParsing="false" onAction="#removeNonMemberFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
                                                    </children>
