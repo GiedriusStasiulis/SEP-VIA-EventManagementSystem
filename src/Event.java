@@ -20,20 +20,20 @@ public class Event
 	private LocalDate eventStartDate, eventEndDate;	
 	private String eventStartTime, eventEndTime;
 	private int eventNumberOfTickets;
+	private int eventTicketsRemaining;
 	private double eventPrice, eventDiscount;
 	private String eventStatus;
-	
-
-	
 
 	private int eventDuration;
+	
+	private int remTickets;
 
 	ArrayList<String> membersRegistered;
 	ArrayList<Member> tempMembersRegistered;
 
 	public Event(String eventTitle, String eventType, String eventCategory, String eventLecturer,
 			LocalDate eventStartDate, String eventStartTime, LocalDate eventEndDate, String eventEndTime, int eventNumberOfTickets,
-			double eventPrice, double eventDiscount, String eventStatus) throws IOException 
+			int eventTicketsRemaining, double eventPrice, double eventDiscount, String eventStatus) throws IOException 
 	{		
 		this.eventTitle = eventTitle;
 		this.eventType = eventType;
@@ -47,6 +47,8 @@ public class Event
 		this.eventPrice = eventPrice;
 		this.eventDiscount = eventDiscount;
 		this.eventStatus = eventStatus;
+		
+		this.eventTicketsRemaining = eventTicketsRemaining;
 		
 		this.membersRegistered = new ArrayList<String>();
 		this.tempMembersRegistered = new ArrayList<Member>();
@@ -203,12 +205,27 @@ public class Event
 		this.tempMembersRegistered = tempMembersRegistered;
 	}
 
+	public int getEventTicketsRemaining() {
+		return eventTicketsRemaining;
+	}
+
+	public void setEventTicketsRemaining(int eventTicketsRemaining) {
+		this.eventTicketsRemaining = eventTicketsRemaining;
+	}
+
 	public void calculateDuration() 
 	{
 		Period intervalPeriod = Period.between(eventStartDate, eventEndDate);
 		this.eventDuration = intervalPeriod.getDays() + 1;
 	}
-
+	
+	public int calculateTicketsRemaining(int totalNum, int participantSize)
+	{
+		this.eventTicketsRemaining = totalNum - participantSize;
+		
+		return eventTicketsRemaining;
+	}
+	
 	public void addMemberToEvent(String memberName) throws FileNotFoundException 
 	{
 		membersRegistered.add(memberName);
