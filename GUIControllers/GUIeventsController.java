@@ -69,6 +69,8 @@ public class GUIeventsController implements Initializable
 
 	private ObservableList<String> membersAlreadyAdded = FXCollections.observableArrayList();
 	private ObservableList<String> membersAlreadyAddedtemp = FXCollections.observableArrayList();
+	
+
 
 	@FXML
 	private BorderPane eventsPage = new BorderPane();
@@ -105,7 +107,7 @@ public class GUIeventsController implements Initializable
 	private TableColumn<Event, Double> tcEventPrice, tcEventDiscount;
 
 	@FXML
-	private Label lblEventCount;
+	private Label lblEventCount,lblEventLecturer,lblEventStartDate,lblEventEndDate,lblEventStartTime,lblEventEndTime,lblEventNumberOfTickets,lblEventPrice,lblEventDiscount;
 
 	@FXML
 	private ListView<Event> lvEventSearchResults;
@@ -115,7 +117,7 @@ public class GUIeventsController implements Initializable
 	private ListView<String> lvMembersToAdd, lvMembersAddedToEvent, lvCategoriesToAdd, lvCategoriesAddedToEvent;
 
 	@FXML
-	private CheckBox cbSelectAllMembersToAdd, cbSelectAllMembersToRemove, cbFinalizeEvent, cbShowEventStatus;
+	private CheckBox cbSelectAllMembersToAdd, cbSelectAllMembersToRemove, cbShowEventStatus;
 
 	@FXML
 	private DatePicker dpShowEventEndDate, dpShowEventStartDate, dpEventStartDate, dpEventEndDate;
@@ -135,6 +137,26 @@ public class GUIeventsController implements Initializable
 		hboxEventEditOptions.setVisible(false);
 
 		hboxEventEditOptions.setVisible(false);
+		
+		cbEventLecturer.setVisible(false);
+		dpEventStartDate.setVisible(false);
+		dpEventEndDate.setVisible(false);
+		tfEventStartTime.setVisible(false);
+		tfEventEndTime.setVisible(false);
+		tfEventEndTime.setVisible(false);
+		tfEventNumberOfTickets.setVisible(false);
+		tfEventPrice.setVisible(false);
+		tfEventDiscount.setVisible(false);
+
+		lblEventCount.setVisible(false);
+		lblEventLecturer.setVisible(false);
+		lblEventStartDate.setVisible(false);
+		lblEventEndDate.setVisible(false);
+		lblEventStartTime.setVisible(false);
+		lblEventEndTime.setVisible(false);
+		lblEventNumberOfTickets.setVisible(false);
+		lblEventPrice.setVisible(false);
+		lblEventDiscount.setVisible(false);
 		
 		tfShowEventTitle.setEditable(false);
 		cbShowEventType.setDisable(true);
@@ -192,7 +214,7 @@ public class GUIeventsController implements Initializable
 		btnEditEvent.setDisable(true);
 		btnDeleteEvent.setDisable(true);
 
-		try {
+		/*try {
 			cbEventLecturer.setItems(getLecturerNames());
 			cbEventLecturer.getSelectionModel().select(0);
 
@@ -202,7 +224,7 @@ public class GUIeventsController implements Initializable
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 
 		try {
 			eventsTable.setItems(getList());
@@ -224,6 +246,37 @@ public class GUIeventsController implements Initializable
 
 				;
 			}
+		});
+		
+		cbEventCategory.setOnMouseClicked((MouseEvent event) ->{
+			if (event.getClickCount() == 1)
+			{
+				cbEventLecturer.setVisible(false);
+				dpEventStartDate.setVisible(false);
+				dpEventEndDate.setVisible(false);
+				tfEventStartTime.setVisible(false);
+				tfEventEndTime.setVisible(false);
+				tfEventEndTime.setVisible(false);
+				tfEventNumberOfTickets.setVisible(false);
+				tfEventPrice.setVisible(false);
+				tfEventDiscount.setVisible(false);
+
+				lblEventCount.setVisible(false);
+				lblEventLecturer.setVisible(false);
+				lblEventStartDate.setVisible(false);
+				lblEventEndDate.setVisible(false);
+				lblEventStartTime.setVisible(false);
+				lblEventEndTime.setVisible(false);
+				lblEventNumberOfTickets.setVisible(false);
+				lblEventPrice.setVisible(false);
+				lblEventDiscount.setVisible(false);
+			}
+		});
+		
+		dpEventStartDate.setOnAction((ActionEvent event) ->  
+		{
+				dpEventEndDate.setValue(dpEventStartDate.getValue());
+				
 		});
 
 		/*lvMembersToAdd.setOnMouseClicked((MouseEvent event) -> {
@@ -314,7 +367,7 @@ public class GUIeventsController implements Initializable
 		return events;
 	}
 
-	public ObservableList<String> getLecturerNames() throws FileNotFoundException, ParseException {
+	/*public ObservableList<String> getLecturerNames() throws FileNotFoundException, ParseException {
 		
 		lecturerList = viaOms.getLecturerList();
 
@@ -323,7 +376,7 @@ public class GUIeventsController implements Initializable
 		}
 
 		return lecturerNames;
-	}
+	} */
 
 	/*public ObservableList<String> getMembersAdded() throws FileNotFoundException, ParseException 
 	{
@@ -374,12 +427,160 @@ public class GUIeventsController implements Initializable
 	 */
 	
 	@FXML
+	public String returnType()
+	{
+		return cbEventType.getValue();
+	}
+	
+	@FXML 
+	void continueCreateEvent() throws FileNotFoundException, ParseException
+	{
+		String type = cbEventType.getValue();
+		String category = cbEventCategory.getValue();
+		
+		switch(type)
+		{
+			
+		case "Journey":
+			
+			tfEventDiscount.setEditable(false);
+			tfEventDiscount.setText("0");
+			
+			break;
+			
+			default:
+				break;
+		}
+		
+		
+		
+		lecturerNames.clear();
+		
+		switch(category)
+		{
+		case "Dream Interpretation":
+
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			
+			break;
+			
+		case "Healing":
+			
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			break;
+			
+		case "Astrology":
+			
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			break;
+		case "Reincarnation":
+			
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			break;
+			
+		case "Karma":
+			
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			break;
+			
+		case "Alternative Health-Care":
+			
+			for(int i = 0; i < viaOms.getLecturerList().size(); i++)
+			{
+				if(viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category))
+				{
+					lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+				}
+			}
+			
+			cbEventLecturer.setItems(lecturerNames);
+			cbEventLecturer.getSelectionModel().select(0);
+			
+			break;
+		}
+		
+		
+		cbEventLecturer.setVisible(true);
+		dpEventStartDate.setVisible(true);
+		dpEventEndDate.setVisible(true);
+		tfEventStartTime.setVisible(true);
+		tfEventEndTime.setVisible(true);
+		tfEventEndTime.setVisible(true);
+		tfEventNumberOfTickets.setVisible(true);
+		tfEventPrice.setVisible(true);
+		tfEventDiscount.setVisible(true);
+
+		lblEventCount.setVisible(true);
+		lblEventLecturer.setVisible(true);
+		lblEventStartDate.setVisible(true);
+		lblEventEndDate.setVisible(true);
+		lblEventStartTime.setVisible(true);
+		lblEventEndTime.setVisible(true);
+		lblEventNumberOfTickets.setVisible(true);
+		lblEventPrice.setVisible(true);
+		lblEventDiscount.setVisible(true);
+	}
+	
+	@FXML
 	void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
 	{
 		String eventTitle = tfEnterEventTitle.getText();
 
 		String eventType = cbEventType.getValue();
-		String eventCategory = cbEventCategory.getValue();
+		
+		String eventCategory = cbEventCategory.getValue();		
+		
+		
 		String eventLecturer = cbEventLecturer.getValue();
 
 		// DatePicker datePicker = new DatePicker();
@@ -392,22 +593,16 @@ public class GUIeventsController implements Initializable
 		double eventDiscount = Double.parseDouble(tfEventDiscount.getText());
 		int eventNumberOfTickets = Integer.parseInt(tfEventNumberOfTickets.getText());
 
-		String eventStatus = "";
-
-		if (cbFinalizeEvent.isSelected()) {
-			eventStatus = "Finalized";
-		}
-
-		else {
-			eventStatus = "Not finalized";
-		}
-
-		Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime, eventEndDate, eventEndTime, eventNumberOfTickets, eventPrice, eventDiscount, eventStatus);
+		String eventStatus = "Not finalized";
 		
+		
+		
+		Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime, eventEndDate, eventEndTime, eventNumberOfTickets, eventPrice, eventDiscount, eventStatus);
+				
 		if(viaOms.checkForEventDuplicates(eventObj))
 		{
 			JOptionPane.showMessageDialog(null, "Event already exists in the system!");
-			clearCreateEventTextFields(event);
+			//clearCreateEventTextFields(event);
 		}
 		
 		else
@@ -465,7 +660,6 @@ public class GUIeventsController implements Initializable
 		tfEventPrice.setText("");
 		tfEventDiscount.setText("");
 		tfEventNumberOfTickets.setText("");
-		cbFinalizeEvent.setSelected(false);
 	}
 
 	@FXML

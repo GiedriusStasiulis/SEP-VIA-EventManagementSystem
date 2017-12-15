@@ -48,26 +48,26 @@
                                           <Label layoutX="10.0" layoutY="65.0" text="Type:" />
                                           <Button fx:id="btnCreateEvent" layoutX="10.0" layoutY="600.0" mnemonicParsing="false" onAction="#createEvent" prefWidth="120.0" text="Create" />
                                           <Button fx:id="btnClearCreateEventTextFields" layoutX="145.0" layoutY="600.0" mnemonicParsing="false" onAction="#clearCreateEventTextFields" prefWidth="120.0" text="Clear fields" />
-                                          <ComboBox fx:id="cbEventType" layoutX="10.0" layoutY="85.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="115.0" text="Category:" />
-                                          <ComboBox fx:id="cbEventCategory" layoutX="10.0" layoutY="135.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="165.0" text="Lecturer:" />
-                                          <ComboBox fx:id="cbEventLecturer" layoutX="10.0" layoutY="185.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="215.0" text="Start-date:" />
-                                          <DatePicker fx:id="dpEventStartDate" layoutX="10.0" layoutY="235.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="265.0" text="End-date:" />
-                                          <DatePicker fx:id="dpEventEndDate" layoutX="10.0" layoutY="285.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="315.0" text="Start-time (hh:mm AM/PM):" />
-                                          <TextField fx:id="tfEventStartTime" layoutX="10.0" layoutY="335.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="365.0" text="End-time (hh:mm AM/PM):" />
-                                          <TextField fx:id="tfEventEndTime" layoutX="10.0" layoutY="385.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="415.0" text="Number of tickets:" />
-                                          <TextField fx:id="tfEventNumberOfTickets" layoutX="10.0" layoutY="435.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="465.0" text="Price:" />
-                                          <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="485.0" prefWidth="260.0" />
-                                          <Label layoutX="10.0" layoutY="515.0" text="Discount:" />
-                                          <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="535.0" prefWidth="260.0" />
-                                          <CheckBox fx:id="cbFinalizeEvent" layoutX="10.0" layoutY="570.0" mnemonicParsing="false" text="Set finalized" />
+                                          <ComboBox fx:id="cbEventType" layoutX="10.0" layoutY="85.0" onAction="#returnType" prefHeight="25.0" prefWidth="260.0" />
+                                          <Label layoutX="10.0" layoutY="114.0" text="Category:" />
+                                          <ComboBox fx:id="cbEventCategory" layoutX="10.0" layoutY="134.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventLecturer" layoutX="10.0" layoutY="187.0" text="Lecturer:" />
+                                          <ComboBox fx:id="cbEventLecturer" layoutX="10.0" layoutY="207.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventStartDate" layoutX="10.0" layoutY="237.0" text="Start-date:" />
+                                          <DatePicker fx:id="dpEventStartDate" layoutX="10.0" layoutY="257.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventEndDate" layoutX="10.0" layoutY="287.0" text="End-date:" />
+                                          <DatePicker fx:id="dpEventEndDate" layoutX="10.0" layoutY="307.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventStartTime" layoutX="10.0" layoutY="337.0" text="Start-time (hh:mm AM/PM):" />
+                                          <TextField fx:id="tfEventStartTime" layoutX="10.0" layoutY="357.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventEndTime" layoutX="10.0" layoutY="387.0" text="End-time (hh:mm AM/PM):" />
+                                          <TextField fx:id="tfEventEndTime" layoutX="10.0" layoutY="407.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventNumberOfTickets" layoutX="10.0" layoutY="437.0" text="Number of tickets:" />
+                                          <TextField fx:id="tfEventNumberOfTickets" layoutX="10.0" layoutY="457.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventPrice" layoutX="10.0" layoutY="487.0" text="Price:" />
+                                          <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="507.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventDiscount" layoutX="10.0" layoutY="535.0" text="Discount:" />
+                                          <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="555.0" prefWidth="260.0" />
+                                          <Button fx:id="btnContinueCreateEvent" layoutX="190.0" layoutY="165.0" maxHeight="5.0" mnemonicParsing="false" onAction="#continueCreateEvent" prefWidth="80.0" text="Continue" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -134,7 +134,7 @@
                                                 <TextField fx:id="tfShowEventPrice" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="115.0" />
                                                 <Label text="Discount:" translateX="10.0" translateY="120.0" />
                                                 <TextField fx:id="tfShowEventDiscount" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="125.0" />
-                                                <CheckBox fx:id="cbShowEventStatus" mnemonicParsing="false" text="Finalized" translateX="10.0" translateY="140.0" />
+                                                <CheckBox fx:id="cbShowEventStatus" mnemonicParsing="false" text="Finalize event" translateX="10.0" translateY="140.0" />
                                                 <HBox fx:id="hboxEventEditOptions" prefHeight="25.0" prefWidth="200.0" translateY="160.0">
                                                    <children>
                                                       <Button fx:id="btnSaveEventEditChanges" mnemonicParsing="false" onAction="#saveEditEventChanges" prefWidth="80.0" text="Save" translateX="10.0" />
