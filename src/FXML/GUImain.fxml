@@ -33,9 +33,9 @@
                   </TextFlow>
                </center>
                <bottom>
-                  <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="200.0" rotate="180.0" BorderPane.alignment="CENTER">
+                  <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="21.0" prefWidth="200.0" rotate="180.0" BorderPane.alignment="CENTER">
                      <items>
-                        <Label prefHeight="10.0" rotate="180.0" text="Version 1.1 / Last update 12/13/2017" />
+                        <Label prefHeight="10.0" rotate="180.0" text="Version 1.1 / Last update 12/15/2017" />
                      </items>
                   </ToolBar>
                </bottom>
