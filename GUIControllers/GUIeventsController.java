@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -205,6 +206,7 @@ public class GUIeventsController implements Initializable {
 
 		btnEditEvent.setDisable(true);
 		btnDeleteEvent.setDisable(true);
+		btnCreateEvent.setDisable(true);
 
 		try {
 			eventsTable.setItems(getList());
@@ -311,6 +313,146 @@ public class GUIeventsController implements Initializable {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
+		cbShowEventType.setOnAction((ActionEvent event) -> {
+			String type = cbShowEventType.getValue();
+			
+			switch(type)
+			{
+			case "Journey":
+				
+				tfShowEventDiscount.setText("0");
+				tfShowEventDiscount.setEditable(false);
+				
+				break;
+				
+				default:
+					
+					tfShowEventDiscount.setEditable(true);
+					break;
+			}
+
+			
+		
+		});
+		
+		
+		cbShowEventCategory.setOnAction((ActionEvent event) -> {
+			
+			String category = cbShowEventCategory.getValue();
+			lecturerNames.clear();
+			switch (category) {
+			case "Dream Interpretation":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+
+			case "Healing":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+
+			case "Astrology":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+			case "Reincarnation":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+
+			case "Karma":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+
+			case "Alternative Health-Care":
+
+				try {
+					for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+						}
+					}
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+
+				break;
+			}
+		});
 
 		lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 	}
@@ -328,6 +470,7 @@ public class GUIeventsController implements Initializable {
 			tfShowEventStartTime.setText(selectedEvent.getEventStartTime());
 			tfShowEventEndTime.setText(selectedEvent.getEventEndTime());
 			tfShowEventNumberOfTickets.setText(Integer.toString(selectedEvent.getEventNumberOfTickets()));
+			tfShowEventTicketsRemaining.setText(Integer.toString(selectedEvent.getEventTicketsRemaining()));
 			tfShowEventPrice.setText(Double.toString(selectedEvent.getEventPrice()));
 			tfShowEventDiscount.setText(Double.toString(selectedEvent.getEventDiscount()));
 			tfSelectedEventNonMember.setText(selectedEvent.getEventTitle());
@@ -449,8 +592,31 @@ public class GUIeventsController implements Initializable {
 		return cbEventType.getValue();
 	}
 
+	public static final LocalDate LOCAL_DATE (String dateString){
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dateString, formatter);
+	    return localDate;
+	}	
+	
 	@FXML
-	void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException {
+	void createEvent(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
+	{		
+		
+		if(tfEventPrice.getText().isEmpty())
+		{
+			tfEventPrice.setText("0.0");
+		}
+		
+		if(tfEventDiscount.getText().isEmpty())
+		{
+			tfEventDiscount.setText("0.0");
+		}
+		
+		if(tfEventNumberOfTickets.getText().isEmpty())
+		{
+			tfEventNumberOfTickets.setText("0");
+		}
+		
 		String eventTitle = tfEnterEventTitle.getText();
 		String eventType = cbEventType.getValue();
 		String eventCategory = cbEventCategory.getValue();
@@ -464,7 +630,38 @@ public class GUIeventsController implements Initializable {
 		int eventNumberOfTickets = Integer.parseInt(tfEventNumberOfTickets.getText());
 		String eventStatus = "Not finalized";
 		int eventTicketsRemaining = eventNumberOfTickets;
-
+		
+		if(cbEventLecturer.getSelectionModel().getSelectedItem() == null)
+		{
+			eventLecturer = "Not specified";
+		}
+		
+		if(tfEnterEventTitle.getText().isEmpty())
+		{
+			eventTitle = "Not specified" + eventList.size();
+		}
+		
+		if(dpEventStartDate.getValue() == null && dpEventEndDate.getValue() == null)
+		{
+			try {
+				dpEventStartDate.setValue(LOCAL_DATE("2001-01-01"));
+				dpEventEndDate.setValue(LOCAL_DATE("2001-01-01"));
+				eventStartDate = dpEventStartDate.getValue();
+				eventEndDate = dpEventEndDate.getValue();
+		    } catch (NullPointerException e) {
+		    }
+		}
+		
+		if(tfEventStartTime.getText().isEmpty())
+		{
+			eventStartTime = "Not specified";
+		}
+		
+		if(tfEventEndTime.getText().isEmpty())
+		{
+			eventEndTime = "Not specified";
+		}
+		
 		Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
 				eventEndDate, eventEndTime, eventNumberOfTickets, eventNumberOfTickets, eventPrice, eventDiscount,
 				eventStatus);
@@ -492,12 +689,33 @@ public class GUIeventsController implements Initializable {
 			file4.createNewFile();
 
 			clearCreateEventTextFields(event);
+			btnCreateEvent.setDisable(true);
+			cbEventLecturer.setVisible(false);
+			dpEventStartDate.setVisible(false);
+			dpEventEndDate.setVisible(false);
+			tfEventStartTime.setVisible(false);
+			tfEventEndTime.setVisible(false);
+			tfEventEndTime.setVisible(false);
+			tfEventNumberOfTickets.setVisible(false);
+			tfEventPrice.setVisible(false);
+			tfEventDiscount.setVisible(false);
+
+			lblEventLecturer.setVisible(false);
+			lblEventStartDate.setVisible(false);
+			lblEventEndDate.setVisible(false);
+			lblEventStartTime.setVisible(false);
+			lblEventEndTime.setVisible(false);
+			lblEventNumberOfTickets.setVisible(false);
+			lblEventPrice.setVisible(false);
+			lblEventDiscount.setVisible(false);
 			lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 		}
 	}
 
 	@FXML
-	void continueCreateEvent() throws FileNotFoundException, ParseException {
+	void continueCreateEvent() throws FileNotFoundException, ParseException 
+	{	
+		btnCreateEvent.setDisable(false);
 		String type = cbEventType.getValue();
 		String category = cbEventCategory.getValue();
 
@@ -631,6 +849,26 @@ public class GUIeventsController implements Initializable {
 		tfEventPrice.setText("");
 		tfEventDiscount.setText("");
 		tfEventNumberOfTickets.setText("");
+		
+		btnCreateEvent.setDisable(true);
+		cbEventLecturer.setVisible(false);
+		dpEventStartDate.setVisible(false);
+		dpEventEndDate.setVisible(false);
+		tfEventStartTime.setVisible(false);
+		tfEventEndTime.setVisible(false);
+		tfEventEndTime.setVisible(false);
+		tfEventNumberOfTickets.setVisible(false);
+		tfEventPrice.setVisible(false);
+		tfEventDiscount.setVisible(false);
+
+		lblEventLecturer.setVisible(false);
+		lblEventStartDate.setVisible(false);
+		lblEventEndDate.setVisible(false);
+		lblEventStartTime.setVisible(false);
+		lblEventEndTime.setVisible(false);
+		lblEventNumberOfTickets.setVisible(false);
+		lblEventPrice.setVisible(false);
+		lblEventDiscount.setVisible(false);
 	}
 
 	@FXML
@@ -732,11 +970,43 @@ public class GUIeventsController implements Initializable {
 			tfShowEventPrice.setEditable(true);
 			tfShowEventDiscount.setEditable(true);
 			cbShowEventStatus.setDisable(false);
+
+			
+			tfShowEventTitle.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			cbShowEventType.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			cbShowEventCategory.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			cbShowEventLecturer.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			dpShowEventStartDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			dpShowEventEndDate.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventStartTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventEndTime.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventNumberOfTickets.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventPrice.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventDiscount.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			tfShowEventTicketsRemaining.setStyle("-fx-border-color: orange ; -fx-border-width: 1px ;");
+			
+			btnDeleteEvent.setDisable(true);
 		}
 	}
 
 	@FXML
-	void saveEditEventChanges(ActionEvent event) throws ParseException, IOException {
+	void saveEditEventChanges(ActionEvent event) throws ParseException, IOException 
+	{
+		if(tfShowEventPrice.getText().isEmpty())
+		{
+			tfShowEventPrice.setText("0.0");
+		}
+		
+		if(tfShowEventDiscount.getText().isEmpty())
+		{
+			tfShowEventDiscount.setText("0.0");
+		}
+		
+		if(tfShowEventNumberOfTickets.getText().isEmpty())
+		{
+			tfShowEventNumberOfTickets.setText("0");
+		}
+		
 		int index = eventsTable.getSelectionModel().getSelectedIndex();
 
 		String eventTitle = tfShowEventTitle.getText();
@@ -754,6 +1024,37 @@ public class GUIeventsController implements Initializable {
 		int eventTicketsRemaining = eventNumberOfTickets;
 		String eventStatus = "";
 
+		if(cbShowEventLecturer.getSelectionModel().getSelectedItem() == null)
+		{
+			eventLecturer = "None";
+		}		
+		
+		if(tfEnterEventTitle.getText().isEmpty())
+		{
+			eventTitle = "Not specified" + eventList.size();
+		}
+		
+		if(dpEventStartDate.getValue() == null && dpEventEndDate.getValue() == null)
+		{
+			try {
+				dpEventStartDate.setValue(LOCAL_DATE("2001-01-01"));
+				dpEventEndDate.setValue(LOCAL_DATE("2001-01-01"));
+				eventStartDate = dpEventStartDate.getValue();
+				eventEndDate = dpEventEndDate.getValue();
+		    } catch (NullPointerException e) {
+		    }
+		}
+		
+		if(tfShowEventStartTime.getText().isEmpty())
+		{
+			eventStartTime = "Not specified";
+		}
+		
+		if(tfShowEventEndTime.getText().isEmpty())
+		{
+			eventEndTime = "Not specified";
+		}
+		
 		if (cbShowEventStatus.isSelected()) {
 			eventStatus = "Finalized";
 		}
@@ -771,7 +1072,7 @@ public class GUIeventsController implements Initializable {
 
 			hboxEventEditOptions.setVisible(false);
 			tfShowEventTitle.setEditable(false);
-			cbShowEventType.setDisable(false);
+			cbShowEventType.setDisable(true);
 			cbShowEventCategory.setDisable(true);
 			cbShowEventLecturer.setDisable(true);
 			dpShowEventStartDate.setDisable(true);
@@ -794,8 +1095,22 @@ public class GUIeventsController implements Initializable {
 			tfShowEventStartTime.setText("");
 			tfShowEventEndTime.setText("");
 			tfShowEventNumberOfTickets.setText("");
+			tfShowEventTicketsRemaining.setText("");
 			tfShowEventPrice.setText("");
 			tfShowEventDiscount.setText("");
+			
+			tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+			cbShowEventType.setStyle("-fx-border-width: 0px ;");
+			cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+			cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+			dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+			dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+			tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+			tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+			tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+			tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+			tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+			tfShowEventDiscount.setStyle("-fx-border-width: 0px ;"); 
 
 			btnEditEvent.setDisable(true);
 			btnDeleteEvent.setDisable(true);
@@ -813,6 +1128,7 @@ public class GUIeventsController implements Initializable {
 			selectedEvent.setEventPrice(eventPrice);
 			selectedEvent.setEventDiscount(eventDiscount);
 			selectedEvent.setEventNumberOfTickets(eventNumberOfTickets);
+			selectedEvent.setEventTicketsRemaining(eventNumberOfTickets);
 			selectedEvent.setEventStatus(eventStatus);
 
 			viaOms.editEvent(index, selectedEvent);
@@ -820,7 +1136,7 @@ public class GUIeventsController implements Initializable {
 
 			hboxEventEditOptions.setVisible(false);
 			tfShowEventTitle.setEditable(false);
-			cbShowEventType.setDisable(false);
+			cbShowEventType.setDisable(true);
 			cbShowEventCategory.setDisable(true);
 			cbShowEventLecturer.setDisable(true);
 			dpShowEventStartDate.setDisable(true);
@@ -831,6 +1147,19 @@ public class GUIeventsController implements Initializable {
 			tfShowEventPrice.setEditable(false);
 			tfShowEventDiscount.setEditable(false);
 			cbShowEventStatus.setDisable(true);
+			
+			tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+			cbShowEventType.setStyle("-fx-border-width: 0px ;");
+			cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+			cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+			dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+			dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+			tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+			tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+			tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+			tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+			tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+			tfShowEventDiscount.setEditable(false);
 
 			clearEditEventTextFields(event);
 
@@ -852,15 +1181,29 @@ public class GUIeventsController implements Initializable {
 		tfShowEventStartTime.setText("");
 		tfShowEventEndTime.setText("");
 		tfShowEventNumberOfTickets.setText("");
+		tfShowEventTicketsRemaining.setText("");
 		tfShowEventPrice.setText("");
 		tfShowEventDiscount.setText("");
+		
+		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+		cbShowEventType.setStyle("-fx-border-width: 0px ;");
+		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+		tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;"); 
 	}
 
 	@FXML
 	void cancelEditEvent(ActionEvent event) {
 		hboxEventEditOptions.setVisible(false);
 		tfShowEventTitle.setEditable(false);
-		cbShowEventType.setDisable(false);
+		cbShowEventType.setDisable(true);
 		cbShowEventCategory.setDisable(true);
 		cbShowEventLecturer.setDisable(true);
 		dpShowEventStartDate.setDisable(true);
@@ -883,8 +1226,22 @@ public class GUIeventsController implements Initializable {
 		tfShowEventStartTime.setText("");
 		tfShowEventEndTime.setText("");
 		tfShowEventNumberOfTickets.setText("");
+		tfShowEventTicketsRemaining.setText("");
 		tfShowEventPrice.setText("");
 		tfShowEventDiscount.setText("");
+		
+		tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+		cbShowEventType.setStyle("-fx-border-width: 0px ;");
+		cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+		cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+		dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+		dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+		tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+		tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+		tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+		tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+		tfShowEventDiscount.setStyle("-fx-border-width: 0px ;"); 
 
 		btnEditEvent.setDisable(true);
 		btnDeleteEvent.setDisable(true);
