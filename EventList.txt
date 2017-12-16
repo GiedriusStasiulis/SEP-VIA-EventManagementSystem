@@ -3,3 +3,4 @@ Ttttt,Journey,Astrology,grdgdrgdrg,2017-12-12,aaa,2017-12-12,aaa,156,156,156.0,0
 aaaa,Seminar,Karma,rdggdrdrg,2017-12-19,aaa,2017-12-19,aaa,156,156,156.0,156.0,1,Not finalized
 gggg,Seminar,Healing,ggggg,2017-12-20,aaa,2017-12-20,aaa,156,156,156.0,156.0,1,Not finalized
 ddd,Workshop,Healing,ggggg,2017-12-28,aaa,2017-12-28,aaa,15,15,156.0,156.0,1,Not finalized
+aaa,Lecture,Dream Interpretation,wwwwww,2017-12-21,aaaa,2017-12-22,aaaa,123456,123456,150.0,150.0,2,Not finalized
