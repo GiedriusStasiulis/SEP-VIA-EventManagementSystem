@@ -230,9 +230,11 @@ public class GUIeventsController implements Initializable {
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
 				showEventDetailsFromTable();
+				
 				try {
 					if(eventsTable.getSelectionModel().getSelectedItem() != null)
 					{
+						generateAllMemberNameList();
 						btnEditEvent.setDisable(false);
 						btnDeleteEvent.setDisable(false);
 						tpShowEventsPane.setDisable(false);
@@ -316,14 +318,6 @@ public class GUIeventsController implements Initializable {
 			}
 		});
 
-		try {
-			generateAllMemberNameList();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		
 		cbShowEventType.setOnAction((ActionEvent event) -> {
 			String type = cbShowEventType.getValue();
