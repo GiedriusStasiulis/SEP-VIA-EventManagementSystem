@@ -958,7 +958,7 @@ public class GUIeventsController implements Initializable {
 	void editEvent(ActionEvent event) {
 		if (eventsTable.getSelectionModel() != null) {
 			hboxEventEditOptions.setVisible(true);
-			tfShowEventTitle.setEditable(true);
+			tfShowEventTitle.setEditable(false);
 			cbShowEventType.setDisable(false);
 			cbShowEventCategory.setDisable(false);
 			cbShowEventLecturer.setDisable(false);
@@ -1029,11 +1029,7 @@ public class GUIeventsController implements Initializable {
 			eventLecturer = "None";
 		}		
 		
-		if(tfEnterEventTitle.getText().isEmpty())
-		{
-			eventTitle = "Not specified" + eventList.size();
-		}
-		
+
 		if(dpEventStartDate.getValue() == null && dpEventEndDate.getValue() == null)
 		{
 			try {

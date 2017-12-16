@@ -417,18 +417,5 @@ public class FileReaderWriter
 			input.close();
 		}
 		
-	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
