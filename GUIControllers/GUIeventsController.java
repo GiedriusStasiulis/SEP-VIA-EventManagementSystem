@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -130,6 +131,9 @@ public class GUIeventsController implements Initializable {
 		eventsPage.setMaxWidth(Double.MAX_VALUE);
 
 		hboxEventEditOptions.setVisible(false);
+		
+		dpEventStartDate.setEditable(false);
+		dpEventEndDate.setEditable(false);
 		
 		tpShowEventsPane.setDisable(true);
 		tpAddEventCategory.setDisable(true);
@@ -306,11 +310,32 @@ public class GUIeventsController implements Initializable {
 			}
 		});
 		
+		cbEventType.setOnAction((ActionEvent event) -> {
+
+				String type = cbEventType.getValue();
+
+				switch (type) {
+
+				case "Journey":
+
+					tfEventDiscount.setText("0");
+					tfEventDiscount.setEditable(false);
+					break;
+
+				default:
+					tfEventDiscount.setText("");
+					tfEventDiscount.setEditable(true);
+					break;
+				}
+				
+			});
+		
+		
 		
 		cbEventLecturer.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
-				String category2 = cbEventCategory.getValue();
-				System.out.println(category2);
+			//	String category2 = cbEventCategory.getValue();
+				//System.out.println(category2);
 				String category = cbEventCategory.getValue();
 				lecturerNames.clear();
 				switch (category) {
@@ -866,9 +891,9 @@ public class GUIeventsController implements Initializable {
 		LocalDate eventEndDate = dpEventEndDate.getValue();
 		String eventStartTime = tfEventStartTime.getText();
 		String eventEndTime = tfEventEndTime.getText();
-		double eventPrice = Double.parseDouble(tfEventPrice.getText());
-		double eventDiscount = Double.parseDouble(tfEventDiscount.getText());
-		int eventNumberOfTickets = Integer.parseInt(tfEventNumberOfTickets.getText());
+		double eventPrice = 0.0;
+		double eventDiscount = 0.0;
+		int eventNumberOfTickets = 0;
 		String eventStatus = "Not finalized";
 		int eventTicketsRemaining = eventNumberOfTickets;
 		
@@ -914,53 +939,90 @@ public class GUIeventsController implements Initializable {
 			tfEnterEventTitle.setStyle("-fx-border-width: 0px ;");
 			eventTitle = tfEnterEventTitle.getText();
 			
-			Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
-					eventEndDate, eventEndTime, eventNumberOfTickets, eventNumberOfTickets, eventPrice, eventDiscount,
-					eventStatus);
-			if (viaOms.checkForEventDuplicates(eventObj)) {
-				JOptionPane.showMessageDialog(null, "Event already exists in the system!");
+			try
+			{
+				tfEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+				eventNumberOfTickets = Integer.parseInt(tfEventNumberOfTickets.getText());
 				
+				try
+				{
+					tfEventPrice.setStyle("-fx-border-width: 0px ;");
+					eventPrice = Double.parseDouble(tfEventPrice.getText());
+					
+					try
+					{
+						tfEventDiscount.setStyle("-fx-border-width: 0px ;");
+						eventDiscount = Double.parseDouble(tfEventDiscount.getText());
+						
+						Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
+								eventEndDate, eventEndTime, eventNumberOfTickets, eventNumberOfTickets, eventPrice, eventDiscount,
+								eventStatus);
+						if (viaOms.checkForEventDuplicates(eventObj)) {
+							JOptionPane.showMessageDialog(null, "Event already exists in the system!");
+							
+						}
+
+						else {
+							viaOms.createEvent(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
+									eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
+									eventStatus);
+							eventsTable.getItems().add(eventObj);
+
+							String filename2 = eventTitle + "MemberListForEvent.txt";
+							String filename3 = eventTitle + "NonMembersForEvent.txt";
+							String filename4 = eventTitle + "CategoriesForEvent.txt";
+							File file2 = new File(filename2);
+							file2.createNewFile();
+
+							File file3 = new File(filename3);
+							file3.createNewFile();
+
+							File file4 = new File(filename4);
+							file4.createNewFile();
+
+							clearCreateEventTextFields(event);
+							btnCreateEvent.setDisable(true);
+							cbEventLecturer.setVisible(false);
+							dpEventStartDate.setVisible(false);
+							dpEventEndDate.setVisible(false);
+							tfEventStartTime.setVisible(false);
+							tfEventEndTime.setVisible(false);
+							tfEventEndTime.setVisible(false);
+							tfEventNumberOfTickets.setVisible(false);
+							tfEventPrice.setVisible(false);
+							tfEventDiscount.setVisible(false);
+
+							lblEventLecturer.setVisible(false);
+							lblEventStartDate.setVisible(false);
+							lblEventEndDate.setVisible(false);
+							lblEventStartTime.setVisible(false);
+							lblEventEndTime.setVisible(false);
+							lblEventNumberOfTickets.setVisible(false);
+							lblEventPrice.setVisible(false);
+							lblEventDiscount.setVisible(false);
+							lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+						}			
+					}
+					
+					catch(NumberFormatException e)
+					{
+						JOptionPane.showMessageDialog(null, "Please enter a valid number for event discount!");
+						tfEventDiscount.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+					}
+					
+				}
+				
+				catch(NumberFormatException e)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid number for event price!");
+					tfEventPrice.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+				}
 			}
-
-			else {
-				viaOms.createEvent(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
-						eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
-						eventStatus);
-				eventsTable.getItems().add(eventObj);
-
-				String filename2 = eventTitle + "MemberListForEvent.txt";
-				String filename3 = eventTitle + "NonMembersForEvent.txt";
-				String filename4 = eventTitle + "CategoriesForEvent.txt";
-				File file2 = new File(filename2);
-				file2.createNewFile();
-
-				File file3 = new File(filename3);
-				file3.createNewFile();
-
-				File file4 = new File(filename4);
-				file4.createNewFile();
-
-				clearCreateEventTextFields(event);
-				btnCreateEvent.setDisable(true);
-				cbEventLecturer.setVisible(false);
-				dpEventStartDate.setVisible(false);
-				dpEventEndDate.setVisible(false);
-				tfEventStartTime.setVisible(false);
-				tfEventEndTime.setVisible(false);
-				tfEventEndTime.setVisible(false);
-				tfEventNumberOfTickets.setVisible(false);
-				tfEventPrice.setVisible(false);
-				tfEventDiscount.setVisible(false);
-
-				lblEventLecturer.setVisible(false);
-				lblEventStartDate.setVisible(false);
-				lblEventEndDate.setVisible(false);
-				lblEventStartTime.setVisible(false);
-				lblEventEndTime.setVisible(false);
-				lblEventNumberOfTickets.setVisible(false);
-				lblEventPrice.setVisible(false);
-				lblEventDiscount.setVisible(false);
-				lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+			
+			catch(NumberFormatException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please enter a valid number for number of tickets!");
+				tfEventNumberOfTickets.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 			}			
 		}		
 	}
@@ -1270,9 +1332,9 @@ public class GUIeventsController implements Initializable {
 		LocalDate eventEndDate = dpShowEventEndDate.getValue();
 		String eventStartTime = tfShowEventStartTime.getText();
 		String eventEndTime = tfShowEventEndTime.getText();
-		double eventPrice = Double.parseDouble(tfShowEventPrice.getText());
-		double eventDiscount = Double.parseDouble(tfShowEventDiscount.getText());
-		int eventNumberOfTickets = Integer.parseInt(tfShowEventNumberOfTickets.getText());
+		double eventPrice = 0.0;
+		double eventDiscount = 0.0;
+		int eventNumberOfTickets = 0;
 
 		int eventTicketsRemaining = eventNumberOfTickets;
 		String eventStatus = "";
@@ -1297,113 +1359,152 @@ public class GUIeventsController implements Initializable {
 			eventStatus = "Finalized";
 		}
 
-		else {
+		if (!(cbShowEventStatus.isSelected()))
+		{
 			eventStatus = "Not finalized";
-		}
-
-		Event tempEvent = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
-				eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
-				eventStatus);
-
-		if (viaOms.checkForEventDuplicates(tempEvent)) {
-			JOptionPane.showMessageDialog(null, "Event already exists in the system!");
-
-			hboxEventEditOptions.setVisible(false);
-			tfShowEventTitle.setEditable(false);
-			cbShowEventType.setDisable(true);
-			cbShowEventCategory.setDisable(true);
-			cbShowEventLecturer.setDisable(true);
-			dpShowEventStartDate.setDisable(true);
-			dpShowEventEndDate.setDisable(true);
-			tfShowEventStartTime.setEditable(false);
-			tfShowEventEndTime.setEditable(false);
-			tfShowEventNumberOfTickets.setEditable(false);
-			tfShowEventPrice.setEditable(false);
-			tfShowEventDiscount.setEditable(false);
-			cbShowEventStatus.setDisable(true);
-
-			tfShowEventTitle.setText("");
-			cbShowEventType.getSelectionModel().select(0);
-			cbShowEventCategory.getSelectionModel().select(0);
-			cbShowEventLecturer.getSelectionModel().select(0);
-			dpShowEventStartDate.getEditor().clear();
-			dpShowEventStartDate.setValue(null);
-			dpShowEventEndDate.getEditor().clear();
-			dpShowEventEndDate.setValue(null);
-			tfShowEventStartTime.setText("");
-			tfShowEventEndTime.setText("");
-			tfShowEventNumberOfTickets.setText("");
-			tfShowEventTicketsRemaining.setText("");
-			tfShowEventPrice.setText("");
-			tfShowEventDiscount.setText("");
+		}	
+		
+		try
+		{
+			tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;");
+			eventNumberOfTickets = Integer.parseInt(tfShowEventNumberOfTickets.getText());
 			
-			tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
-			cbShowEventType.setStyle("-fx-border-width: 0px ;");
-			cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
-			cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
-			dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
-			dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
-			tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
-			tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
-			tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
-			tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
-			tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
-			tfShowEventDiscount.setStyle("-fx-border-width: 0px ;"); 
+			try
+			{
+				tfShowEventPrice.setStyle("-fx-border-width: 0px ;");
+				eventPrice = Double.parseDouble(tfShowEventPrice.getText());
+				
+				try
+				{
+					tfShowEventDiscount.setStyle("-fx-border-width: 0px ;");
+					eventDiscount = Double.parseDouble(tfShowEventDiscount.getText());
+					
+					Event tempEvent = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
+							eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
+							eventStatus);
 
-			btnEditEvent.setDisable(true);
-			btnDeleteEvent.setDisable(true);
-		}
+					if (viaOms.checkForEventDuplicates(tempEvent)) {
+						JOptionPane.showMessageDialog(null, "Event already exists in the system!");
 
-		else {
-			selectedEvent.setEventTitle(eventTitle);
-			selectedEvent.setEventType(eventType);
-			selectedEvent.setEventCategory(eventCategory);
-			selectedEvent.setEventLecturer(eventLecturer);
-			selectedEvent.setEventStartDate(eventStartDate);
-			selectedEvent.setEventEndDate(eventEndDate);
-			selectedEvent.setEventStartTime(eventStartTime);
-			selectedEvent.setEventEndTime(eventEndTime);
-			selectedEvent.setEventPrice(eventPrice);
-			selectedEvent.setEventDiscount(eventDiscount);
-			selectedEvent.setEventNumberOfTickets(eventNumberOfTickets);
-			selectedEvent.setEventTicketsRemaining(eventNumberOfTickets);
-			selectedEvent.setEventStatus(eventStatus);
+						hboxEventEditOptions.setVisible(false);
+						tfShowEventTitle.setEditable(false);
+						cbShowEventType.setDisable(true);
+						cbShowEventCategory.setDisable(true);
+						cbShowEventLecturer.setDisable(true);
+						dpShowEventStartDate.setDisable(true);
+						dpShowEventEndDate.setDisable(true);
+						tfShowEventStartTime.setEditable(false);
+						tfShowEventEndTime.setEditable(false);
+						tfShowEventNumberOfTickets.setEditable(false);
+						tfShowEventPrice.setEditable(false);
+						tfShowEventDiscount.setEditable(false);
+						cbShowEventStatus.setDisable(true);
 
-			viaOms.editEvent(index, selectedEvent);
-			eventsTable.getItems().set(index, selectedEvent);
+						tfShowEventTitle.setText("");
+						cbShowEventType.getSelectionModel().select(0);
+						cbShowEventCategory.getSelectionModel().select(0);
+						cbShowEventLecturer.getSelectionModel().select(0);
+						dpShowEventStartDate.getEditor().clear();
+						dpShowEventStartDate.setValue(null);
+						dpShowEventEndDate.getEditor().clear();
+						dpShowEventEndDate.setValue(null);
+						tfShowEventStartTime.setText("");
+						tfShowEventEndTime.setText("");
+						tfShowEventNumberOfTickets.setText("");
+						tfShowEventTicketsRemaining.setText("");
+						tfShowEventPrice.setText("");
+						tfShowEventDiscount.setText("");
+						
+						tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+						cbShowEventType.setStyle("-fx-border-width: 0px ;");
+						cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+						cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+						dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+						dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+						tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+						tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+						tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+						tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+						tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+						tfShowEventDiscount.setStyle("-fx-border-width: 0px ;"); 
 
-			hboxEventEditOptions.setVisible(false);
-			tfShowEventTitle.setEditable(false);
-			cbShowEventType.setDisable(true);
-			cbShowEventCategory.setDisable(true);
-			cbShowEventLecturer.setDisable(true);
-			dpShowEventStartDate.setDisable(true);
-			dpShowEventEndDate.setDisable(true);
-			tfShowEventStartTime.setEditable(false);
-			tfShowEventEndTime.setEditable(false);
-			tfShowEventNumberOfTickets.setEditable(false);
-			tfShowEventPrice.setEditable(false);
-			tfShowEventDiscount.setEditable(false);
-			cbShowEventStatus.setDisable(true);
+						btnEditEvent.setDisable(true);
+						btnDeleteEvent.setDisable(true);
+					}
+
+					else {
+						selectedEvent.setEventTitle(eventTitle);
+						selectedEvent.setEventType(eventType);
+						selectedEvent.setEventCategory(eventCategory);
+						selectedEvent.setEventLecturer(eventLecturer);
+						selectedEvent.setEventStartDate(eventStartDate);
+						selectedEvent.setEventEndDate(eventEndDate);
+						selectedEvent.setEventStartTime(eventStartTime);
+						selectedEvent.setEventEndTime(eventEndTime);
+						selectedEvent.setEventPrice(eventPrice);
+						selectedEvent.setEventDiscount(eventDiscount);
+						selectedEvent.setEventNumberOfTickets(eventNumberOfTickets);
+						selectedEvent.setEventTicketsRemaining(eventNumberOfTickets);
+						selectedEvent.setEventStatus(eventStatus);
+
+						viaOms.editEvent(index, selectedEvent);
+						eventsTable.getItems().set(index, selectedEvent);
+
+						hboxEventEditOptions.setVisible(false);
+						tfShowEventTitle.setEditable(false);
+						cbShowEventType.setDisable(true);
+						cbShowEventCategory.setDisable(true);
+						cbShowEventLecturer.setDisable(true);
+						dpShowEventStartDate.setDisable(true);
+						dpShowEventEndDate.setDisable(true);
+						tfShowEventStartTime.setEditable(false);
+						tfShowEventEndTime.setEditable(false);
+						tfShowEventNumberOfTickets.setEditable(false);
+						tfShowEventPrice.setEditable(false);
+						tfShowEventDiscount.setEditable(false);
+						cbShowEventStatus.setDisable(true);
+						
+						tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
+						cbShowEventType.setStyle("-fx-border-width: 0px ;");
+						cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
+						cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
+						dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
+						dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
+						tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
+						tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
+						tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
+						tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
+						tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
+						tfShowEventDiscount.setEditable(false);
+
+						clearEditEventTextFields(event);
+
+						btnEditEvent.setDisable(true);
+						btnDeleteEvent.setDisable(true);
+					}					
+				}
+				
+				catch(NumberFormatException e)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid number for event discount!");
+					tfShowEventDiscount.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+				}	
+			}
 			
-			tfShowEventTitle.setStyle("-fx-border-width: 0px ;");
-			cbShowEventType.setStyle("-fx-border-width: 0px ;");
-			cbShowEventCategory.setStyle("-fx-border-width: 0px ;");
-			cbShowEventLecturer.setStyle("-fx-border-width: 0px ;");
-			dpShowEventStartDate.setStyle("-fx-border-width: 0px ;");
-			dpShowEventEndDate.setStyle("-fx-border-width: 0px ;");
-			tfShowEventStartTime.setStyle("-fx-border-width: 0px ;");
-			tfShowEventEndTime.setStyle("-fx-border-width: 0px ;");
-			tfShowEventNumberOfTickets.setStyle("-fx-border-width: 0px ;");
-			tfShowEventTicketsRemaining.setStyle("-fx-border-width: 0px ;"); 
-			tfShowEventPrice.setStyle("-fx-border-width: 0px ;"); 
-			tfShowEventDiscount.setEditable(false);
-
-			clearEditEventTextFields(event);
-
-			btnEditEvent.setDisable(true);
-			btnDeleteEvent.setDisable(true);
+			catch(NumberFormatException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please enter a valid number for event price!");
+				tfShowEventPrice.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			}			
 		}
+
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(null, "Please enter a valid number for number of tickets!");
+			tfShowEventNumberOfTickets.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+		}
+		
+		
 	}
 
 	@FXML

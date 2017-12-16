@@ -98,6 +98,9 @@ public class GUImembersController implements Initializable
 
 		hboxMemberEditOptions.setVisible(false);
 		
+		dpEnterMemberSince.setEditable(false);
+		dpShowMemberSince.setEditable(false);
+		
 		cbMemberSearchCriteria.setItems(searchCriteria);
 		cbMemberSearchCriteria.getSelectionModel().select(0);
 
@@ -397,7 +400,6 @@ public class GUImembersController implements Initializable
 	    	tfShowMemberPhone.setEditable(true);
 	    	tfShowMemberEmail.setEditable(true);
 	    	dpShowMemberSince.setDisable(false);
-	    	dpShowMemberSince.setEditable(true);
 	    	
 	    	cbShowMembershipStatus.setDisable(false);
 	    	
