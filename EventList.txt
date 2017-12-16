@@ -1,3 +1,3 @@
 aaaa,Lecture,Dream Interpretation,aaaaeee,2001-01-27,aaa,2001-01-25,aaa,120,120,120.0,120.0,-1,Finalized
 aaaa,Lecture,Dream Interpretation,aaaaeee,2017-12-04,aaa,2017-12-26,aaa,12056,12056,120.0,120.0,23,Not finalized
-bbbbb,Lecture,Dream Interpretation,wwwwww,2017-12-21,aaaa,2018-01-04,aaaa,5005,5005,20.0,20.0,15,Finalized
+bbbbb,Lecture,Dream Interpretation,wwwwww,2017-12-21,aaaa,2018-01-04,aaaa,5005,5004,20.0,20.0,15,Finalized
