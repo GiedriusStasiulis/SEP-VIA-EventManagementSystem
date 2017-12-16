@@ -1,1 +1,5 @@
-Aaaaa,Workshop,Healing,ggggg,2017-12-18,aaa,2017-12-18,aaa,120,120,120.0,120.0,1,Finalized
+Aaaaa,Workshop,Healing,ggggg,2017-12-18,aaa,2017-12-18,aaa,120,119,120.0,120.0,1,Finalized
+Ttttt,Journey,Astrology,grdgdrgdrg,2017-12-12,aaa,2017-12-12,aaa,156,156,156.0,0.0,1,Not finalized
+aaaa,Seminar,Karma,rdggdrdrg,2017-12-19,aaa,2017-12-19,aaa,156,156,156.0,156.0,1,Not finalized
+gggg,Seminar,Healing,ggggg,2017-12-20,aaa,2017-12-20,aaa,156,156,156.0,156.0,1,Not finalized
+ddd,Workshop,Healing,ggggg,2017-12-28,aaa,2017-12-28,aaa,15,15,156.0,156.0,1,Not finalized

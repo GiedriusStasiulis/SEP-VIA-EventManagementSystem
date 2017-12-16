@@ -226,6 +226,9 @@ public class GUIeventsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 
 		eventsTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() == 1) {
@@ -303,6 +306,127 @@ public class GUIeventsController implements Initializable {
 			}
 		});
 
+		
+		cbShowEventLecturer.setOnMouseClicked((MouseEvent event) -> {
+			if (event.getClickCount() == 1) {
+				String category2 = cbShowEventCategory.getValue();
+				System.out.println(category2);
+				String category = cbShowEventCategory.getValue();
+				lecturerNames.clear();
+				switch (category) {
+				case "Dream Interpretation":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+
+				case "Healing":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException | ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+
+				case "Astrology":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException | ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+				case "Reincarnation":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException | ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+
+				case "Karma":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException | ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+
+				case "Alternative Health-Care":
+
+					try {
+						for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
+							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) {
+								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
+							}
+						}
+					} catch (FileNotFoundException | ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					cbShowEventLecturer.setItems(lecturerNames);
+					cbShowEventLecturer.getSelectionModel().select(0);
+
+					break;
+				}
+			}
+		});	
+		
 		dpEventStartDate.setOnAction((ActionEvent event) -> {
 			dpEventEndDate.setValue(dpEventStartDate.getValue());
 
@@ -613,7 +737,7 @@ public class GUIeventsController implements Initializable {
 			tfEventNumberOfTickets.setText("0");
 		}
 		
-		String eventTitle = tfEnterEventTitle.getText();
+		String eventTitle = "";
 		String eventType = cbEventType.getValue();
 		String eventCategory = cbEventCategory.getValue();
 		String eventLecturer = cbEventLecturer.getValue();
@@ -632,10 +756,10 @@ public class GUIeventsController implements Initializable {
 			eventLecturer = "Not specified";
 		}
 		
-		if(tfEnterEventTitle.getText().isEmpty())
+		/*if(tfEnterEventTitle.getText().isEmpty())
 		{
 			eventTitle = "Not specified" + eventList.size();
-		}
+		}*/
 		
 		if(dpEventStartDate.getValue() == null && dpEventEndDate.getValue() == null)
 		{
@@ -658,54 +782,66 @@ public class GUIeventsController implements Initializable {
 			eventEndTime = "Not specified";
 		}
 		
-		Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
-				eventEndDate, eventEndTime, eventNumberOfTickets, eventNumberOfTickets, eventPrice, eventDiscount,
-				eventStatus);
-
-		if (viaOms.checkForEventDuplicates(eventObj)) {
-			JOptionPane.showMessageDialog(null, "Event already exists in the system!");
+		if(tfEnterEventTitle.getText().isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Please enter event title!");
+			tfEnterEventTitle.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 		}
-
-		else {
-			viaOms.createEvent(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
-					eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
+		
+		else
+		{
+			tfEnterEventTitle.setStyle("-fx-border-width: 0px ;");
+			eventTitle = tfEnterEventTitle.getText();
+			
+			Event eventObj = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
+					eventEndDate, eventEndTime, eventNumberOfTickets, eventNumberOfTickets, eventPrice, eventDiscount,
 					eventStatus);
-			eventsTable.getItems().add(eventObj);
+			if (viaOms.checkForEventDuplicates(eventObj)) {
+				JOptionPane.showMessageDialog(null, "Event already exists in the system!");
+				
+			}
 
-			String filename2 = eventTitle + "MemberListForEvent.txt";
-			String filename3 = eventTitle + "NonMembersForEvent.txt";
-			String filename4 = eventTitle + "CategoriesForEvent.txt";
-			File file2 = new File(filename2);
-			file2.createNewFile();
+			else {
+				viaOms.createEvent(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate, eventStartTime,
+						eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
+						eventStatus);
+				eventsTable.getItems().add(eventObj);
 
-			File file3 = new File(filename3);
-			file3.createNewFile();
+				String filename2 = eventTitle + "MemberListForEvent.txt";
+				String filename3 = eventTitle + "NonMembersForEvent.txt";
+				String filename4 = eventTitle + "CategoriesForEvent.txt";
+				File file2 = new File(filename2);
+				file2.createNewFile();
 
-			File file4 = new File(filename4);
-			file4.createNewFile();
+				File file3 = new File(filename3);
+				file3.createNewFile();
 
-			clearCreateEventTextFields(event);
-			btnCreateEvent.setDisable(true);
-			cbEventLecturer.setVisible(false);
-			dpEventStartDate.setVisible(false);
-			dpEventEndDate.setVisible(false);
-			tfEventStartTime.setVisible(false);
-			tfEventEndTime.setVisible(false);
-			tfEventEndTime.setVisible(false);
-			tfEventNumberOfTickets.setVisible(false);
-			tfEventPrice.setVisible(false);
-			tfEventDiscount.setVisible(false);
+				File file4 = new File(filename4);
+				file4.createNewFile();
 
-			lblEventLecturer.setVisible(false);
-			lblEventStartDate.setVisible(false);
-			lblEventEndDate.setVisible(false);
-			lblEventStartTime.setVisible(false);
-			lblEventEndTime.setVisible(false);
-			lblEventNumberOfTickets.setVisible(false);
-			lblEventPrice.setVisible(false);
-			lblEventDiscount.setVisible(false);
-			lblEventCount.setText(String.format("Event count: %d", eventList.size()));
-		}
+				clearCreateEventTextFields(event);
+				btnCreateEvent.setDisable(true);
+				cbEventLecturer.setVisible(false);
+				dpEventStartDate.setVisible(false);
+				dpEventEndDate.setVisible(false);
+				tfEventStartTime.setVisible(false);
+				tfEventEndTime.setVisible(false);
+				tfEventEndTime.setVisible(false);
+				tfEventNumberOfTickets.setVisible(false);
+				tfEventPrice.setVisible(false);
+				tfEventDiscount.setVisible(false);
+
+				lblEventLecturer.setVisible(false);
+				lblEventStartDate.setVisible(false);
+				lblEventEndDate.setVisible(false);
+				lblEventStartTime.setVisible(false);
+				lblEventEndTime.setVisible(false);
+				lblEventNumberOfTickets.setVisible(false);
+				lblEventPrice.setVisible(false);
+				lblEventDiscount.setVisible(false);
+				lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+			}			
+		}		
 	}
 
 	@FXML
