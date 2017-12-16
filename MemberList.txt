@@ -1,7 +1,4 @@
-aaa,aaa,aaa,aaa@,2017-12-21,Not paid
-bbbb,bbb,bbb,bbb@,2017-12-28,Not paid
-ccccc,cccc,ccccc,cccc@,2017-12-26,2017
-yyyyyyyyyy,yyyyyyyyy,yyyyyyyyyyy,yuyyy@,2017-12-05,Not paid
-ggggg,gggg,ggg,gg@,2017-12-19,2017
-ttttttttt,ttttttt,tttttttt,ttt@,2017-12-20,2017
-yyyy,yyy,yyyy,yyy@,2017-12-21,2017
+Giedrius Stasiulis,Niels Bohrs Alle 85,53659845,gs@via.dk,2017-08-21,2017
+Marius Amarandei,Tuborg Havnepark 15,52669957,ma@via.dk,2017-08-21,2017
+Justas Brazdeikis,Vesterskovvej 20,54112365,jb@via.dk,2017-08-21,2017
+Flavius Alin Boanca,Vesterskovvej 20,52663589,fab@via.dk,2017-08-21,2017

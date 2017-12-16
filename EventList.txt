@@ -1,11 +1,1 @@
-Aaaaa,Workshop,Healing,ggggg,2017-12-18,aaa,2017-12-18,aaa,120,119,120.0,120.0,1,Finalized
-Ttttt,Journey,Astrology,grdgdrgdrg,2017-12-12,aaa,2017-12-12,aaa,156,156,156.0,0.0,1,Not finalized
-aaaa,Seminar,Karma,rdggdrdrg,2017-12-19,aaa,2017-12-19,aaa,156,156,156.0,156.0,1,Not finalized
-gggg,Seminar,Healing,ggggg,2017-12-20,aaa,2017-12-20,aaa,156,156,156.0,156.0,1,Not finalized
-ddd,Workshop,Healing,ggggg,2017-12-28,aaa,2017-12-28,aaa,15,15,156.0,156.0,1,Not finalized
-aaa,Lecture,Dream Interpretation,wwwwww,2017-12-21,aaaa,2017-12-22,aaaa,5555,5555,150.0,150.0,2,Not finalized
-aaaa,Seminar,Karma,rdggdrdrg,2017-12-22,aaa,2017-12-22,aaa,120,0,120.0,120.0,1,Not finalized
-tttt,Lecture,Dream Interpretation,aaaaeee,2017-12-21,aaa,2017-12-21,aaa,30,0,20.0,20.0,1,Not finalized
-aaaaa,Lecture,Dream Interpretation,aaaaeee,2017-12-22,aaa,2017-12-22,aaa,50,0,20.0,20.0,1,Not finalized
-tttt,Lecture,Dream Interpretation,aaaaeee,2017-12-21,aaa,2017-12-21,aaa,50,0,30.0,20.0,1,Not finalized
-uuuuu,Seminar,Reincarnation,hhhh,2017-12-19,aaa,2017-12-19,aaaa,30,0,30.0,30.0,1,Not finalized
+Inbetween lives,Seminar,Reincarnation,Richard Gombrich,2017-12-21,18:00,2017-12-21,19:30,50,47,200.0,20.0,1,Finalized

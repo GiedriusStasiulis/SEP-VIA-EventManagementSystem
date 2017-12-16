@@ -57,16 +57,16 @@
                                           <DatePicker fx:id="dpEventStartDate" layoutX="10.0" layoutY="257.0" prefWidth="260.0" />
                                           <Label fx:id="lblEventEndDate" layoutX="10.0" layoutY="287.0" text="End-date:" />
                                           <DatePicker fx:id="dpEventEndDate" layoutX="10.0" layoutY="307.0" prefWidth="260.0" />
-                                          <Label fx:id="lblEventStartTime" layoutX="10.0" layoutY="337.0" text="Start-time (hh:mm AM/PM):" />
-                                          <TextField fx:id="tfEventStartTime" layoutX="10.0" layoutY="357.0" prefWidth="260.0" />
-                                          <Label fx:id="lblEventEndTime" layoutX="10.0" layoutY="387.0" text="End-time (hh:mm AM/PM):" />
-                                          <TextField fx:id="tfEventEndTime" layoutX="10.0" layoutY="407.0" prefWidth="260.0" />
+                                          <Label fx:id="lblEventStartTime" layoutX="10.0" layoutY="337.0" text="Start-time:" />
+                                          <TextField fx:id="tfEventStartTime" layoutX="10.0" layoutY="357.0" prefWidth="260.0" promptText="hh:mm" />
+                                          <Label fx:id="lblEventEndTime" layoutX="10.0" layoutY="387.0" text="End-time:" />
+                                          <TextField fx:id="tfEventEndTime" layoutX="10.0" layoutY="407.0" prefWidth="260.0" promptText="hh:mm" />
                                           <Label fx:id="lblEventNumberOfTickets" layoutX="10.0" layoutY="437.0" text="Number of tickets:" />
-                                          <TextField fx:id="tfEventNumberOfTickets" layoutX="10.0" layoutY="457.0" prefWidth="260.0" />
-                                          <Label fx:id="lblEventPrice" layoutX="10.0" layoutY="487.0" text="Price:" />
-                                          <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="507.0" prefWidth="260.0" />
-                                          <Label fx:id="lblEventDiscount" layoutX="10.0" layoutY="535.0" text="Discount:" />
-                                          <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="555.0" prefWidth="260.0" />
+                                          <TextField fx:id="tfEventNumberOfTickets" layoutX="10.0" layoutY="457.0" prefWidth="260.0" promptText="Digits only!" />
+                                          <Label fx:id="lblEventPrice" layoutX="10.0" layoutY="487.0" text="Price (DKK):" />
+                                          <TextField fx:id="tfEventPrice" layoutX="10.0" layoutY="507.0" prefWidth="260.0" promptText="Digits only!" />
+                                          <Label fx:id="lblEventDiscount" layoutX="10.0" layoutY="535.0" text="Discount (%):" />
+                                          <TextField fx:id="tfEventDiscount" layoutX="10.0" layoutY="555.0" prefWidth="260.0" promptText="Digits only!" />
                                           <Button fx:id="btnContinueCreateEvent" layoutX="190.0" layoutY="170.0" maxHeight="5.0" mnemonicParsing="false" onAction="#continueCreateEvent" prefWidth="80.0" text="Continue" />
                                        </children>
                                     </AnchorPane>
@@ -190,7 +190,7 @@
                               </ScrollPane>
                           </content>
                         </TitledPane>
-                      <TitledPane fx:id="tpAddMembersToEvent" prefWidth="295.0" text="Add members to event">
+                      <TitledPane fx:id="tpAddMembersToEvent" prefWidth="295.0" text="Add member to event">
                         <content>
                               <ScrollPane prefViewportHeight="753.0" prefViewportWidth="293.0">
                                  <content>
@@ -200,14 +200,14 @@
                                              <children>
                                                 <Label text="Selected event:" translateX="10.0" translateY="10.0" />
                                                 <TextField fx:id="tfSelectedEvent2" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
-                                                <Label text="Add members to event:" translateX="10.0" translateY="20.0" />
+                                                <Label text="Select member to add:" translateX="10.0" translateY="20.0" />
                                                 <ListView fx:id="lvMembersToAdd" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
                                                    <children>
                                                       <Button fx:id="btnAddMemberToEvent" mnemonicParsing="false" onAction="#addMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="Members already added:" translateX="10.0" translateY="45.0" />
+                                                <Label fx:id="lblMembersAdded" text="Members already added:" translateX="10.0" translateY="45.0" />
                                                 <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="50.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
                                                    <children>
@@ -230,18 +230,18 @@
                                        <children>
                                           <VBox layoutX="6.0" layoutY="14.0" prefHeight="753.0" prefWidth="280.0" AnchorPane.bottomAnchor="-18.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="14.0">
                                              <children>
-                                                <Label text="Selected event" />
+                                                <Label text="Selected event:" />
                                                 <TextField fx:id="tfSelectedEventNonMember" maxWidth="260.0" prefWidth="260.0" />
-                                                <Label text="Name" />
+                                                <Label text="Name:" />
                                                 <TextField fx:id="tfNonMemberName" maxWidth="260.0" prefWidth="260.0" />
-                                                <Label text="Phone number" />
+                                                <Label text="Phone number:" />
                                                 <TextField fx:id="tfNonMemberPhoneNumber" maxWidth="260.0" prefWidth="260.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="10.0">
                                                    <children>
                                                       <Button fx:id="btnAddNonMemberToEvent" mnemonicParsing="false" onAction="#addNonMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="Non-members added:" translateY="25.0" />
+                                                <Label fx:id="lblNonMembersAdded" text="Non-members added:" translateY="25.0" />
                                                 <ListView fx:id="lvNonMembersAddedToEvent" maxWidth="260.0" prefHeight="390.0" prefWidth="260.0" translateY="30.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="40.0">
                                                    <children>

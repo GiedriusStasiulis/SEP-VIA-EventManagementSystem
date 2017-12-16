@@ -103,7 +103,7 @@ public class GUIeventsController implements Initializable {
 
 	@FXML
 	private Label lblEventCount, lblEventLecturer, lblEventStartDate, lblEventEndDate, lblEventStartTime,
-			lblEventEndTime, lblEventNumberOfTickets, lblEventPrice, lblEventDiscount;
+			lblEventEndTime, lblEventNumberOfTickets, lblEventPrice, lblEventDiscount, lblMembersAdded, lblNonMembersAdded;
 
 	@FXML
 	private ListView<Event> lvEventSearchResults;
@@ -252,6 +252,9 @@ public class GUIeventsController implements Initializable {
 						tfSelectedEventCategory.setText(selectedEvent.getEventCategory());
 						lvCategoriesToAdd.setItems(categoryChoices);
 						lvCategoriesAddedToEvent.setItems(getCategories());
+						
+						lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
+						lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
 	
 						if (selectedEvent.getEventType().equals("Lecture")
 								|| selectedEvent.getEventType().equals("Journey")) {
@@ -730,6 +733,8 @@ public class GUIeventsController implements Initializable {
 		});
 
 		lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+		
+		
 	}
 
 	public void showEventDetailsFromTable() {
@@ -1591,9 +1596,9 @@ public class GUIeventsController implements Initializable {
 		if (eventsTable.getSelectionModel() != null) {
 			if (eventList.size() > 0) {
 				try {
-					String[] options = { "Delete", "Cancel" };
+					String[] options = { "Delete event", "Cancel" };
 					int n = JOptionPane.showOptionDialog(null,
-							"Are you sure you want to delete event:\n" + selectedEvent + " ?", "Delete a member",
+							"Are you sure you want to delete event:\n" + selectedEvent + " ?", "Delete event",
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
 					if (n == JOptionPane.YES_OPTION) {
@@ -1640,6 +1645,7 @@ public class GUIeventsController implements Initializable {
 
 			viaOms.writeMembersToFile(membersRegisteredList, selectedEvent.getEventTitle());
 			lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+			lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
 
 		}
 	}
@@ -1664,6 +1670,7 @@ public class GUIeventsController implements Initializable {
 				lvMembersAddedToEvent.getItems().remove(index);
 				selectedEvent.setEventTicketsRemaining(selectedEvent.calculateTicketsRemaining(
 						selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
+				lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
 			}
 		}
 	}
@@ -1708,6 +1715,8 @@ public class GUIeventsController implements Initializable {
 
 		tfNonMemberName.setText("");
 		tfNonMemberPhoneNumber.setText("");
+		
+		lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
 	}
 
 	
@@ -1726,6 +1735,7 @@ public class GUIeventsController implements Initializable {
 
 				lvNonMembersAddedToEvent.getItems().remove(index);
 				viaOms.writeNonMembersToFile(nonMembers, selectedEvent.getEventTitle());
+				lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
 			}
 		}
 	}
