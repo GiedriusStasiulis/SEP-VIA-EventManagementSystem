@@ -1,4 +1,0 @@
-aaa,Baltupiai,152,aaa@,2015-11-25,Not paid
-666aaaeeeeee,ggg,gggrrr,ggg@525,2017-12-26,2017
-aaa,Not defined,156,Not defined@,2001-01-01,Not paid
-aaa,aaa,aaa,aa@,2017-12-25,2017

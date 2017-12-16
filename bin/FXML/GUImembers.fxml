@@ -7,7 +7,7 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUImembersController">
    <content>
-      <BorderPane fx:id="memberPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0">
+      <BorderPane fx:id="memberPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" prefHeight="900.0" prefWidth="1200.0">
          <center>
             <ScrollPane prefHeight="726.0" prefWidth="625.0" BorderPane.alignment="CENTER">
                <content>

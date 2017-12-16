@@ -231,33 +231,36 @@ public class GUIeventsController implements Initializable {
 			if (event.getClickCount() == 1) {
 				showEventDetailsFromTable();
 				try {
-					tpShowEventsPane.setDisable(false);
-					lvMembersAddedToEvent.setItems(getMembersAdded());
-					lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
-					tfSelectedEvent1.setText(selectedEvent.getEventTitle());
-					tfSelectedEvent2.setText(selectedEvent.getEventTitle());
-					tfSelectedEventCategory.setText(selectedEvent.getEventCategory());
-					lvCategoriesToAdd.setItems(categoryChoices);
-					lvCategoriesAddedToEvent.setItems(getCategories());
-
-					if (selectedEvent.getEventType().equals("Lecture")
-							|| selectedEvent.getEventType().equals("Journey")) {
-						tpAddEventCategory.setDisable(true);
-					}
-
-					if (selectedEvent.getEventType().equals("Seminar")
-							|| selectedEvent.getEventType().equals("Workshop")) {
-						tpAddEventCategory.setDisable(false);
-					}
-
-					if (selectedEvent.getEventStatus().equals("Not finalized")) {
-						tpAddMembersToEvent.setDisable(true);
-						tpAddNonMembersToEvent.setDisable(true);
-					}
-
-					if (selectedEvent.getEventStatus().equals("Finalized")) {
-						tpAddMembersToEvent.setDisable(false);
-						tpAddNonMembersToEvent.setDisable(false);
+					if(eventsTable.getSelectionModel().getSelectedItem() != null)
+					{
+						tpShowEventsPane.setDisable(false);
+						lvMembersAddedToEvent.setItems(getMembersAdded());
+						lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
+						tfSelectedEvent1.setText(selectedEvent.getEventTitle());
+						tfSelectedEvent2.setText(selectedEvent.getEventTitle());
+						tfSelectedEventCategory.setText(selectedEvent.getEventCategory());
+						lvCategoriesToAdd.setItems(categoryChoices);
+						lvCategoriesAddedToEvent.setItems(getCategories());
+	
+						if (selectedEvent.getEventType().equals("Lecture")
+								|| selectedEvent.getEventType().equals("Journey")) {
+							tpAddEventCategory.setDisable(true);
+						}
+	
+						if (selectedEvent.getEventType().equals("Seminar")
+								|| selectedEvent.getEventType().equals("Workshop")) {
+							tpAddEventCategory.setDisable(false);
+						}
+	
+						if (selectedEvent.getEventStatus().equals("Not finalized")) {
+							tpAddMembersToEvent.setDisable(true);
+							tpAddNonMembersToEvent.setDisable(true);
+						}
+	
+						if (selectedEvent.getEventStatus().equals("Finalized")) {
+							tpAddMembersToEvent.setDisable(false);
+							tpAddNonMembersToEvent.setDisable(false);
+						}
 					}
 
 				} catch (FileNotFoundException e) {
@@ -536,7 +539,7 @@ public class GUIeventsController implements Initializable {
 	public ObservableList<String> getMembersAdded() throws FileNotFoundException, ParseException {
 		membersAlreadyAddedtemp.clear();
 
-		if (eventsTable.getSelectionModel() != null) {
+		if (eventsTable.getSelectionModel().getSelectedItem() != null) {
 			membersRegisteredList = viaOms.readMembersFromFile(selectedEvent.getEventTitle());
 
 			for (int i = 0; i < membersRegisteredList.size(); i++) {
@@ -549,7 +552,7 @@ public class GUIeventsController implements Initializable {
 	public ObservableList<String> getNonMembersAdded() throws FileNotFoundException, ParseException {
 		nonMembersAlreadyAdded.clear();
 
-		if (eventsTable.getSelectionModel() != null) {
+		if (eventsTable.getSelectionModel().getSelectedItem() != null) {
 			ArrayList<String> nonMembersRegisteredList = viaOms.readNonMembersFromFile(selectedEvent.getEventTitle());
 
 			for (int i = 0; i < nonMembersRegisteredList.size(); i++) {

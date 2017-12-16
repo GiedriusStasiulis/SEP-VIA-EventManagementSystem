@@ -7,11 +7,11 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="200.0" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIeventsController">
    <content>
-      <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0">
+      <BorderPane fx:id="eventsPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="100.0" prefHeight="900.0" prefWidth="1200.0">
          <center>
-            <ScrollPane minHeight="200.0" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
+            <ScrollPane minHeight="200.0" minWidth="100.0" prefHeight="1100.0" prefWidth="1375.0" BorderPane.alignment="CENTER">
                <content>
-                  <TableView fx:id="eventsTable" prefHeight="1100.0" prefWidth="2100.0">
+                  <TableView fx:id="eventsTable" minWidth="300.0" prefHeight="1100.0" prefWidth="2100.0">
                     <columns>
                       <TableColumn fx:id="tcEventTitle" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Title" />
                       <TableColumn fx:id="tcEventType" maxWidth="800.0" minWidth="50.0" prefWidth="150.0" text="Type" />

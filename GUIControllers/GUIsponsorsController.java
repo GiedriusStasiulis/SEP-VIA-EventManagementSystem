@@ -269,8 +269,8 @@ public class GUIsponsorsController implements Initializable
 
 	@FXML
 	void editSponsor(ActionEvent event) {
-		if (sponsorTable.getSelectionModel() != null) {
-			System.out.println(sponsorTable.getSelectionModel());
+		if (sponsorTable.getSelectionModel() != null) 
+		{
 			hboxSponsorEditOptions.setVisible(true);
 
 			tfShowSponsorName.setEditable(true);
