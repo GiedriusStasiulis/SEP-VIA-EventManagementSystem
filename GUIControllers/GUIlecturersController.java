@@ -258,87 +258,98 @@ public class GUIlecturersController implements Initializable
 		ObservableList<Lecturer> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbLecturerSearchCriteria.getSelectionModel().getSelectedIndex();
 		String searchKeyword = tfEnterLecturerSearchKeywords.getText();
-		tfEnterLecturerSearchKeywords.setText("");
-
-		searchResults.clear();
-
-		switch (searchCriteriaComboBoxSelection) 
+		
+		if(tfEnterLecturerSearchKeywords.getText().isEmpty())
 		{
-		case 0:
-
-			for (int i = 0; i < lecturers.size(); i++) 
-			{
-				if (lecturers.get(i).getLecturerName().toLowerCase().contains(searchKeyword.toLowerCase())) 
-				{
-					searchResults.add(lecturers.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) 
-			{
-				JOptionPane.showMessageDialog(null,
-						"No lecturers found with the given search keyword: \n" + searchKeyword);
-			}
-			
-			break;
-
-		case 1:
-
-			for (int i = 0; i < lecturers.size(); i++) 
-			{
-				if (lecturers.get(i).getLecturerCategory().toLowerCase().contains(searchKeyword.toLowerCase())) 
-				{
-					searchResults.add(lecturers.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) 
-			{
-				JOptionPane.showMessageDialog(null,
-						"No lecturers found with the given search keyword: " + searchKeyword);
-			}
-
-			break;
-			
-		case 2:
-			
-			for (int i = 0; i < lecturers.size(); i++) 
-			{
-				if (lecturers.get(i).getLecturerPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) 
-				{
-					searchResults.add(lecturers.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) 
-			{
-				JOptionPane.showMessageDialog(null,
-						"No lecturers found with the given search keyword: \n" + searchKeyword);
-			}
-			
-			break;
-			
-		case 3:
-			
-			for (int i = 0; i < lecturers.size(); i++) 
-			{
-				if (lecturers.get(i).getLecturerEmail().toLowerCase().contains(searchKeyword.toLowerCase())) 
-				{
-					searchResults.add(lecturers.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) 
-			{
-				JOptionPane.showMessageDialog(null,
-						"No lecturers found with the given search keyword: \n" + searchKeyword);
-			}
-
-		default:
-			break;
+			JOptionPane.showMessageDialog(null, "Please enter a search key-word!");
+			tfEnterLecturerSearchKeywords.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");			
 		}
+		
+		else
+		{
+			tfEnterLecturerSearchKeywords.setText("");
+			tfEnterLecturerSearchKeywords.setStyle("-fx-border-width: 0px ;");
 
-		lvLecturerSearchResults.setItems(searchResults);
+			searchResults.clear();
+
+			switch (searchCriteriaComboBoxSelection) 
+			{
+			case 0:
+
+				for (int i = 0; i < lecturers.size(); i++) 
+				{
+					if (lecturers.get(i).getLecturerName().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
+						searchResults.add(lecturers.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null,
+							"No lecturers found with the given search keyword: \n" + searchKeyword);
+				}
+				
+				break;
+
+			case 1:
+
+				for (int i = 0; i < lecturers.size(); i++) 
+				{
+					if (lecturers.get(i).getLecturerCategory().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
+						searchResults.add(lecturers.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null,
+							"No lecturers found with the given search keyword: " + searchKeyword);
+				}
+
+				break;
+				
+			case 2:
+				
+				for (int i = 0; i < lecturers.size(); i++) 
+				{
+					if (lecturers.get(i).getLecturerPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
+						searchResults.add(lecturers.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null,
+							"No lecturers found with the given search keyword: \n" + searchKeyword);
+				}
+				
+				break;
+				
+			case 3:
+				
+				for (int i = 0; i < lecturers.size(); i++) 
+				{
+					if (lecturers.get(i).getLecturerEmail().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
+						searchResults.add(lecturers.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null,
+							"No lecturers found with the given search keyword: \n" + searchKeyword);
+				}
+
+			default:
+				break;
+			}
+
+			lvLecturerSearchResults.setItems(searchResults);
+		}		
 	}
 	
 	@FXML
@@ -347,7 +358,8 @@ public class GUIlecturersController implements Initializable
 		if (lecturerTable.getSelectionModel() != null) 
 		{
 			hboxLecturerEditOptions.setVisible(true);
-
+			
+			btnDeleteLecturer.setDisable(true);
 			cbShowLecturerCategory.setDisable(false);
 			
 			tfShowLecturerName.setEditable(true);
@@ -490,7 +502,7 @@ public class GUIlecturersController implements Initializable
 					String[] options = { "Delete", "Cancel" };
 					int n = JOptionPane.showOptionDialog(null,
 							"Are you sure you want to delete lecturer:\n" + selectedLecturer + " ?",
-							"Delete a lecturer", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+							"Delete lecturer", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
 
 					if (n == JOptionPane.YES_OPTION) 

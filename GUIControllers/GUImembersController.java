@@ -164,7 +164,7 @@ public class GUImembersController implements Initializable
 	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
 	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
-	        if (selectedMember.getMembershipStatus().equals("Paid"))
+	        if (selectedMember.getMembershipStatus().equals("2017"))
 	        {
 	        	cbShowMembershipStatus.setSelected(true);
 	        }
@@ -185,6 +185,15 @@ public class GUImembersController implements Initializable
 	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
 	        tfShowMemberEmail.setText(selectedMember.getEmail());
 	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
+	        
+	        if (selectedMember.getMembershipStatus().equals("2017"))
+	        {
+	        	cbShowMembershipStatus.setSelected(true);
+	        }
+	        else
+	        {
+	        	cbShowMembershipStatus.setSelected(false);
+	        }
 	    }
 	}	
 	
@@ -308,85 +317,96 @@ public class GUImembersController implements Initializable
 		ObservableList<Member> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbMemberSearchCriteria.getSelectionModel().getSelectedIndex();		
 		String searchKeyword = tfEnterSearchKeywords.getText();		
-		tfEnterSearchKeywords.setText("");
 		
-		searchResults.clear();
-		
-		switch(searchCriteriaComboBoxSelection)
+		if(tfEnterSearchKeywords.getText().isEmpty())
 		{
-			case 0:
-				
-				for(int i = 0; i < members.size(); i ++)
-				{
-					if (members.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase()))
-					{
-						searchResults.add(members.get(i));
-					}
-				}
-				
-				if(searchResults.isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
-				}
-				
-				break;
-				
-			case 1:
-				
-				for(int i = 0; i < members.size(); i ++)
-				{
-					if (members.get(i).getAddress().toLowerCase().contains(searchKeyword.toLowerCase()))
-					{
-						searchResults.add(members.get(i));
-					}
-				}
-				
-				if(searchResults.isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
-				}				
-				
-				break;
-				
-			case 2:
-				
-				for(int i = 0; i < members.size(); i ++)
-				{
-					if (members.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase()))
-					{
-						searchResults.add(members.get(i));
-					}
-				}
-				
-				if(searchResults.isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
-				}
-				
-				break;
-				
-			case 3:
-				
-				for(int i = 0; i < members.size(); i ++)
-				{
-					if (members.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase()))
-					{
-						searchResults.add(members.get(i));
-					}
-				}
-				
-				if(searchResults.isEmpty())
-				{
-					JOptionPane.showMessageDialog(null, "No members found with the given search keyword: " + searchKeyword);
-				}
-				
-				break;
-
-				default:					
-					break;			
-		}	
+			JOptionPane.showMessageDialog(null, "Please enter a search key-word!");
+			tfEnterSearchKeywords.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+		}
 		
-		lvMemberSearchResults.setItems(searchResults);	
+		else
+		{
+			tfEnterSearchKeywords.setText("");
+			tfEnterSearchKeywords.setStyle("-fx-border-width: 0px ;");
+			
+			searchResults.clear();
+			
+			switch(searchCriteriaComboBoxSelection)
+			{
+				case 0:
+					
+					for(int i = 0; i < members.size(); i ++)
+					{
+						if (members.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase()))
+						{
+							searchResults.add(members.get(i));
+						}
+					}
+					
+					if(searchResults.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
+					}
+					
+					break;
+					
+				case 1:
+					
+					for(int i = 0; i < members.size(); i ++)
+					{
+						if (members.get(i).getAddress().toLowerCase().contains(searchKeyword.toLowerCase()))
+						{
+							searchResults.add(members.get(i));
+						}
+					}
+					
+					if(searchResults.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
+					}				
+					
+					break;
+					
+				case 2:
+					
+					for(int i = 0; i < members.size(); i ++)
+					{
+						if (members.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase()))
+						{
+							searchResults.add(members.get(i));
+						}
+					}
+					
+					if(searchResults.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "No members found with the given search keyword: \n" + searchKeyword);
+					}
+					
+					break;
+					
+				case 3:
+					
+					for(int i = 0; i < members.size(); i ++)
+					{
+						if (members.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase()))
+						{
+							searchResults.add(members.get(i));
+						}
+					}
+					
+					if(searchResults.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "No members found with the given search keyword: " + searchKeyword);
+					}
+					
+					break;
+
+					default:					
+						break;			
+			}	
+			
+			lvMemberSearchResults.setItems(searchResults);	
+		}		
     }
 	
 	@FXML
@@ -441,7 +461,7 @@ public class GUImembersController implements Initializable
 				newMembershipStatus = "2017";
 			}
 			
-			else
+			if(!(cbShowMembershipStatus.isSelected()))
 			{
 				newMembershipStatus = "Not paid";
 			}			
@@ -579,7 +599,7 @@ public class GUImembersController implements Initializable
 	    	    	String[] options = {"Delete","Cancel"}; 
 	    	    	int n = JOptionPane.showOptionDialog(null,
 	    	                "Are you sure you want to delete member:\n" + selectedMember + " ?",
-	    	                "Delete a member",
+	    	                "Delete member",
 	    	                JOptionPane.YES_NO_OPTION,
 	    	                JOptionPane.QUESTION_MESSAGE,
 	    	                null,

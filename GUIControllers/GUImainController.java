@@ -41,7 +41,7 @@ public class GUImainController implements Initializable
 	{
 		if (Desktop.isDesktopSupported()) {
 		    try {
-		        File myFile = new File("VIA user guide.pdf");
+		        File myFile = new File("VIAuserGuide.pdf");
 		        Desktop.getDesktop().open(myFile);
 		    } catch (IOException ex) {
 		        // no application registered for PDFs

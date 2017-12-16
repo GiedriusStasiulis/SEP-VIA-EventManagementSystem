@@ -1197,81 +1197,92 @@ public class GUIeventsController implements Initializable {
 		ObservableList<Event> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbEventSearchCriteria.getSelectionModel().getSelectedIndex();
 		String searchKeyword = tfEnterSearchKeywords.getText();
-		tfEnterSearchKeywords.setText("");
-
-		switch (searchCriteriaComboBoxSelection) {
-		case 0:
-
-			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventTitle().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(events.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		case 1:
-
-			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventType().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(events.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		case 2:
-
-			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventCategory().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(events.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		case 3:
-
-			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventLecturer().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(events.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		case 4:
-
-			for (int i = 0; i < events.size(); i++) {
-				if (events.get(i).getEventStatus().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(events.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
+		
+		if(tfEnterSearchKeywords.getText().isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Please enter a search key-word!");
+			tfEnterSearchKeywords.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 		}
+		
+		else
+		{
+			tfEnterSearchKeywords.setText("");
+			tfEnterSearchKeywords.setStyle("-fx-border-width: 0px ;");
 
-		lvEventSearchResults.setItems(searchResults);
+			switch (searchCriteriaComboBoxSelection) {
+			case 0:
+
+				for (int i = 0; i < events.size(); i++) {
+					if (events.get(i).getEventTitle().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(events.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			case 1:
+
+				for (int i = 0; i < events.size(); i++) {
+					if (events.get(i).getEventType().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(events.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			case 2:
+
+				for (int i = 0; i < events.size(); i++) {
+					if (events.get(i).getEventCategory().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(events.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			case 3:
+
+				for (int i = 0; i < events.size(); i++) {
+					if (events.get(i).getEventLecturer().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(events.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			case 4:
+
+				for (int i = 0; i < events.size(); i++) {
+					if (events.get(i).getEventStatus().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(events.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No event found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+			}
+
+			lvEventSearchResults.setItems(searchResults);
+		}	
 	}
 
 	@FXML

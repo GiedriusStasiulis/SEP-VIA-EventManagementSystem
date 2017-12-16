@@ -1,4 +1,4 @@
-Giedrius Stasiulis,Niels Bohrs Alle 85,53659845,gs@via.dk,2017-08-21,2017
-Marius Amarandei,Tuborg Havnepark 15,52669957,ma@via.dk,2017-08-21,2017
-Justas Brazdeikis,Vesterskovvej 20,54112365,jb@via.dk,2017-08-21,2017
-Flavius Alin Boanca,Vesterskovvej 20,52663589,fab@via.dk,2017-08-21,2017
+Giedrius Stasiulis,Niels Bohrs Alle 85,53659845,gs@via.dk,2017-08-21,Not paid
+Marius Amarandei,Tuborg Havnepark 15,52669957,ma@via.dk,2017-08-21,Not paid
+Justas Brazdeikis,Vesterskovvej 20,54112365,jb@via.dk,2017-08-21,Not paid
+Flavius Alin Boanca,Vesterskovvej 20,52663589,fab@via.dk,2017-08-21,Not paid

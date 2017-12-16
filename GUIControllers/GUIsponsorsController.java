@@ -210,61 +210,72 @@ public class GUIsponsorsController implements Initializable
 		ObservableList<Sponsor> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbSponsorSearchCriteria.getSelectionModel().getSelectedIndex();
 		String searchKeyword = tfEnterSponsorSearchKeywords.getText();
-		tfEnterSponsorSearchKeywords.setText("");
-
-		searchResults.clear();
-
-		switch (searchCriteriaComboBoxSelection) {
-		case 0:
-
-			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(sponsors.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null,
-						"No sponsors found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		case 1:
-
-			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(sponsors.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null,
-						"No sponsors found with the given search keyword: " + searchKeyword);
-			}
-
-			break;
-
-		case 2:
-
-			for (int i = 0; i < sponsors.size(); i++) {
-				if (sponsors.get(i).getPhone().toLowerCase().contains(searchKeyword.toLowerCase())) {
-					searchResults.add(sponsors.get(i));
-				}
-			}
-
-			if (searchResults.isEmpty()) {
-				JOptionPane.showMessageDialog(null,
-						"No sponsors found with the given search keyword: \n" + searchKeyword);
-			}
-
-			break;
-
-		default:
-			break;
+		
+		if(tfEnterSponsorSearchKeywords.getText().isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Please enter a search key-word!");
+			tfEnterSponsorSearchKeywords.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");	
 		}
+		
+		else
+		{
+			tfEnterSponsorSearchKeywords.setText("");
+			tfEnterSponsorSearchKeywords.setStyle("-fx-border-width: 0px ;");	
 
-		lvSponsorSearchResults.setItems(searchResults);
+			searchResults.clear();
+
+			switch (searchCriteriaComboBoxSelection) {
+			case 0:
+
+				for (int i = 0; i < sponsors.size(); i++) {
+					if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(sponsors.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"No sponsors found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			case 1:
+
+				for (int i = 0; i < sponsors.size(); i++) {
+					if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(sponsors.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"No sponsors found with the given search keyword: " + searchKeyword);
+				}
+
+				break;
+
+			case 2:
+
+				for (int i = 0; i < sponsors.size(); i++) {
+					if (sponsors.get(i).getPhone().toLowerCase().contains(searchKeyword.toLowerCase())) {
+						searchResults.add(sponsors.get(i));
+					}
+				}
+
+				if (searchResults.isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"No sponsors found with the given search keyword: \n" + searchKeyword);
+				}
+
+				break;
+
+			default:
+				break;
+			}
+
+			lvSponsorSearchResults.setItems(searchResults);
+		}		
 	}
 
 	@FXML
@@ -276,6 +287,8 @@ public class GUIsponsorsController implements Initializable
 			tfShowSponsorName.setEditable(true);
 			tfShowSponsorEmail.setEditable(true);
 			tfShowSponsorPhoneNumber.setEditable(true);
+			
+			btnDeleteSponsor.setDisable(true);
 
 			tfShowSponsorName.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
 			tfShowSponsorEmail.setStyle("-fx-border-color: red ; -fx-border-width: 0.3px ;");
@@ -387,7 +400,7 @@ public class GUIsponsorsController implements Initializable
 				try {
 					String[] options = { "Delete", "Cancel" };
 					int n = JOptionPane.showOptionDialog(null,
-							"Are you sure you want to delete sponsor:\n" + selectedSponsor + " ?", "Delete a sponsor",
+							"Are you sure you want to delete sponsor:\n" + selectedSponsor + " ?", "Delete sponsor",
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
 					if (n == JOptionPane.YES_OPTION) {
