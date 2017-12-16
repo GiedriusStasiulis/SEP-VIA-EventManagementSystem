@@ -1029,18 +1029,7 @@ public class GUIeventsController implements Initializable {
 			eventLecturer = "None";
 		}		
 		
-
-		if(dpEventStartDate.getValue() == null && dpEventEndDate.getValue() == null)
-		{
-			try {
-				dpEventStartDate.setValue(LOCAL_DATE("2001-01-01"));
-				dpEventEndDate.setValue(LOCAL_DATE("2001-01-01"));
-				eventStartDate = dpEventStartDate.getValue();
-				eventEndDate = dpEventEndDate.getValue();
-		    } catch (NullPointerException e) {
-		    }
-		}
-		
+	
 		if(tfShowEventStartTime.getText().isEmpty())
 		{
 			eventStartTime = "Not specified";
