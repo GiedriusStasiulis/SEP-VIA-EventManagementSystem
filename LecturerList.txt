@@ -17,3 +17,4 @@ uuuuu,Healing,uuu@,123456
 ttttt,Healing,123456@,123
 aaaaa,Astrology,ddd@,123456
 eeeee,Karma,eee@,123456
+uuuuu,Dream Interpretation,uuu@,123456
