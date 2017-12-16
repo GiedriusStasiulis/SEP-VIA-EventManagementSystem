@@ -233,6 +233,8 @@ public class GUIeventsController implements Initializable {
 				try {
 					if(eventsTable.getSelectionModel().getSelectedItem() != null)
 					{
+						btnEditEvent.setDisable(false);
+						btnDeleteEvent.setDisable(false);
 						tpShowEventsPane.setDisable(false);
 						lvMembersAddedToEvent.setItems(getMembersAdded());
 						lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
