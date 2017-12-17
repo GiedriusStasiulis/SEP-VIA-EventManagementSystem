@@ -37,9 +37,9 @@
                <children>
                   <Accordion prefHeight="690.0">
                     <panes>
-                      <TitledPane text="Create event">
+                      <TitledPane fx:id="tpShowCreateEventPane" text="Create event">
                         <content>
-                              <ScrollPane prefViewportHeight="639.0" prefViewportWidth="278.0">
+                              <ScrollPane fx:id="spCreateEvent" prefViewportHeight="639.0" prefViewportWidth="278.0">
                                  <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="634.0" prefWidth="236.0">
                                        <children>

@@ -23,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -128,13 +129,19 @@ public class GUIeventsController implements Initializable
 	@FXML
 	private TitledPane tpShowEventsPane, tpShowSearchEventsPane, tpShowCreateEventPane, tpAddEventCategory,
 			tpAddMembersToEvent, tpAddNonMembersToEvent, tpAddLecturer;
+	
+	@FXML private ScrollPane spCreateEvent;
+	
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		eventsPage.setMaxHeight(Double.MAX_VALUE);
 		eventsPage.setMaxWidth(Double.MAX_VALUE);
-
+		
+		
+		
 		hboxEventEditOptions.setVisible(false);		
 		dpEventStartDate.setEditable(false);
 		dpEventEndDate.setEditable(false);		
@@ -1137,6 +1144,9 @@ public class GUIeventsController implements Initializable
 							lblEventPrice.setVisible(false);
 							lblEventDiscount.setVisible(false);
 							lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+							
+							spCreateEvent.requestFocus();
+							spCreateEvent.setVvalue(0.0);
 						}			
 					}
 					
@@ -1144,8 +1154,7 @@ public class GUIeventsController implements Initializable
 					{
 						JOptionPane.showMessageDialog(null, "Please enter a valid number for event discount!");
 						tfEventDiscount.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-					}
-				//	
+					}	
 				}
 				
 				catch(NumberFormatException e)
