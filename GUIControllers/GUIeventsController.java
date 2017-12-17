@@ -966,7 +966,7 @@ public class GUIeventsController implements Initializable
 		{
 			lecturersAdded.add(lecturersAddedToEvent.get(i));
 		}
-
+		
 		return lecturersAdded;
 	}
 
@@ -2004,24 +2004,32 @@ public class GUIeventsController implements Initializable
 	@FXML
 	void addLecturerToEvent(ActionEvent event) throws ParseException, IOException
 	{
-		if (checkForDuplicates(lecturersAlreadyRegistered, lvLecturersToAdd.getSelectionModel().getSelectedItem())) 
+		if(lvLecturersToAdd.getSelectionModel().getSelectedItem() == null)
 		{
-			JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
+			JOptionPane.showMessageDialog(null, "Please select a lecturer to add.\nIf the list is empty - There are no lecturers in the system with a category: \n" + selectedEvent.getEventCategory());
 		}
 		
-		else if (lvLecturersToAdd.getSelectionModel().getSelectedItem().equals(selectedEvent.getEventLecturer())) 
+		else
 		{
-			JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
-		}
-		
-		else 
-		{
-			lecturersAlreadyRegistered.add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
+			if (checkForDuplicates(lecturersAlreadyRegistered, lvLecturersToAdd.getSelectionModel().getSelectedItem())) 
+			{
+				JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
+			}
+			
+			else if (lvLecturersToAdd.getSelectionModel().getSelectedItem().equals(selectedEvent.getEventLecturer())) 
+			{
+				JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
+			}
+			
+			else 
+			{
+				lecturersAlreadyRegistered.add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
 
-			viaOms.addLecturerToEvent(lecturersAlreadyRegistered, selectedEvent.getEventTitle());
-			lvLecturersAlreadyAdded.getItems().add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
-			lblLecturersAdded.setText("Lecturers already added: " + lecturersAlreadyRegistered.size());
-		}
+				viaOms.addLecturerToEvent(lecturersAlreadyRegistered, selectedEvent.getEventTitle());
+				lvLecturersAlreadyAdded.getItems().add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
+				lblLecturersAdded.setText("Lecturers already added: " + lecturersAlreadyRegistered.size());
+			}
+		}		
 	}
 	
 	@FXML
