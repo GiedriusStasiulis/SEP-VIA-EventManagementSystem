@@ -26,7 +26,5 @@ public class MainClass extends Application
 		stage.setTitle("VIA - Organization Management System");
 		stage.setScene(scene);
 		stage.show();		
-		
-		//TEST
 	}
 }
