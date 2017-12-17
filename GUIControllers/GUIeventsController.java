@@ -29,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -48,6 +49,7 @@ public class GUIeventsController implements Initializable
 	private EventList eventList = new EventList();
 	private MemberList memberList = new MemberList();
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
+	private ArrayList<String> lecturersAlreadyRegistered = new ArrayList<String>();
 	private ArrayList<String> nonMembers = new ArrayList<String>();
 	private ArrayList<String> eventCategories = new ArrayList<String>();
 
@@ -64,6 +66,8 @@ public class GUIeventsController implements Initializable
 	private ObservableList<String> nonMembersAlreadyAdded = FXCollections.observableArrayList();
 
 	private ObservableList<String> categoriesAdded = FXCollections.observableArrayList();
+	private ObservableList<String> lecturersAdded = FXCollections.observableArrayList();
+
 
 	@FXML
 	private BorderPane eventsPage = new BorderPane();
@@ -72,14 +76,14 @@ public class GUIeventsController implements Initializable
 	private Button btnCreateEvent, btnDeleteEvent, btnCancelEditEvent, btnEditEvent, btnClearTextFields,
 			btnSearchEvents, btnSaveEventEditChanges, btnClearEditEventTextFields, btnAddMemberToEvent,
 			btnRemoveMemberFromEvent, btnAddCategoryToEvent, btnRemoveCategoryFromEvent, btnRemoveNonMemberFromEvent,
-			btnAddNonMemberToEvent;
+			btnAddNonMemberToEvent, btnAddLecturerToEvent, btnRemoveLecturerFromEvent;
 
 	@FXML
 	private TextField tfEnterSearchKeywords, tfEventEndTime, tfShowEventPrice, tfShowEventNumberOfTickets,
 			tfShowEventEndTime, tfEventNumberOfTickets, tfEventPrice, tfShowEventDiscount, tfEnterEventTitle,
 			tfEventStartTime, tfEventDiscount, tfShowEventTicketsRemaining, tfShowEventStartTime, tfSelectedEvent1,
 			tfSelectedEvent2, tfShowEventTitle, tfSelectedEventNonMember, tfNonMemberName, tfNonMemberPhoneNumber,
-			tfSelectedEventCategory;
+			tfSelectedEventCategory, tfSelectedEvent3, tfSelectedEventCategory2,tfMainEventLecturer;
 
 	@FXML
 	private ComboBox<String> cbEventLecturer, cbEventCategory, cbEventSearchCriteria, cbShowEventCategory, cbEventType,
@@ -103,14 +107,14 @@ public class GUIeventsController implements Initializable
 
 	@FXML
 	private Label lblEventCount, lblEventLecturer, lblEventStartDate, lblEventEndDate, lblEventStartTime,
-			lblEventEndTime, lblEventNumberOfTickets, lblEventPrice, lblEventDiscount, lblMembersAdded, lblNonMembersAdded;
+			lblEventEndTime, lblEventNumberOfTickets, lblEventPrice, lblEventDiscount, lblMembersAdded, lblNonMembersAdded, lblLecturersAdded;
 
 	@FXML
 	private ListView<Event> lvEventSearchResults;
 	@FXML
 	private ListView<String> lvNonMembersAddedToEvent;
 	@FXML
-	private ListView<String> lvMembersToAdd, lvMembersAddedToEvent, lvCategoriesToAdd, lvCategoriesAddedToEvent;
+	private ListView<String> lvMembersToAdd, lvMembersAddedToEvent, lvCategoriesToAdd, lvCategoriesAddedToEvent, lvLecturersToAdd, lvLecturersAlreadyAdded;
 
 	@FXML
 	private CheckBox cbSelectAllMembersToAdd, cbSelectAllMembersToRemove, cbShowEventStatus;
@@ -242,16 +246,22 @@ public class GUIeventsController implements Initializable
 					if(eventsTable.getSelectionModel().getSelectedItem() != null)
 					{
 						generateAllMemberNameList();
+						
+						lvLecturersToAdd.setItems(lecturerNames);
 						btnEditEvent.setDisable(false);
 						btnDeleteEvent.setDisable(false);
 						tpShowEventsPane.setDisable(false);
+						tfMainEventLecturer.setText(selectedEvent.getEventLecturer());
 						lvMembersAddedToEvent.setItems(getMembersAdded());
 						lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
 						tfSelectedEvent1.setText(selectedEvent.getEventTitle());
 						tfSelectedEvent2.setText(selectedEvent.getEventTitle());
+						tfSelectedEvent3.setText(selectedEvent.getEventTitle());
+						tfSelectedEventCategory2.setText(selectedEvent.getEventCategory());
 						tfSelectedEventCategory.setText(selectedEvent.getEventCategory());
 						lvCategoriesToAdd.setItems(categoryChoices);
 						lvCategoriesAddedToEvent.setItems(getCategories());
+						lvLecturersAlreadyAdded.setItems(getLecturersAdded());
 						
 						lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
 						lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
@@ -697,6 +707,7 @@ public class GUIeventsController implements Initializable
 				}
 
 				cbShowEventLecturer.setItems(lecturerNames);
+				lvLecturersToAdd.setItems(lecturerNames);
 				cbShowEventLecturer.getSelectionModel().select(0);
 
 				break;
@@ -941,6 +952,22 @@ public class GUIeventsController implements Initializable
 
 		return categoriesAdded;
 	}
+	
+	public ObservableList<String> getLecturersAdded() throws FileNotFoundException
+	{
+		lecturersAdded.clear();
+		
+		ArrayList<String> lecturersAddedToEvent = viaOms.getEventLecturers(selectedEvent.getEventTitle());
+		
+		for(int i = 0; i < lecturersAddedToEvent.size(); i ++)
+		{
+			lecturersAdded.add(lecturersAddedToEvent.get(i));
+		}
+		
+		System.out.println(lecturersAdded);
+		
+		return lecturersAdded;
+	}
 
 
 	public void generateAllMemberNameList() throws FileNotFoundException, ParseException 
@@ -1075,6 +1102,8 @@ public class GUIeventsController implements Initializable
 							String filename2 = eventTitle + "MemberListForEvent.txt";
 							String filename3 = eventTitle + "NonMembersForEvent.txt";
 							String filename4 = eventTitle + "CategoriesForEvent.txt";
+							String filename5 = eventTitle + "LecturersForEvent.txt";
+							
 							File file2 = new File(filename2);
 							file2.createNewFile();
 
@@ -1083,6 +1112,9 @@ public class GUIeventsController implements Initializable
 
 							File file4 = new File(filename4);
 							file4.createNewFile();
+							
+							File file5 = new File(filename5);
+							file5.createNewFile();
 
 							clearCreateEventTextFields(event);
 							btnCreateEvent.setDisable(true);
@@ -1630,6 +1662,14 @@ public class GUIeventsController implements Initializable
 
 						btnEditEvent.setDisable(true);
 						btnDeleteEvent.setDisable(true);
+						
+						eventsTable.requestFocus();
+						eventsTable.getSelectionModel().select(index);
+						eventsTable.getFocusModel().focus(index);
+						
+						MouseEvent.fireEvent(eventsTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+				                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+				                true, true, true, true, true, true, null));
 					}					
 				}
 				
@@ -1753,7 +1793,7 @@ public class GUIeventsController implements Initializable
 					{
 						int index = viaOms.getEventList().getEventIndex(selectedEvent);
 
-						viaOms.deleteEvent(index);
+						viaOms.deleteEvent(index, selectedEvent.getEventTitle());
 						eventsTable.getItems().remove(index);
 						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
 					}
@@ -1805,21 +1845,28 @@ public class GUIeventsController implements Initializable
 	{	
 		if (lvMembersAddedToEvent.getSelectionModel() != null) 
 		{
-			if (membersRegisteredList.size() > 0) 
+			try
 			{
-				int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
-				
-				membersRegisteredList.remove(lvMembersAddedToEvent.getSelectionModel().getSelectedIndex());
+				if (membersRegisteredList.size() > 0) 
+				{
+					int index = lvMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+					
+					membersRegisteredList.remove(lvMembersAddedToEvent.getSelectionModel().getSelectedIndex());
 
-				viaOms.editEvent(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
-				eventsTable.getItems().set(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
-				
-				viaOms.addMembersToEvent(membersRegisteredList, selectedEvent.getEventTitle());
-				
-				lvMembersAddedToEvent.getItems().remove(index);
-				selectedEvent.setEventTicketsRemaining(selectedEvent.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
-				lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
+					viaOms.editEvent(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
+					eventsTable.getItems().set(eventsTable.getSelectionModel().getSelectedIndex(), selectedEvent);
+					
+					viaOms.addMembersToEvent(membersRegisteredList, selectedEvent.getEventTitle());
+					
+					lvMembersAddedToEvent.getItems().remove(index);
+					selectedEvent.setEventTicketsRemaining(selectedEvent.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
+					lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
+				}
 			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please select a member to remove!");
+			}				
 		}
 	}
 
@@ -1875,16 +1922,23 @@ public class GUIeventsController implements Initializable
 
 		if (lvNonMembersAddedToEvent.getSelectionModel() != null) 
 		{
-			if (nonMembers.size() > 0) 
+			try
 			{
-				int index = lvNonMembersAddedToEvent.getSelectionModel().getSelectedIndex();
+				if (nonMembers.size() > 0) 
+				{
+					int index = lvNonMembersAddedToEvent.getSelectionModel().getSelectedIndex();
 
-				nonMembers.remove(index);
+					nonMembers.remove(index);
 
-				lvNonMembersAddedToEvent.getItems().remove(index);
-				viaOms.addNonMembersToEvent(nonMembers, selectedEvent.getEventTitle());
-				lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
+					lvNonMembersAddedToEvent.getItems().remove(index);
+					viaOms.addNonMembersToEvent(nonMembers, selectedEvent.getEventTitle());
+					lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
+				}
 			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please select a non-member to remove!");
+			}			
 		}
 	}	
 	
@@ -1906,6 +1960,7 @@ public class GUIeventsController implements Initializable
 		else 
 		{
 			eventCategories.add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
+			
 			lvCategoriesAddedToEvent.getItems().add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
 			viaOms.addCategoriesToEvent(eventCategories, selectedEvent.getEventTitle());
 		}
@@ -1918,15 +1973,72 @@ public class GUIeventsController implements Initializable
 
 		if (lvCategoriesAddedToEvent.getSelectionModel() != null) 
 		{
-			if (eventCategories.size() > 0) 
+			try
 			{
-				int index = lvCategoriesAddedToEvent.getSelectionModel().getSelectedIndex();
-				eventCategories.remove(index);
+				if (eventCategories.size() > 0) 
+				{
+					int index = lvCategoriesAddedToEvent.getSelectionModel().getSelectedIndex();
+					eventCategories.remove(index);
 
-				lvCategoriesAddedToEvent.getItems().remove(index);
+					lvCategoriesAddedToEvent.getItems().remove(index);
+					viaOms.addCategoriesToEvent(eventCategories, selectedEvent.getEventTitle());
+				}				
 			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please select a category to remove!");
+			}			
+		}	
+	}
+	
+	@FXML
+	void addLecturerToEvent(ActionEvent event) throws ParseException, IOException
+	{
+		if (checkForDuplicates(lecturersAlreadyRegistered, lvLecturersToAdd.getSelectionModel().getSelectedItem())) 
+		{
+			JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
 		}
-		viaOms.addCategoriesToEvent(eventCategories, selectedEvent.getEventTitle());
+		
+		else if (lvLecturersToAdd.getSelectionModel().getSelectedItem().equals(selectedEvent.getEventLecturer())) 
+		{
+			JOptionPane.showMessageDialog(null, "Lecturer is already added to event!");
+		}
+		
+		else 
+		{
+			lecturersAlreadyRegistered.add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
+
+			viaOms.addLecturerToEvent(lecturersAlreadyRegistered, selectedEvent.getEventTitle());
+			lvLecturersAlreadyAdded.getItems().add(lvLecturersToAdd.getSelectionModel().getSelectedItem());
+			lblLecturersAdded.setText("Lecturers already added: " + lecturersAlreadyRegistered.size());
+		}
+	}
+	
+	@FXML
+	void removeLecturerFromEvent(ActionEvent event) throws FileNotFoundException
+	{
+		lecturersAlreadyRegistered = viaOms.getEventLecturers(selectedEvent.getEventTitle());
+		
+		if (lvLecturersAlreadyAdded.getSelectionModel() != null) 
+		{
+			try
+			{
+				if (lecturersAlreadyRegistered.size() > 0) 
+				{
+					int index = lvLecturersAlreadyAdded.getSelectionModel().getSelectedIndex();
+					lecturersAlreadyRegistered.remove(index);
+					lvLecturersAlreadyAdded.getItems().remove(index);
+					
+					viaOms.addLecturerToEvent(lecturersAlreadyRegistered, selectedEvent.getEventTitle());
+					lblLecturersAdded.setText("Lecturers already added: " + lecturersAlreadyRegistered.size());
+				}
+			}			
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				JOptionPane.showMessageDialog(null, "Please select a lecturer to remove!");
+			}			
+		}
+		
 	}
 	
 	public boolean checkForDuplicates(ArrayList<String> memberList, String member) 

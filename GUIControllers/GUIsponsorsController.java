@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -346,9 +347,6 @@ public class GUIsponsorsController implements Initializable
 				selectedSponsor.setPhoneNumber(newSponsorPhone);
 
 				viaOms.editSponsor(index, selectedSponsor);
-				//sponsorList.replaceSponsor(index, selectedSponsor);
-				//sponsorFile.writeSponsorTextFile(sponsorList);
-
 				sponsorTable.getItems().set(index, selectedSponsor);
 
 				hboxSponsorEditOptions.setVisible(false);
@@ -362,6 +360,14 @@ public class GUIsponsorsController implements Initializable
 				tfShowSponsorName.setStyle("-fx-border-width: 0px ;");
 				tfShowSponsorEmail.setStyle("-fx-border-width: 0px ;");
 				tfShowSponsorPhoneNumber.setStyle("-fx-border-width: 0px ;");
+				
+				sponsorTable.requestFocus();
+				sponsorTable.getSelectionModel().select(index);
+				sponsorTable.getFocusModel().focus(index);
+				
+				MouseEvent.fireEvent(sponsorTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+		                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+		                true, true, true, true, true, true, null));
 			}
 		}
 

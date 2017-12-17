@@ -32,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -534,6 +535,14 @@ public class GUImembersController implements Initializable
 			    	
 			    	btnEditMember.setDisable(true);
 					btnDeleteMember.setDisable(true);
+					
+					memberTable.requestFocus();
+					memberTable.getSelectionModel().select(index);
+					memberTable.getFocusModel().focus(index);
+					
+					MouseEvent.fireEvent(memberTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+			                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+			                true, true, true, true, true, true, null));
 				}			
 			}
 			

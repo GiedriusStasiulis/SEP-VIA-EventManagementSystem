@@ -156,6 +156,30 @@
                               </ScrollPane>
                         </content>
                       </TitledPane>
+                        <TitledPane animated="false" text="Add other lecturers to an event">
+                          <content>
+                              <ScrollPane prefViewportHeight="704.0" prefViewportWidth="293.0">
+                                 <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="698.0" prefWidth="271.0">
+                                       <children>
+                                          <Label layoutX="10.0" layoutY="10.0" text="Selected event:" />
+                                          <TextField fx:id="tfSelectedEvent3" editable="false" layoutX="10.0" layoutY="30.0" prefWidth="260.0" />
+                                          <Label layoutX="10.0" layoutY="60.0" text="Selected event category:" />
+                                          <TextField fx:id="tfSelectedEventCategory2" editable="false" layoutX="10.0" layoutY="80.0" prefWidth="260.0" />
+                                          <Label layoutX="10.0" layoutY="170.0" text="Select other lecturer to add:" />
+                                          <ListView fx:id="lvLecturersToAdd" layoutX="10.0" layoutY="190.0" prefHeight="200.0" prefWidth="260.0" />
+                                          <Button fx:id="btnAddLecturerToEvent" layoutX="80.0" layoutY="400.0" mnemonicParsing="false" onAction="#addLecturerToEvent" prefWidth="125.0" text="Add" />
+                                          <Label fx:id="lblLecturersAdded" layoutX="10.0" layoutY="435.0" text="Lecturers already added:" />
+                                          <ListView fx:id="lvLecturersAlreadyAdded" layoutX="10.0" layoutY="455.0" prefHeight="200.0" prefWidth="260.0" />
+                                          <Button fx:id="btnRemoveLecturerFromEvent" layoutX="80.0" layoutY="665.0" mnemonicParsing="false" onAction="#removeLecturerFromEvent" prefWidth="125.0" text="Remove" />
+                                          <Label layoutX="10.0" layoutY="110.0" text="Selected event lecturer:" />
+                                          <TextField fx:id="tfMainEventLecturer" editable="false" layoutX="10.0" layoutY="130.0" prefWidth="260.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                          </content>
+                        </TitledPane>
                         <TitledPane fx:id="tpAddEventCategory" animated="false" prefWidth="295.0" text="Add other categories to seminar or workshop">
                           <content>
                               <ScrollPane prefViewportHeight="754.0" prefViewportWidth="293.0">

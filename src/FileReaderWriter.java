@@ -29,6 +29,7 @@ public class FileReaderWriter
 	private ArrayList<String> eventMembersRegistered = new ArrayList<String>();
 	private ArrayList<String> eventNonMembersRegistered = new ArrayList<String>();
 	private ArrayList<String> eventCategoriesAdded = new ArrayList<String>();
+	private ArrayList<String> eventLecturersAdded = new ArrayList<String>();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -390,6 +391,49 @@ public class FileReaderWriter
 			}
 
 			return eventCategoriesAdded;
+		}
+		finally 
+		{
+			input.close();
+		}
+	}	
+	
+	public void writeEventLecturersTextFile(ArrayList<String> eventLecturersList) throws FileNotFoundException
+	{
+		PrintWriter output = null;
+		
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < eventLecturersList.size(); i++) 
+			{
+				output.println(eventLecturersList.get(i));
+			}
+			output.flush();
+		}
+		finally 
+		{
+			output.close();
+		}
+	}
+	
+	public ArrayList<String> readEventLecturersTextFile() throws FileNotFoundException
+	{
+		Scanner input = null;
+		eventLecturersAdded.clear();
+
+		try 
+		{
+			input = new Scanner(file);
+
+			while (input.hasNext()) 
+			{
+				String line = input.nextLine();
+				eventLecturersAdded.add(line);
+			}
+
+			return eventLecturersAdded;
 		}
 		finally 
 		{

@@ -1,2 +1,7 @@
 Krishna Ghosh Della Santina,Astrology,kgds@yahoo.com,52448569
 Richard Gombrich,Reincarnation,rickgom@gmail.com,56968545
+aaaaa,Astrology,aaa@,123456
+bbbbb,Reincarnation,bbbb@123,123456
+ttttt,Healing,aaaa@,789456
+uuuuuuu,Healing,fff@,789456
+uuoooiioyyy,Healing,hjk@aaaa,78456123

@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -453,6 +454,14 @@ public class GUIlecturersController implements Initializable
 				tfShowLecturerEmail.setStyle("-fx-border-width: 0px ;");
 				tfShowLecturerPhoneNumber.setStyle("-fx-border-width: 0px ;");
 				cbShowLecturerCategory.setStyle("-fx-border-width: 0px ;");
+				
+				lecturerTable.requestFocus();
+				lecturerTable.getSelectionModel().select(index);
+				lecturerTable.getFocusModel().focus(index);
+				
+				MouseEvent.fireEvent(lecturerTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+		                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+		                true, true, true, true, true, true, null));
 			}		
 		}
 		

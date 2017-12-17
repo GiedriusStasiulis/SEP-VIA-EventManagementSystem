@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -16,6 +17,8 @@ public class VIAoms
 	private FileReaderWriter nonMemberEventFile = new FileReaderWriter(filenameNonMembersEvent);
 	private String filenameEventCategories = "CategoriesForEvent.txt";
 	private FileReaderWriter eventCategoriesFile = new FileReaderWriter(filenameEventCategories);	
+	private String filenameEventLecturers = "LecturersForEvent.txt";
+	private FileReaderWriter eventLecturersFile = new FileReaderWriter(filenameEventLecturers);
 	
 	private Lecturer lecturer;
 	private LecturerList lecturerList = new LecturerList();
@@ -103,12 +106,22 @@ public class VIAoms
 		memberFile.writeMemberTextFile(memberList);
 	}	
 	
-	public void deleteEvent(int index) throws ParseException, IOException
+	public void deleteEvent(int index, String eventTitle) throws ParseException, IOException
 	{
 		eventList.clearEventList();
 		eventList = eventFile.readEventTextFile();
 		eventList.deleteEventFromList(index);
 		eventFile.writeEventTextFile(eventList);
+		
+		File file1 = new File(eventTitle + filenameMembersEvent);
+		File file2 = new File(eventTitle + filenameNonMembersEvent);
+		File file3 = new File(eventTitle + filenameEventCategories);
+		File file4 = new File(eventTitle + filenameEventLecturers);
+		
+		file1.delete();
+		file2.delete();
+		file3.delete();
+		file4.delete();
 	}	
 		
 	public void deleteLecturer(int index) throws FileNotFoundException, ParseException
@@ -274,6 +287,21 @@ public class VIAoms
 		addedCategories = eventCategoriesFile.readEventCategoriesTextFile();
 		
 		return addedCategories;
+	}
+	
+	public void addLecturerToEvent(ArrayList<String> lecturerList, String eventTitle) throws FileNotFoundException
+	{
+		eventLecturersFile.setFile(eventTitle + "LecturersForEvent.txt");
+		eventLecturersFile.writeEventLecturersTextFile(lecturerList);
+	}
+	
+	public ArrayList<String> getEventLecturers(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> addedLecturers;
+		eventLecturersFile.setFile(eventTitle + "LecturersForEvent.txt");
+		addedLecturers = eventLecturersFile.readEventLecturersTextFile();
+		
+		return addedLecturers;
 	}
 	
 	public MemberList generateListNonPaidMembership() throws FileNotFoundException, ParseException
