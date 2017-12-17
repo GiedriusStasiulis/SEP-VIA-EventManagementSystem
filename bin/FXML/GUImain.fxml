@@ -21,7 +21,7 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="800.0" translateY="200.0">
                            <children>
-                              <Label text="Welcome to VIA Organization Management System System" textAlignment="CENTER" translateY="20.0">
+                              <Label text="Welcome to VIA Organization Management System" textAlignment="CENTER" translateY="20.0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
