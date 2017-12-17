@@ -1142,7 +1142,7 @@ public class GUIeventsController implements Initializable
 						JOptionPane.showMessageDialog(null, "Please enter a valid number for event discount!");
 						tfEventDiscount.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 					}
-					
+				//	
 				}
 				
 				catch(NumberFormatException e)
