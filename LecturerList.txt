@@ -8,3 +8,4 @@ aaaa,Healing,aa@,aaa
 ttttt,Healing,yyy@,123456
 rrrr,Healing,rrr@,123456
 aaaaaaaa,Reincarnation,dd@,123456
+addddd,Dream Interpretation,aaa@,12456

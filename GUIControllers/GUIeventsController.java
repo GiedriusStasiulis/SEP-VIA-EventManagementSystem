@@ -47,8 +47,6 @@ public class GUIeventsController implements Initializable
 	private VIAoms viaOms = new VIAoms();
 
 	private Event selectedEvent;
-	private EventList eventList = new EventList();
-	private MemberList memberList = new MemberList();
 	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
 	private ArrayList<String> lecturersAlreadyRegistered = new ArrayList<String>();
 	private ArrayList<String> nonMembers = new ArrayList<String>();
@@ -273,6 +271,9 @@ public class GUIeventsController implements Initializable
 						lvCategoriesAddedToEvent.setItems(getCategories());
 						lvLecturersAlreadyAdded.setItems(getLecturersAdded());
 						
+						cbShowEventLecturer.setItems(lecturerNames);
+						cbShowEventLecturer.getSelectionModel().select(0);
+						
 						lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
 						lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
 	
@@ -386,7 +387,23 @@ public class GUIeventsController implements Initializable
 					e.printStackTrace();
 				}
 			}
-		});	
+		});			
+		
+		cbShowEventCategory.setOnAction((ActionEvent event) -> 
+		{	
+			String category = cbShowEventCategory.getValue();
+			lecturerNames.clear();
+			
+			try {
+				lecturerNames.addAll(viaOms.getLecturerListByCategory(category));
+				cbShowEventLecturer.setItems(lecturerNames);
+				cbShowEventLecturer.getSelectionModel().select(0);
+				lvLecturersToAdd.setItems(lecturerNames);
+			} catch (FileNotFoundException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});		
 		
 		dpEventStartDate.setOnAction((ActionEvent event) -> 
 		{
@@ -426,153 +443,14 @@ public class GUIeventsController implements Initializable
 					
 					break;
 			}		
-		});		
-		
-		cbShowEventCategory.setOnAction((ActionEvent event) -> 
-		{			
-			String category = cbShowEventCategory.getValue();
-			lecturerNames.clear();
-			
-			switch (category) {
-			case "Dream Interpretation":
+		});			
 
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} 
-				catch (FileNotFoundException e) 
-				{
-					e.printStackTrace();
-				} 
-				catch (ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				lvLecturersToAdd.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-
-			case "Healing":
-
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} 
-				catch (FileNotFoundException | ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-
-			case "Astrology":
-
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} catch (FileNotFoundException | ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-				
-			case "Reincarnation":
-
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} 
-				catch (FileNotFoundException | ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-
-			case "Karma":
-
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} 
-				catch (FileNotFoundException | ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-
-			case "Alternative Health-Care":
-
-				try 
-				{
-					for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-					{
-						if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-						{
-							lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-						}
-					}
-				} 
-				catch (FileNotFoundException | ParseException e) 
-				{
-					e.printStackTrace();
-				}
-
-				cbShowEventLecturer.setItems(lecturerNames);
-				cbShowEventLecturer.getSelectionModel().select(0);
-
-				break;
-			}
-		});
-
-		lblEventCount.setText(String.format("Event count: %d", eventList.size()));		
+		try {
+			lblEventCount.setText(String.format("Event count: %d", viaOms.getEventList().size()));
+		} catch (ParseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	public void showEventDetailsFromTable() 
@@ -638,17 +516,15 @@ public class GUIeventsController implements Initializable
 
 	public ObservableList<Event> getList() throws ParseException, IOException 
 	{
-		eventList = viaOms.getEventList();
-
-		for (int i = 0; i < eventList.size(); i++) 
+		for (int i = 0; i < viaOms.getEventList().size(); i++) 
 		{
-			events.add(new Event(eventList.getEvent(i).getEventTitle(), eventList.getEvent(i).getEventType(),
-					eventList.getEvent(i).getEventCategory(), eventList.getEvent(i).getEventLecturer(),
-					eventList.getEvent(i).getEventStartDate(), eventList.getEvent(i).getEventStartTime(),
-					eventList.getEvent(i).getEventEndDate(), eventList.getEvent(i).getEventEndTime(),
-					eventList.getEvent(i).getEventNumberOfTickets(), eventList.getEvent(i).getEventTicketsRemaining(),
-					eventList.getEvent(i).getEventPrice(), eventList.getEvent(i).getEventDiscount(),
-					eventList.getEvent(i).getEventStatus()));
+			events.add(new Event(viaOms.getEventList().getEvent(i).getEventTitle(), viaOms.getEventList().getEvent(i).getEventType(),
+					viaOms.getEventList().getEvent(i).getEventCategory(), viaOms.getEventList().getEvent(i).getEventLecturer(),
+					viaOms.getEventList().getEvent(i).getEventStartDate(), viaOms.getEventList().getEvent(i).getEventStartTime(),
+					viaOms.getEventList().getEvent(i).getEventEndDate(), viaOms.getEventList().getEvent(i).getEventEndTime(),
+					viaOms.getEventList().getEvent(i).getEventNumberOfTickets(), viaOms.getEventList().getEvent(i).getEventTicketsRemaining(),
+					viaOms.getEventList().getEvent(i).getEventPrice(), viaOms.getEventList().getEvent(i).getEventDiscount(),
+					viaOms.getEventList().getEvent(i).getEventStatus()));
 		}
 		
 		return events;
@@ -719,20 +595,13 @@ public class GUIeventsController implements Initializable
 	public void generateAllMemberNameList() throws FileNotFoundException, ParseException 
 	{
 		memberNames.clear();
-		memberList = viaOms.getMemberList();
 
-		for (int i = 0; i < memberList.size(); i++) 
+		for (int i = 0; i < viaOms.getMemberList().size(); i++) 
 		{
-			memberNames.add(memberList.getMember(i).getName());
+			memberNames.add(viaOms.getMemberList().getMember(i).getName());
 		}
 
 		lvMembersToAdd.setItems(memberNames);
-
-		int size = memberList.size();
-		for (int i = 0; i < size; i++) 
-		{
-			memberList.deleteMemberFromList(0);
-		}
 	}
 
 	public static final LocalDate LOCAL_DATE (String dateString)
@@ -865,7 +734,7 @@ public class GUIeventsController implements Initializable
 							lblEventNumberOfTickets.setVisible(false);
 							lblEventPrice.setVisible(false);
 							lblEventDiscount.setVisible(false);
-							lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+							lblEventCount.setText(String.format("Event count: %d", viaOms.getEventList().size()));
 							
 							spCreateEvent.requestFocus();
 							spCreateEvent.setVvalue(0.0);
@@ -1511,7 +1380,7 @@ public class GUIeventsController implements Initializable
 	{
 		if (eventsTable.getSelectionModel() != null) 
 		{
-			if (eventList.size() > 0) 
+			if (viaOms.getEventList().size() > 0) 
 			{
 				try 
 				{
@@ -1526,7 +1395,7 @@ public class GUIeventsController implements Initializable
 
 						viaOms.deleteEvent(index, selectedEvent.getEventTitle());
 						eventsTable.getItems().remove(index);
-						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+						lblEventCount.setText(String.format("Event count: %d", viaOms.getEventList().size()));
 						
 						btnEditEvent.setDisable(true);
 						btnDeleteEvent.setDisable(true);
