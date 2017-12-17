@@ -7,7 +7,6 @@
 public class Sponsor
 {
    private static final long serialVersionUID = 1L;
-   private int index;
    private String name;
    private String email;
    private String phoneNumber;
@@ -19,16 +18,6 @@ public class Sponsor
       this.phoneNumber = phoneNumber;
    }
    
-   public String getPhone() 
-   {
-      return phoneNumber;
-   }
-   
-   public void setPhone(String phoneNumber)
-   {
-      this.phoneNumber = phoneNumber;
-   }
-
    public String getName() 
    {
       return name;
@@ -38,7 +27,7 @@ public class Sponsor
    {
       this.name = name;
    }
-
+   
    public String getEmail() 
    {
       return email;
@@ -48,6 +37,16 @@ public class Sponsor
    {
       this.email = email;
    }
+   
+   public String getPhoneNumber() 
+   {
+      return phoneNumber;
+   }
+   
+   public void setPhoneNumber(String phoneNumber)
+   {
+      this.phoneNumber = phoneNumber;
+   }  
 
    public boolean equals(Object obj) 
    {
@@ -61,7 +60,7 @@ public class Sponsor
 
    public String toString() 
    {
-      String s = String.format("%s,%s,%s", getName(), getEmail(), getPhone());
+      String s = String.format("%s,%s,%s", getName(), getEmail(), getPhoneNumber());
       return s;
    }
    

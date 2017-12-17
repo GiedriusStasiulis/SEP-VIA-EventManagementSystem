@@ -19,7 +19,7 @@ public class LecturerList
 		lecturerList.add(lecturer);
 	}
 	
-	public void replaceLecturer(int index, Lecturer lecturer)
+	public void replaceLecturerInList(int index, Lecturer lecturer)
 	{
 		lecturerList.set(index, lecturer);
 	}
@@ -34,7 +34,7 @@ public class LecturerList
 		return lecturerList.indexOf(lecturer);
 	}
 	
-	public void deleteLecturer(int index)
+	public void deleteLecturerFromList(int index)
 	{
 		lecturerList.remove(index);
 	}
@@ -42,22 +42,6 @@ public class LecturerList
 	public void clearLecturerList()
 	{
 		lecturerList.clear();
-	}
-	
-	public boolean checkForDuplicates(LecturerList lecturerList, Lecturer lecturer)
-	{
-		boolean status = false;
-		
-		for(int i = 0; i < lecturerList.size(); i++)
-		{
-			if(lecturer.equals(lecturerList.getLecturer(i)))
-
-				return true;
-			else
-				return false;
-		}
-		
-		return status;
 	}
 	
 	public String toString()

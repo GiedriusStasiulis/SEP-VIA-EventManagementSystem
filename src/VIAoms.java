@@ -15,8 +15,7 @@ public class VIAoms
 	private String filenameNonMembersEvent = "NonMembersForEvent.txt";
 	private FileReaderWriter nonMemberEventFile = new FileReaderWriter(filenameNonMembersEvent);
 	private String filenameEventCategories = "CategoriesForEvent.txt";
-	private FileReaderWriter eventCategoriesFile = new FileReaderWriter(filenameNonMembersEvent);
-	
+	private FileReaderWriter eventCategoriesFile = new FileReaderWriter(filenameEventCategories);	
 	
 	private Lecturer lecturer;
 	private LecturerList lecturerList = new LecturerList();
@@ -32,9 +31,7 @@ public class VIAoms
 	private MemberList memberList = new MemberList();
 	private MemberList nonPaidMemberList = new MemberList();
 	private static final String MEMBERFILENAME = "MemberList.txt";
-	private FileReaderWriter memberFile = new FileReaderWriter(MEMBERFILENAME);	
-	
-	
+	private FileReaderWriter memberFile = new FileReaderWriter(MEMBERFILENAME);		
 	
 	public void createEvent(String eventTitle, String eventType, String eventCategory, String eventLecturer,
 			LocalDate eventStartDate, String eventStartTime, LocalDate eventEndDate, String eventEndTime, int eventNumberOfTickets, int eventTicketsRemaining,
@@ -42,7 +39,7 @@ public class VIAoms
 	{
 		event = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate,eventStartTime,eventEndDate,eventEndTime,eventNumberOfTickets,eventTicketsRemaining,eventPrice,eventDiscount,eventStatus);
 		eventList.clearEventList();
-		eventList = eventFile.readEventsTextFile();
+		eventList = eventFile.readEventTextFile();
 		eventList.addEventToList(event);
 		eventFile.writeEventTextFile(eventList);
 	}
@@ -56,9 +53,9 @@ public class VIAoms
 		lecturerFile.writeLecturerTextFile(lecturerList);
 	}
 	
-	public void addSponsor(String name, String email, String phoneNumber) throws FileNotFoundException, ParseException
+	public void addSponsor(String sponsorName, String sponsorEmail, String sponsorPhoneNumber) throws FileNotFoundException, ParseException
 	{
-	   sponsor = new Sponsor(name,email,phoneNumber);
+	   sponsor = new Sponsor(sponsorName,sponsorEmail,sponsorPhoneNumber);
 	   sponsorList.clearSponsorList();
 	   sponsorList = sponsorFile.readSponsorTextFile();
 	   sponsorList.addSponsorToList(sponsor);
@@ -74,14 +71,11 @@ public class VIAoms
 		memberFile.writeMemberTextFile(memberList);
 	}
 	
-	
-	
-	
 	public void editEvent(int index, Event event) throws ParseException, IOException
 	{
 		eventList.clearEventList();
-		eventList = eventFile.readEventsTextFile();
-		eventList.replaceEvent(index, event);
+		eventList = eventFile.readEventTextFile();
+		eventList.replaceEventInList(index, event);
 		eventFile.writeEventTextFile(eventList);
 	}	
 		
@@ -89,7 +83,7 @@ public class VIAoms
 	{
 		lecturerList.clearLecturerList();
 		lecturerList = lecturerFile.readLecturerTextFile();
-		lecturerList.replaceLecturer(index, lecturer);
+		lecturerList.replaceLecturerInList(index, lecturer);
 		lecturerFile.writeLecturerTextFile(lecturerList);
 	}
 	
@@ -97,7 +91,7 @@ public class VIAoms
 	{
 	   sponsorList.clearSponsorList();
 	   sponsorList = sponsorFile.readSponsorTextFile();
-	   sponsorList.replaceSponsor(index, sponsor);
+	   sponsorList.replaceSponsorinList(index, sponsor);
 	   sponsorFile.writeSponsorTextFile(sponsorList);
 	}
 	
@@ -105,18 +99,15 @@ public class VIAoms
 	{
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
-		memberList.replaceMember(index, member);
+		memberList.replaceMemberInList(index, member);
 		memberFile.writeMemberTextFile(memberList);
 	}	
-	
-	
-	
 	
 	public void deleteEvent(int index) throws ParseException, IOException
 	{
 		eventList.clearEventList();
-		eventList = eventFile.readEventsTextFile();
-		eventList.deleteEvent(index);
+		eventList = eventFile.readEventTextFile();
+		eventList.deleteEventFromList(index);
 		eventFile.writeEventTextFile(eventList);
 	}	
 		
@@ -124,7 +115,7 @@ public class VIAoms
 	{
 		lecturerList.clearLecturerList();
 		lecturerList = lecturerFile.readLecturerTextFile();
-		lecturerList.deleteLecturer(index);
+		lecturerList.deleteLecturerFromList(index);
 		lecturerFile.writeLecturerTextFile(lecturerList);
 	}	
 	
@@ -132,7 +123,7 @@ public class VIAoms
 	{
 	   sponsorList.clearSponsorList();
       sponsorList =sponsorFile.readSponsorTextFile();
-      sponsorList.deleteSponsor(index);
+      sponsorList.deleteSponsorFromList(index);
       sponsorFile.writeSponsorTextFile(sponsorList);
 	}
 	
@@ -140,21 +131,16 @@ public class VIAoms
 	{
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
-		memberList.deleteMember(index);		
+		memberList.deleteMemberFromList(index);		
 		memberFile.writeMemberTextFile(memberList);
-	}
-	
-	
-	
-	
+	}	
 	
 	public EventList getEventList() throws ParseException, IOException
 	{
 		eventList.clearEventList();
-		eventList = eventFile.readEventsTextFile();
+		eventList = eventFile.readEventTextFile();
 		return eventList;
-	}		
-	
+	}	
 	
 	public LecturerList getLecturerList() throws FileNotFoundException, ParseException
 	{
@@ -175,17 +161,14 @@ public class VIAoms
 		memberList.clearMemberList();
 		memberList = memberFile.readMemberTextFile();
 		return memberList;
-	}
-	
-	
-	
+	}	
 	
 	public boolean checkForEventDuplicates(Event event) throws ParseException, IOException
 	{
 	   boolean status = false;
 	   
 	   eventList.clearEventList();
-	   eventList = eventFile.readEventsTextFile();
+	   eventList = eventFile.readEventTextFile();
 	   
 	   for ( int i=0;i<eventList.size();i++)
 	   {
@@ -197,6 +180,22 @@ public class VIAoms
 	   return status;	         
 	}
 	
+	public boolean checkForLecturerDuplicates(Lecturer lecturer) throws FileNotFoundException, ParseException
+	{
+		boolean status = false;		
+		
+		lecturerList.clearLecturerList();
+		lecturerList = lecturerFile.readLecturerTextFile();
+		
+		for(int i = 0; i < lecturerList.size(); i++)
+		{
+			if(lecturer.equals(lecturerList.getLecturer(i)))
+			{
+				return true;
+			}
+		}		
+		return status;
+	}	
 	
 	public boolean checkForSponsorDuplicates(Sponsor sponsor) throws FileNotFoundException, ParseException
 	{
@@ -215,25 +214,6 @@ public class VIAoms
 	   return status;	         
 	}
 	
-	
-	
-	public boolean checkForLecturerDuplicates(Lecturer lecturer) throws FileNotFoundException, ParseException
-	{
-		boolean status = false;		
-		
-		lecturerList.clearLecturerList();
-		lecturerList = lecturerFile.readLecturerTextFile();
-		
-		for(int i = 0; i < lecturerList.size(); i++)
-		{
-			if(lecturer.equals(lecturerList.getLecturer(i)))
-			{
-				return true;
-			}
-		}		
-		return status;
-	}
-	
 	public boolean checkForMemberDuplicates(Member member) throws FileNotFoundException, ParseException
 	{
 		boolean status = false;		
@@ -249,8 +229,52 @@ public class VIAoms
 			}
 		}		
 		return status;
+	}
+	
+	public void addMembersToEvent(ArrayList<String> memberList, String eventTitle) throws FileNotFoundException
+	{
+		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
+		memberEventFile.writeEventMemberFile(memberList);
 	}	
 	
+	public ArrayList<String> getEventMembers(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> membersAdded;
+		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
+		membersAdded = memberEventFile.readEventMemberFile();
+		
+		return membersAdded;
+	}	
+	
+	public void addNonMembersToEvent(ArrayList<String> nonMemberList, String eventTitle) throws FileNotFoundException
+	{
+		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");
+		nonMemberEventFile.writeNonMemberTextFile(nonMemberList);
+	}	
+	
+	public ArrayList<String> getEventNonMembers(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> nonMemberList;
+		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");		
+		nonMemberList = nonMemberEventFile.readNonMemberTextFile();
+				
+		return nonMemberList;
+	}
+	
+	public void addCategoriesToEvent(ArrayList<String> categoryList, String eventTitle) throws FileNotFoundException
+	{
+		eventCategoriesFile.setFile(eventTitle + "CategoriesForEvent.txt");
+		eventCategoriesFile.writeEventCategoriesTextFile(categoryList);
+	}
+	
+	public ArrayList<String> getEventCategories(String eventTitle) throws FileNotFoundException
+	{
+		ArrayList<String> addedCategories;
+		eventCategoriesFile.setFile(eventTitle + "CategoriesForEvent.txt");		
+		addedCategories = eventCategoriesFile.readEventCategoriesTextFile();
+		
+		return addedCategories;
+	}
 	
 	public MemberList generateListNonPaidMembership() throws FileNotFoundException, ParseException
 	{
@@ -263,88 +287,7 @@ public class VIAoms
     			nonPaidMemberList.addMemberToList(memberList.getMember(i));
 			}
     	}
+		
 		return nonPaidMemberList;
-	}
-	
-
-	
-	public void writeMembersToFile(ArrayList<String> memberList, String eventTitle) throws FileNotFoundException
-	{
-		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
-		memberEventFile.writeEventMemberFile(memberList, eventTitle);
-	}
-	
-	
-	
-	
-	public ArrayList<String> readMembersFromFile(String eventTitle) throws FileNotFoundException
-	{
-		ArrayList<String> membersAdded;
-		memberEventFile.setFile(eventTitle + "MemberListForEvent.txt");
-		membersAdded = memberEventFile.readEventMemberFile();
-		
-		return membersAdded;
-	}
-	
-	
-	
-	
-	public void writeNonMembersToFile(ArrayList<String> nonMemberList, String eventTitle) throws FileNotFoundException
-	{
-		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");
-		nonMemberEventFile.writeNonMemberTextFile(nonMemberList,eventTitle);
-	}
-	
-	
-	
-	
-	
-	public ArrayList<String> readNonMembersFromFile(String eventTitle) throws FileNotFoundException
-	{
-		ArrayList<String> nonMemberList;
-		nonMemberEventFile.setFile(eventTitle + "NonMembersForEvent.txt");
-		
-		nonMemberList = nonMemberEventFile.readNonMemberTextFile(eventTitle);
-				
-		return nonMemberList;
-	}
-	
-	public void writeCategoriesToFile(ArrayList<String> categoryList, String eventTitle) throws FileNotFoundException
-	{
-		eventCategoriesFile.setFile(eventTitle + "CategoriesForEvent.txt");
-		eventCategoriesFile.writeCategoriesToFile(categoryList, eventTitle);
-	}
-	
-	public ArrayList<String> readCategoriesFromFile(String eventTitle) throws FileNotFoundException
-	{
-		ArrayList<String> addedCategories;
-		eventCategoriesFile.setFile(eventTitle + "CategoriesForEvent.txt");
-		
-		addedCategories = eventCategoriesFile.readCategoriesFromFile(eventTitle);
-		
-		return addedCategories;
-	}
-	
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

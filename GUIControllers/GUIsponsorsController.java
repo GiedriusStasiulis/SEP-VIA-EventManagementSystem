@@ -81,7 +81,7 @@ public class GUIsponsorsController implements Initializable
 
 		tcSponsorName.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("name"));
 		tcSponsorEmail.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("email"));
-		tcSponsorPhoneNumber.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("phone"));
+		tcSponsorPhoneNumber.setCellValueFactory(new PropertyValueFactory<Sponsor, String>("phoneNumber"));
 
 		tcSponsorName.setStyle("-fx-alignment: CENTER;");
 		tcSponsorEmail.setStyle("-fx-alignment: CENTER;");
@@ -126,7 +126,7 @@ public class GUIsponsorsController implements Initializable
 			selectedSponsor = sponsorTable.getSelectionModel().getSelectedItem();
 			tfShowSponsorName.setText(selectedSponsor.getName());
 			tfShowSponsorEmail.setText(selectedSponsor.getEmail());
-			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhone());
+			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhoneNumber());
 		}
 	}
 
@@ -135,7 +135,7 @@ public class GUIsponsorsController implements Initializable
 			selectedSponsor = lvSponsorSearchResults.getSelectionModel().getSelectedItem();
 			tfShowSponsorName.setText(selectedSponsor.getName());
 			tfShowSponsorEmail.setText(selectedSponsor.getEmail());
-			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhone());
+			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhoneNumber());
 		}
 	}
 
@@ -145,7 +145,7 @@ public class GUIsponsorsController implements Initializable
 
 		for (int i = 0; i < sponsorList.size(); i++) {
 			sponsors.add(new Sponsor(sponsorList.getSponsor(i).getName(), sponsorList.getSponsor(i).getEmail(),
-					sponsorList.getSponsor(i).getPhone()));
+					sponsorList.getSponsor(i).getPhoneNumber()));
 		}
 		return sponsors;
 	}
@@ -258,7 +258,7 @@ public class GUIsponsorsController implements Initializable
 			case 2:
 
 				for (int i = 0; i < sponsors.size(); i++) {
-					if (sponsors.get(i).getPhone().toLowerCase().contains(searchKeyword.toLowerCase())) {
+					if (sponsors.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) {
 						searchResults.add(sponsors.get(i));
 					}
 				}
@@ -343,7 +343,7 @@ public class GUIsponsorsController implements Initializable
 			else {
 				selectedSponsor.setName(newSponsorName);
 				selectedSponsor.setEmail(newSponsorEmail);
-				selectedSponsor.setPhone(newSponsorPhone);
+				selectedSponsor.setPhoneNumber(newSponsorPhone);
 
 				viaOms.editSponsor(index, selectedSponsor);
 				//sponsorList.replaceSponsor(index, selectedSponsor);

@@ -23,13 +23,7 @@ public class Event
 	private int eventTicketsRemaining;
 	private double eventPrice, eventDiscount;
 	private String eventStatus;
-
 	private int eventDuration;
-	
-	private int remTickets;
-
-	ArrayList<String> membersRegistered;
-	ArrayList<Member> tempMembersRegistered;
 
 	public Event(String eventTitle, String eventType, String eventCategory, String eventLecturer,
 			LocalDate eventStartDate, String eventStartTime, LocalDate eventEndDate, String eventEndTime, int eventNumberOfTickets,
@@ -46,13 +40,8 @@ public class Event
 		this.eventNumberOfTickets = eventNumberOfTickets;
 		this.eventPrice = eventPrice;
 		this.eventDiscount = eventDiscount;
-		this.eventStatus = eventStatus;
-		
+		this.eventStatus = eventStatus;		
 		this.eventTicketsRemaining = eventTicketsRemaining;
-		
-		this.membersRegistered = new ArrayList<String>();
-		this.tempMembersRegistered = new ArrayList<Member>();
-		// this.lecturersRegistered = new ArrayList<String>();
 		calculateDuration();
 	}
 
@@ -145,6 +134,16 @@ public class Event
 	{
 		this.eventNumberOfTickets = eventNumberOfTickets;
 	}
+	
+	public int getEventTicketsRemaining() 
+	{
+		return eventTicketsRemaining;
+	}
+
+	public void setEventTicketsRemaining(int eventTicketsRemaining) 
+	{
+		this.eventTicketsRemaining = eventTicketsRemaining;
+	}
 
 	public double getEventPrice() 
 	{
@@ -156,7 +155,8 @@ public class Event
 		this.eventPrice = eventPrice;
 	}
 
-	public double getEventDiscount() {
+	public double getEventDiscount() 
+	{
 		return eventDiscount;
 	}
 	
@@ -185,55 +185,23 @@ public class Event
 		this.eventDuration = eventDuration;
 	}
 
-	public ArrayList<String> getMembersRegistered() 
-	{
-		return membersRegistered;
-	}
-
-	public void setMembersRegistered(ArrayList<String> membersRegistered) 
-	{
-		this.membersRegistered = membersRegistered;
-	}
-
-	public ArrayList<Member> getTempMembersRegistered() 
-	{
-		return tempMembersRegistered;
-	}
-
-	public void setTempMembersRegistered(ArrayList<Member> tempMembersRegistered) 
-	{
-		this.tempMembersRegistered = tempMembersRegistered;
-	}
-
-	public int getEventTicketsRemaining() {
-		return eventTicketsRemaining;
-	}
-
-	public void setEventTicketsRemaining(int eventTicketsRemaining) {
-		this.eventTicketsRemaining = eventTicketsRemaining;
-	}
-
 	public void calculateDuration() 
 	{
 		Period intervalPeriod = Period.between(eventStartDate, eventEndDate);
 		this.eventDuration = intervalPeriod.getDays() + 1;
 	}
 	
-	public int calculateTicketsRemaining(int totalNum, int participantSize)
+	public int calculateTicketsRemaining(int numberOfTickets, int numberOfParticipants)
 	{
-		this.eventTicketsRemaining = totalNum - participantSize;
+		this.eventTicketsRemaining = numberOfTickets - numberOfParticipants;
 		
 		return eventTicketsRemaining;
 	}
 	
-	public void addMemberToEvent(String memberName) throws FileNotFoundException 
-	{
-		membersRegistered.add(memberName);
-	}	
-	
 	public boolean equals(Object obj) 
 	{
-		if (!(obj instanceof Event)) {
+		if (!(obj instanceof Event)) 
+		{
 			return false;
 		}
 

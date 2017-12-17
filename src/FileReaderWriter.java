@@ -21,26 +21,14 @@ public class FileReaderWriter
 {
 	private File file;
 
-	private SponsorList currentSponsorList = new SponsorList();
-	private SponsorList currentSponsors = new SponsorList();;
-	private SponsorList sponsorList = new SponsorList();
-
-	private LecturerList currentLecturerList = new LecturerList();
-	private LecturerList currentLecturers = new LecturerList();;
-	private LecturerList lecturerList = new LecturerList();
-
-	private MemberList currentMemberList = new MemberList();
-	private MemberList currentMembers = new MemberList();;
-	private MemberList memberList = new MemberList();
-	
 	private EventList currentEventList = new EventList();
-	private EventList currentEvents = new EventList();
-	private EventList eventList= new EventList();
-	
-	private ArrayList<String> membersRegisteredList = new ArrayList<String>();
-	private ArrayList<String> membersAlreadyRegistered = new ArrayList<String>();
-	private ArrayList<String> embersAlreadyRegistered = new ArrayList<String>();
-	private ArrayList<String> categoriesAdded = new ArrayList<String>();
+	private SponsorList currentSponsorList = new SponsorList();
+	private LecturerList currentLecturerList = new LecturerList();
+	private MemberList currentMemberList = new MemberList();
+
+	private ArrayList<String> eventMembersRegistered = new ArrayList<String>();
+	private ArrayList<String> eventNonMembersRegistered = new ArrayList<String>();
+	private ArrayList<String> eventCategoriesAdded = new ArrayList<String>();
 
 	public FileReaderWriter(String filename) 
 	{
@@ -56,99 +44,96 @@ public class FileReaderWriter
 	{
 		return this.file;
 	}
-	
-	
-	public EventList readEventsTextFile() throws FileNotFoundException,ParseException, IOException
-	{
-    Scanner input = null;
-    
-    try
-    {
-       input = new Scanner(file);
-       while (input.hasNext())
-       {
-          String line = input.nextLine();
-          String[] lineItems = line.split(",");
-          
-          String eventTitle=lineItems[0].trim();          
-          
-          String eventType=lineItems[1].trim();
-          
-          String eventCategory=lineItems[2].trim();
-          
-          String eventLecturer = lineItems[3].trim();
-          
-          LocalDate eventStartDate=LocalDate.parse(lineItems[4].trim());        
-          String eventStartTime=lineItems[5].trim();
-          LocalDate eventEndDate=LocalDate.parse(lineItems[6].trim());
-          String eventEndTime=lineItems[7].trim();
-          int maxMembers=Integer.parseInt(lineItems[8].trim());
-          int ticketsRemaining = Integer.parseInt(lineItems[9].trim());
-          double price = Double.parseDouble(lineItems[10].trim());
-          double discount = Double.parseDouble(lineItems[11].trim());
-          
-          int duration = Integer.parseInt(lineItems[12].trim());
-          
-          String status = lineItems[13].trim();
-          
-          Event eventToAdd = new Event(eventTitle,eventType,eventCategory,eventLecturer,eventStartDate, eventStartTime, eventEndDate, eventEndTime,maxMembers,ticketsRemaining,price,discount,status);
-          
-          currentEventList.addEventToList(eventToAdd);
-          
-                   
-       }
-       return currentEventList;       
-    }
-    finally
-    {
-       input.close();
-    }
-   }	
-	
-	public void writeEventTextFile(EventList eventList) throws FileNotFoundException
-	{
-      PrintWriter output = null;
-      try
-      {
-         output = new PrintWriter(file);
-         for (int i = 0; i < eventList.size(); i++)
-         {
-            output.println(eventList.getEvent(i).getEventTitle()+","+eventList.getEvent(i).getEventType()+","+eventList.getEvent(i).getEventCategory()+"," +eventList.getEvent(i).getEventLecturer() + "," + eventList.getEvent(i).getEventStartDate()+","+eventList.getEvent(i).getEventStartTime()+","+eventList.getEvent(i).getEventEndDate()+","+eventList.getEvent(i).getEventEndTime()+","+eventList.getEvent(i).getEventNumberOfTickets()+","+ eventList.getEvent(i).getEventTicketsRemaining() + "," +eventList.getEvent(i).getEventPrice()+","+eventList.getEvent(i).getEventDiscount()+","+eventList.getEvent(i).getEventDuration()+","+eventList.getEvent(i).getEventStatus());
-         }
-         output.flush();
-         
-      }
-      finally
-      {
-         output.close();
-      }
-   }
-	
-	public void writeEventMemberFile(ArrayList<String> membersRegisteredList, String eventName) throws FileNotFoundException
+
+	public void writeEventTextFile(EventList eventList) throws FileNotFoundException 
 	{
 		PrintWriter output = null;
-		String file = eventName+"MemberListForEvent.txt";
-		try
+		
+		try 
 		{
 			output = new PrintWriter(file);
-			for ( int i=0; i<membersRegisteredList.size(); i++)
+			for (int i = 0; i < eventList.size(); i++) 
 			{
-				output.println(membersRegisteredList.get(i));
+				output.println(eventList.getEvent(i).getEventTitle() + "," + eventList.getEvent(i).getEventType() + ","
+						+ eventList.getEvent(i).getEventCategory() + "," + eventList.getEvent(i).getEventLecturer()
+						+ "," + eventList.getEvent(i).getEventStartDate() + ","
+						+ eventList.getEvent(i).getEventStartTime() + "," + eventList.getEvent(i).getEventEndDate()
+						+ "," + eventList.getEvent(i).getEventEndTime() + ","
+						+ eventList.getEvent(i).getEventNumberOfTickets() + ","
+						+ eventList.getEvent(i).getEventTicketsRemaining() + "," + eventList.getEvent(i).getEventPrice()
+						+ "," + eventList.getEvent(i).getEventDiscount() + ","
+						+ eventList.getEvent(i).getEventDuration() + "," + eventList.getEvent(i).getEventStatus());
 			}
 			output.flush();
-			
-			
+
+		} finally {
+			output.close();
 		}
-		finally
+	}
+
+	public EventList readEventTextFile() throws FileNotFoundException, ParseException, IOException 
+	{
+		Scanner input = null;
+
+		try 
+		{
+			input = new Scanner(file);
+			while (input.hasNext()) 
+			{
+				String line = input.nextLine();
+				String[] lineItems = line.split(",");
+
+				String eventTitle = lineItems[0].trim();
+				String eventType = lineItems[1].trim();
+				String eventCategory = lineItems[2].trim();
+				String eventLecturer = lineItems[3].trim();
+				LocalDate eventStartDate = LocalDate.parse(lineItems[4].trim());
+				String eventStartTime = lineItems[5].trim();
+				LocalDate eventEndDate = LocalDate.parse(lineItems[6].trim());
+				String eventEndTime = lineItems[7].trim();
+				int maxMembers = Integer.parseInt(lineItems[8].trim());
+				int ticketsRemaining = Integer.parseInt(lineItems[9].trim());
+				double price = Double.parseDouble(lineItems[10].trim());
+				double discount = Double.parseDouble(lineItems[11].trim());
+				int duration = Integer.parseInt(lineItems[12].trim());
+				String status = lineItems[13].trim();
+
+				Event eventToAdd = new Event(eventTitle, eventType, eventCategory, eventLecturer, eventStartDate,
+						eventStartTime, eventEndDate, eventEndTime, maxMembers, ticketsRemaining, price, discount,
+						status);
+
+				currentEventList.addEventToList(eventToAdd);
+
+			}
+			return currentEventList;
+		} 
+		finally 
+		{
+			input.close();
+		}
+	}
+
+	public void writeSponsorTextFile(SponsorList sponsorList) throws FileNotFoundException 
+	{
+		PrintWriter output = null;
+		
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < sponsorList.size(); i++) 
+			{
+				output.println(sponsorList.getSponsor(i).getName() + "," + sponsorList.getSponsor(i).getEmail() + ","
+						+ sponsorList.getSponsor(i).getPhoneNumber());
+			}
+			output.flush();
+		}
+		finally 
 		{
 			output.close();
 		}
-		   
 	}
-	
 
-	
-	
 	public SponsorList readSponsorTextFile() throws FileNotFoundException, ParseException 
 	{
 		Scanner input = null;
@@ -156,13 +141,11 @@ public class FileReaderWriter
 		try 
 		{
 			input = new Scanner(file);
-			int lineNumber = 0;
 			while (input.hasNext()) 
 			{
 				String line = input.nextLine();
 				String[] lineToken = line.split(",");
-				lineNumber++;
-
+				
 				String sponsorName = lineToken[0].trim();
 				String sponsorEmail = lineToken[1].trim();
 				String sponsorPhone = lineToken[2].trim();
@@ -172,28 +155,29 @@ public class FileReaderWriter
 			}
 			return currentSponsorList;
 		}
-
 		finally 
 		{
 			input.close();
 		}
 	}
-	
-	public void writeSponsorTextFile(SponsorList sponsorList) throws FileNotFoundException 
+
+	public void writeLecturerTextFile(LecturerList lecturerList) throws FileNotFoundException 
 	{
 		PrintWriter output = null;
+		
 		try 
 		{
 			output = new PrintWriter(file);
 
-			for (int i = 0; i < sponsorList.size(); i++) 
+			for (int i = 0; i < lecturerList.size(); i++) 
 			{
-				output.println(sponsorList.getSponsor(i).getName() + "," + sponsorList.getSponsor(i).getEmail() + ","
-						+ sponsorList.getSponsor(i).getPhone());
+				output.println(lecturerList.getLecturer(i).getLecturerName() + ","
+						+ lecturerList.getLecturer(i).getLecturerCategory() + ","
+						+ lecturerList.getLecturer(i).getLecturerEmail() + ","
+						+ lecturerList.getLecturer(i).getLecturerPhoneNumber());
 			}
 			output.flush();
-		} 
-		
+		}
 		finally 
 		{
 			output.close();
@@ -223,34 +207,34 @@ public class FileReaderWriter
 			}
 			return currentLecturerList;
 		}
-
 		finally 
 		{
 			input.close();
 		}
 	}
 	
-	public void writeLecturerTextFile(LecturerList lecturerList) throws FileNotFoundException 
+	public void writeMemberTextFile(MemberList memberList) throws FileNotFoundException 
 	{
 		PrintWriter output = null;
+		
 		try 
 		{
 			output = new PrintWriter(file);
 
-			for (int i = 0; i < lecturerList.size(); i++) 
+			for (int i = 0; i < memberList.size(); i++) 
 			{
-				output.println(lecturerList.getLecturer(i).getLecturerName() + "," + lecturerList.getLecturer(i).getLecturerCategory()
-						+ "," + lecturerList.getLecturer(i).getLecturerEmail() + ","
-						+ lecturerList.getLecturer(i).getLecturerPhoneNumber());
+				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getAddress() + ","
+						+ memberList.getMember(i).getPhoneNumber() + "," + memberList.getMember(i).getEmail() + ","
+						+ memberList.getMember(i).getMemberSince() + ","
+						+ memberList.getMember(i).getMembershipStatus());
 			}
 			output.flush();
-		} 
-		
+		}
 		finally 
 		{
 			output.close();
 		}
-	}
+	}	
 
 	public MemberList readMemberTextFile() throws FileNotFoundException, ParseException 
 	{
@@ -259,7 +243,8 @@ public class FileReaderWriter
 		try 
 		{
 			input = new Scanner(file);
-			while (input.hasNext()) {
+			while (input.hasNext()) 
+			{
 				String line = input.nextLine();
 				String[] lineToken = line.split(",");
 
@@ -267,155 +252,148 @@ public class FileReaderWriter
 				String memberAddress = lineToken[1].trim();
 				String memberPhoneNumber = lineToken[2].trim();
 				String memberEmail = lineToken[3].trim();
-				LocalDate memberSince = LocalDate.parse(lineToken[4].trim()); 
+				LocalDate memberSince = LocalDate.parse(lineToken[4].trim());
 				String membershipStatus = lineToken[5].trim();
 
-				Member member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);
+				Member member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince,
+						membershipStatus);
+				
 				currentMemberList.addMemberToList(member);
 			}
 			return currentMemberList;
 		}
-
 		finally 
 		{
 			input.close();
 		}
-	}	
-
-	public void writeMemberTextFile(MemberList memberList) throws FileNotFoundException 
+	}
+	
+	public void writeEventMemberFile(ArrayList<String> eventMemberList)
+			throws FileNotFoundException 
 	{
 		PrintWriter output = null;
+		
 		try 
 		{
-			 
 			output = new PrintWriter(file);
-
-			for (int i = 0; i < memberList.size(); i++) 
+			for (int i = 0; i < eventMemberList.size(); i++) 
 			{
-				output.println(memberList.getMember(i).getName() + "," + memberList.getMember(i).getAddress() + "," + memberList.getMember(i).getPhoneNumber() + "," + memberList.getMember(i).getEmail() + "," + memberList.getMember(i).getMemberSince() + "," + memberList.getMember(i).getMembershipStatus());
+				output.println(eventMemberList.get(i));
 			}
 			output.flush();
 		} 
-		
 		finally 
 		{
 			output.close();
 		}
 	}
-	public void writeNonMemberTextFile(ArrayList<String> nonMemberList, String eventTitle) throws FileNotFoundException 
-   {
-      PrintWriter output = null;
-      try 
-      {
-         output = new PrintWriter(file);
-
-         for (int i = 0; i < nonMemberList.size(); i++) 
-			{
-				output.println(nonMemberList.get(i));
-			}
-             
-         output.flush();
-      } 
-      
-      finally 
-      {
-         output.close();
-      }
-   }
 	
-	public void writeCategoriesToFile(ArrayList<String> categoryList, String eventTitle) throws FileNotFoundException
-	{
-		PrintWriter output = null;
-	      try 
-	      {
-	         output = new PrintWriter(file);
-
-	         for (int i = 0; i < categoryList.size(); i++) 
-				{
-					output.println(categoryList.get(i));
-				}
-	             
-	         output.flush();
-	      } 
-	      
-	      finally 
-	      {
-	         output.close();
-	      }
-	}
-	
-	public ArrayList<String> readCategoriesFromFile(String eventTitle) throws FileNotFoundException
-	{
+	public ArrayList<String> readEventMemberFile() throws FileNotFoundException 
+	{		
 		Scanner input = null;
-		categoriesAdded.clear();
-		
-		try
-		{
-			input = new Scanner(file);
-			
-			while (input.hasNext())
-			{
-				String line = input.nextLine();
+		eventMembersRegistered.clear();
 
-				categoriesAdded.add(line);
-			}
-			
-			return categoriesAdded;
-		}
-		
-		finally
-		{
-			input.close();
-		}
-	}
-	
-	
-	public ArrayList<String> readNonMemberTextFile(String eventTitle) throws FileNotFoundException
-	{
-		Scanner input = null;
-		membersAlreadyRegistered.clear();
-		
-		try
-		{
-			input = new Scanner(file);
-			
-			while (input.hasNext())
-			{
-				String line = input.nextLine();
-
-				membersAlreadyRegistered.add(line);
-			}
-			
-			return membersAlreadyRegistered;
-		}
-		
-		finally
-		{
-			input.close();
-		}
-	}
-	
-	public ArrayList<String> readEventMemberFile() throws FileNotFoundException
-	{
-		membersAlreadyRegistered.clear();
-		Scanner input = null;
-		
-		try
+		try 
 		{
 			input = new Scanner(file);
 
-			while(input.hasNext())
+			while (input.hasNext()) 
 			{
 				String line = input.nextLine();
-				membersAlreadyRegistered.add(line);
+				eventMembersRegistered.add(line);
 			}
-			return membersAlreadyRegistered;
+			
+			return eventMembersRegistered;
 		}
-		
 		finally 
 		{
 			input.close();
 		}
+	}
+	
+	public void writeNonMemberTextFile(ArrayList<String> eventNonMemberList)
+			throws FileNotFoundException 
+	{
+		PrintWriter output = null;
 		
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < eventNonMemberList.size(); i++) 
+			{
+				output.println(eventNonMemberList.get(i));
+			}
+			output.flush();
+		}
+		finally 
+		{
+			output.close();
+		}
+	}
+	
+	public ArrayList<String> readNonMemberTextFile() throws FileNotFoundException 
+	{
+		Scanner input = null;
+		eventNonMembersRegistered.clear();
+
+		try 
+		{
+			input = new Scanner(file);
+
+			while (input.hasNext()) 
+			{
+				String line = input.nextLine();
+				eventNonMembersRegistered.add(line);
+			}
+
+			return eventNonMembersRegistered;
+		}
+		finally {
+			input.close();
+		}
+	}
+
+	public void writeEventCategoriesTextFile(ArrayList<String> eventCategoriesList) throws FileNotFoundException 
+	{
+		PrintWriter output = null;
+		
+		try 
+		{
+			output = new PrintWriter(file);
+
+			for (int i = 0; i < eventCategoriesList.size(); i++) 
+			{
+				output.println(eventCategoriesList.get(i));
+			}
+			output.flush();
+		}
+		finally 
+		{
+			output.close();
+		}
+	}
+
+	public ArrayList<String> readEventCategoriesTextFile() throws FileNotFoundException 
+	{
+		Scanner input = null;
+		eventCategoriesAdded.clear();
+
+		try 
+		{
+			input = new Scanner(file);
+
+			while (input.hasNext()) 
+			{
+				String line = input.nextLine();
+				eventCategoriesAdded.add(line);
+			}
+
+			return eventCategoriesAdded;
+		}
+		finally 
+		{
+			input.close();
+		}
 	}	
 }

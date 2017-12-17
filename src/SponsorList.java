@@ -28,7 +28,7 @@ public class SponsorList
       sponsorList.add(sponsor);
    }
    
-   public void replaceSponsor(int index, Sponsor sponsor)
+   public void replaceSponsorinList(int index, Sponsor sponsor)
    {
       sponsorList.set(index, sponsor);
    }
@@ -43,31 +43,19 @@ public class SponsorList
       return sponsorList.indexOf(sponsor);
    }
    
-   public void deleteSponsor(int index)
+   public void deleteSponsorFromList(int index)
    {
       sponsorList.remove(index);
    }
    
-   public boolean checkForDuplicates(SponsorList sponsorList, Sponsor sponsor)
-   {
-      boolean status = false;
-      
-      for(int i = 0; i < sponsorList.size(); i++)
-      {
-         if(sponsor.equals(sponsorList.getSponsor(i)))
-            return true;
-      }
-      
-      return status;
-   }
-   
-   public String toString()
-   {
-      String s = String.format("%s", sponsorList);
-      return s;
-   }
    public void clearSponsorList()
    {
       sponsorList.clear();
    }
+      
+   public String toString()
+   {
+      String s = String.format("%s", sponsorList);
+      return s;
+   }   
 }

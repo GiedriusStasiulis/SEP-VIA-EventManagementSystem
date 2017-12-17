@@ -15,11 +15,6 @@ public class Member
 	private String email;
 	private LocalDate memberSince;
 	private String membershipStatus;
-
-	public Member()
-	{
-		
-	}	
 	
 	public Member(String name, String address, String phoneNumber, String email, LocalDate memberSince, String membershipStatus) 
 	{
@@ -31,46 +26,6 @@ public class Member
 		this.membershipStatus = membershipStatus;
 	}
 	
-	public String getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-
-	public LocalDate getMemberSince() {
-		return memberSince;
-	}
-
-
-	public void setMemberSince(LocalDate memberSince) {
-		this.memberSince = memberSince;
-	}
-
-
-	
-
-	public String getMembershipStatus() {
-		return membershipStatus;
-	}
-
-	public void setMembershipStatus(String membershipStatus) {
-		this.membershipStatus = membershipStatus;
-	}
-
 	public String getName() 
 	{
 		return name;
@@ -79,6 +34,28 @@ public class Member
 	public void setName(String name) 
 	{
 		this.name = name;
+	}
+	
+	public String getAddress() 
+	{
+		return address;
+	}
+
+	public void setAddress(String address) 
+	{
+		this.address = address;
+	}
+
+
+	public String getPhoneNumber() 
+	{
+		return phoneNumber;
+	}
+
+
+	public void setPhoneNumber(String phoneNumber) 
+	{
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getEmail() 
@@ -89,11 +66,31 @@ public class Member
 	public void setEmail(String email) 
 	{
 		this.email = email;
+	}	
+	
+	public LocalDate getMemberSince() 
+	{
+		return memberSince;
 	}
+
+	public void setMemberSince(LocalDate memberSince) 
+	{
+		this.memberSince = memberSince;
+	}	
+
+	public String getMembershipStatus() {
+		return membershipStatus;
+	}
+
+	public void setMembershipStatus(String membershipStatus) 
+	{
+		this.membershipStatus = membershipStatus;
+	}	
 
 	public boolean equals(Object obj) 
 	{
-		if (!(obj instanceof Member)) {
+		if (!(obj instanceof Member)) 
+		{
 			return false;
 		}
 

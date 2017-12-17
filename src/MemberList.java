@@ -28,7 +28,7 @@ public class MemberList
 		memberList.add(member);
 	}
 	
-	public void replaceMember(int index, Member member)
+	public void replaceMemberInList(int index, Member member)
 	{
 		memberList.set(index, member);
 	}
@@ -43,7 +43,7 @@ public class MemberList
 		return memberList.indexOf(member);
 	}
 	
-	public void deleteMember(int index)
+	public void deleteMemberFromList(int index)
 	{
 		memberList.remove(index);
 	}
@@ -51,21 +51,6 @@ public class MemberList
 	public void clearMemberList()
 	{
 		memberList.clear();
-	}
-	
-	public boolean checkForDuplicates(MemberList memberList, Member member)
-	{
-		boolean status = false;
-		
-		for(int i = 0; i < memberList.size(); i++)
-		{
-			if(member.equals(memberList.getMember(i)))
-			{
-				return true;
-			}
-		}
-		
-		return status;
 	}
 	
 	public String toString()
