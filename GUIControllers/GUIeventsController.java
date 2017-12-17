@@ -1899,21 +1899,21 @@ public class GUIeventsController implements Initializable
 
 		if (tfNonMemberName.getText().isEmpty() && tfNonMemberPhoneNumber.getText().isEmpty()) 
 		{
-			JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member name\nNon-member phone number");
+			JOptionPane.showMessageDialog(null, "Please enter non-member information: \nName\nPhone number");
 		}
 		
 		else
 		{
 			if (tfNonMemberName.getText().isEmpty()) 
 			{
-				JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member name");
+				JOptionPane.showMessageDialog(null, "Please enter non-member information: \nName");
 			}
 			
 			else
 			{
 				if (tfNonMemberPhoneNumber.getText().isEmpty()) 
 				{
-					JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member phone number");
+					JOptionPane.showMessageDialog(null, "Please enter non-member information: \nPhone number");
 				}
 				
 				else
