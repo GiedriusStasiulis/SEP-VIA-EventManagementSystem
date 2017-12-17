@@ -963,12 +963,9 @@ public class GUIeventsController implements Initializable
 		{
 			lecturersAdded.add(lecturersAddedToEvent.get(i));
 		}
-		
-		System.out.println(lecturersAdded);
-		
+
 		return lecturersAdded;
 	}
-
 
 	public void generateAllMemberNameList() throws FileNotFoundException, ParseException 
 	{
