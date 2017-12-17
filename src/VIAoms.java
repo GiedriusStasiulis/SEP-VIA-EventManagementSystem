@@ -45,6 +45,23 @@ public class VIAoms
 		eventList = eventFile.readEventTextFile();
 		eventList.addEventToList(event);
 		eventFile.writeEventTextFile(eventList);
+		
+		String filename2 = eventTitle + filenameMembersEvent;
+		String filename3 = eventTitle + filenameNonMembersEvent;
+		String filename4 = eventTitle + filenameEventCategories;
+		String filename5 = eventTitle + filenameEventLecturers;
+		
+		File file1 = new File(filename2);
+		file1.createNewFile();
+
+		File file2 = new File(filename3);
+		file2.createNewFile();
+
+		File file3 = new File(filename4);
+		file3.createNewFile();
+		
+		File file4 = new File(filename5);
+		file4.createNewFile();
 	}
 	
 	public void addLecturer(String lecturerName, String lecturerCategory, String lecturerEmail, String lecturerPhoneNumber) throws FileNotFoundException, ParseException
@@ -161,6 +178,24 @@ public class VIAoms
 		lecturerList = lecturerFile.readLecturerTextFile();
 		return lecturerList;
 	}	
+	
+	public ArrayList<String> getLecturerListByCategory(String category) throws FileNotFoundException, ParseException
+	{
+		lecturerList.clearLecturerList();
+		lecturerList = lecturerFile.readLecturerTextFile();
+		
+		ArrayList<String> lecturersByCategory = new ArrayList<String>();
+		
+		for (int i = 0; i < lecturerList.size(); i++)
+		{
+			if(lecturerList.getLecturer(i).getLecturerCategory().equals(category))
+			{
+				lecturersByCategory.add(lecturerList.getLecturer(i).getLecturerName());
+			}			
+		}
+		
+		return lecturersByCategory;
+	}
 	
 	public SponsorList getSponsorList() throws FileNotFoundException, ParseException
 	{

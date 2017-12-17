@@ -5,3 +5,6 @@ Norman Fische,Healing,aaaa@,789456
 Joan Halifax Roshi,Healing,fff@,789456
 Pema Chodron,Healing,hjk@aaaa,78456123
 aaaa,Healing,aa@,aaa
+ttttt,Healing,yyy@,123456
+rrrr,Healing,rrr@,123456
+aaaaaaaa,Reincarnation,dd@,123456

@@ -138,9 +138,7 @@ public class GUIeventsController implements Initializable
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		eventsPage.setMaxHeight(Double.MAX_VALUE);
-		eventsPage.setMaxWidth(Double.MAX_VALUE);
-		
-		
+		eventsPage.setMaxWidth(Double.MAX_VALUE);		
 		
 		hboxEventEditOptions.setVisible(false);		
 		dpEventStartDate.setEditable(false);
@@ -366,142 +364,11 @@ public class GUIeventsController implements Initializable
 				String category = cbEventCategory.getValue();
 				lecturerNames.clear();
 				
-				switch (category) 
-				{
-				case "Dream Interpretation":
-					
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException e) 
-					{
-						e.printStackTrace();
-					} 
-					catch (ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Healing":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Astrology":
-
-					try {
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
-					
-				case "Reincarnation":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Karma":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Alternative Health-Care":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbEventLecturer.setItems(lecturerNames);
-					cbEventLecturer.getSelectionModel().select(0);
-
-					break;
+				try {
+					lecturerNames.addAll(viaOms.getLecturerListByCategory(category));
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});	
@@ -512,142 +379,11 @@ public class GUIeventsController implements Initializable
 			{
 				String category = cbShowEventCategory.getValue();
 				lecturerNames.clear();
-				switch (category) {
-				case "Dream Interpretation":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException e) 
-					{
-						e.printStackTrace();
-					} 
-					catch (ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Healing":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Astrology":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
-					
-				case "Reincarnation":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Karma":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
-
-				case "Alternative Health-Care":
-
-					try 
-					{
-						for (int i = 0; i < viaOms.getLecturerList().size(); i++) 
-						{
-							if (viaOms.getLecturerList().getLecturer(i).getLecturerCategory().equals(category)) 
-							{
-								lecturerNames.add(viaOms.getLecturerList().getLecturer(i).getLecturerName());
-							}
-						}
-					} 
-					catch (FileNotFoundException | ParseException e) 
-					{
-						e.printStackTrace();
-					}
-
-					cbShowEventLecturer.setItems(lecturerNames);
-					cbShowEventLecturer.getSelectionModel().select(0);
-
-					break;
+				
+				try {
+					lecturerNames.addAll(viaOms.getLecturerListByCategory(category));
+				} catch (FileNotFoundException | ParseException e) {
+					e.printStackTrace();
 				}
 			}
 		});	
@@ -668,6 +404,8 @@ public class GUIeventsController implements Initializable
 				btnDeleteEvent.setDisable(false);
 			}
 		});
+		
+		
 		
 		cbShowEventType.setOnAction((ActionEvent event) -> 
 		{
@@ -694,6 +432,7 @@ public class GUIeventsController implements Initializable
 		{			
 			String category = cbShowEventCategory.getValue();
 			lecturerNames.clear();
+			
 			switch (category) {
 			case "Dream Interpretation":
 
@@ -1105,23 +844,6 @@ public class GUIeventsController implements Initializable
 									eventEndDate, eventEndTime, eventNumberOfTickets, eventTicketsRemaining, eventPrice, eventDiscount,
 									eventStatus);
 							eventsTable.getItems().add(eventObj);
-
-							String filename2 = eventTitle + "MemberListForEvent.txt";
-							String filename3 = eventTitle + "NonMembersForEvent.txt";
-							String filename4 = eventTitle + "CategoriesForEvent.txt";
-							String filename5 = eventTitle + "LecturersForEvent.txt";
-							
-							File file2 = new File(filename2);
-							file2.createNewFile();
-
-							File file3 = new File(filename3);
-							file3.createNewFile();
-
-							File file4 = new File(filename4);
-							file4.createNewFile();
-							
-							File file5 = new File(filename5);
-							file5.createNewFile();
 
 							clearCreateEventTextFields(event);
 							btnCreateEvent.setDisable(true);
