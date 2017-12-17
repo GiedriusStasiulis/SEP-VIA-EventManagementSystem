@@ -239,13 +239,16 @@ public class GUIeventsController implements Initializable
 		eventsTable.setOnMouseClicked((MouseEvent event) -> 
 		{
 			if (event.getClickCount() == 1) 
-			{
-				showEventDetailsFromTable();
-				
+			{				
 				try 
 				{
 					if(eventsTable.getSelectionModel().getSelectedItem() != null)
 					{
+						tpShowEventsPane.setExpanded(true);
+						btnEditEvent.setDisable(false);
+						btnDeleteEvent.setDisable(false);
+						
+						showEventDetailsFromTable();
 						generateAllMemberNameList();
 						
 						lvLecturersToAdd.setItems(lecturerNames);
@@ -299,9 +302,7 @@ public class GUIeventsController implements Initializable
 				{
 					e.printStackTrace();
 				}
-				tpShowEventsPane.setExpanded(true);
-				btnEditEvent.setDisable(false);
-				btnDeleteEvent.setDisable(false);
+				
 				;}
 		});
 
@@ -1795,6 +1796,16 @@ public class GUIeventsController implements Initializable
 						viaOms.deleteEvent(index, selectedEvent.getEventTitle());
 						eventsTable.getItems().remove(index);
 						lblEventCount.setText(String.format("Event count: %d", eventList.size()));
+						
+						btnEditEvent.setDisable(true);
+						btnDeleteEvent.setDisable(true);
+						clearEditEventTextFields(event);
+						tpShowEventsPane.setExpanded(false);
+						tpShowEventsPane.setDisable(true);
+						tpAddLecturer.setDisable(true);
+						tpAddMembersToEvent.setDisable(true);
+						tpAddNonMembersToEvent.setDisable(true);
+						cbShowEventStatus.setSelected(false);
 					}
 				} 
 				catch (ArrayIndexOutOfBoundsException e) 

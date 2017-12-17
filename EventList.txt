@@ -1,1 +1,1 @@
-aaaa,Lecture,Astrology,Krishna Ghosh Della Santina,2001-01-01,Not specified,2001-01-01,Not specified,0,0,0.0,0.0,1,Not finalized
+yyyyyyyyyy,Lecture,Dream Interpretation,Not specified,2001-01-01,Not specified,2001-01-01,Not specified,0,0,0.0,0.0,1,Not finalized
