@@ -1827,27 +1827,36 @@ public class GUIeventsController implements Initializable
 	@FXML
 	void addMemberToEvent(ActionEvent event) throws ParseException, IOException 
 	{
-		if (checkForDuplicates(membersRegisteredList, lvMembersToAdd.getSelectionModel().getSelectedItem())) 
+		
+		if(lvMembersToAdd.getSelectionModel().getSelectedItem() == null)
 		{
-			JOptionPane.showMessageDialog(null, "Member is already added to event!");
+			JOptionPane.showMessageDialog(null, "Please select a member to add!");
 		}
-
-		else 
+		
+		else
 		{
-			int index = eventsTable.getSelectionModel().getSelectedIndex();
+			if (checkForDuplicates(membersRegisteredList, lvMembersToAdd.getSelectionModel().getSelectedItem())) 
+			{
+				JOptionPane.showMessageDialog(null, "Member is already added to event!");
+			}
 
-			membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+			else 
+			{
+				int index = eventsTable.getSelectionModel().getSelectedIndex();
 
-			selectedEvent.setEventTicketsRemaining(selectedEvent
-					.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
+				membersRegisteredList.add(lvMembersToAdd.getSelectionModel().getSelectedItem());
 
-			viaOms.editEvent(index, selectedEvent);
-			eventsTable.getItems().set(index, selectedEvent);
+				selectedEvent.setEventTicketsRemaining(selectedEvent
+						.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), membersRegisteredList.size()));
 
-			viaOms.addMembersToEvent(membersRegisteredList, selectedEvent.getEventTitle());
-			lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
-			lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
-		}
+				viaOms.editEvent(index, selectedEvent);
+				eventsTable.getItems().set(index, selectedEvent);
+
+				viaOms.addMembersToEvent(membersRegisteredList, selectedEvent.getEventTitle());
+				lvMembersAddedToEvent.getItems().add(lvMembersToAdd.getSelectionModel().getSelectedItem());
+				lblMembersAdded.setText("Members already added: " + membersRegisteredList.size());
+			}
+		}	
 	}
 	
 	@FXML
@@ -1890,39 +1899,47 @@ public class GUIeventsController implements Initializable
 
 		if (tfNonMemberName.getText().isEmpty() && tfNonMemberPhoneNumber.getText().isEmpty()) 
 		{
-			nonMemberName = "not specified";
-			nonMemberPhoneNumber = "not specified";
+			JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member name\nNon-member phone number");
 		}
-
-		if (tfNonMemberName.getText().isEmpty()) 
+		
+		else
 		{
-			nonMemberName = "not specified";
-		}
+			if (tfNonMemberName.getText().isEmpty()) 
+			{
+				JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member name");
+			}
+			
+			else
+			{
+				if (tfNonMemberPhoneNumber.getText().isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null, "Please enter non-member information: \nNon-member phone number");
+				}
+				
+				else
+				{
+					int index = eventsTable.getSelectionModel().getSelectedIndex();
 
-		if (tfNonMemberPhoneNumber.getText().isEmpty()) 
-		{
-			nonMemberPhoneNumber = "not specified";
-		}
-		
-		int index = eventsTable.getSelectionModel().getSelectedIndex();
+					String nonMember = String.format("%s,%s", nonMemberName, nonMemberPhoneNumber);
 
-		String nonMember = String.format("%s,%s", nonMemberName, nonMemberPhoneNumber);
+					nonMembers.add(nonMember);
+					
+					selectedEvent.setEventTicketsRemaining(selectedEvent
+							.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), nonMembers.size()));
 
-		nonMembers.add(nonMember);
-		
-		selectedEvent.setEventTicketsRemaining(selectedEvent
-				.calculateTicketsRemaining(selectedEvent.getEventNumberOfTickets(), nonMembers.size()));
+					viaOms.editEvent(index, selectedEvent);
+					eventsTable.getItems().set(index, selectedEvent);
 
-		viaOms.editEvent(index, selectedEvent);
-		eventsTable.getItems().set(index, selectedEvent);
+					viaOms.addNonMembersToEvent(nonMembers, selectedEvent.getEventTitle());
+					nonMembersAlreadyAdded.add(nonMember);
 
-		viaOms.addNonMembersToEvent(nonMembers, selectedEvent.getEventTitle());
-		nonMembersAlreadyAdded.add(nonMember);
-
-		tfNonMemberName.setText("");
-		tfNonMemberPhoneNumber.setText("");
-		
-		lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
+					tfNonMemberName.setText("");
+					tfNonMemberPhoneNumber.setText("");
+					
+					lblNonMembersAdded.setText("Non-members already added: " + nonMembers.size());
+				}
+			}
+		}		
 	}	
 	
 	@FXML
@@ -1957,23 +1974,31 @@ public class GUIeventsController implements Initializable
 	{
 		eventCategories = viaOms.getEventCategories(selectedEvent.getEventTitle());
 
-		if (checkForDuplicates(eventCategories, lvCategoriesToAdd.getSelectionModel().getSelectedItem())) 
+		if(lvCategoriesToAdd.getSelectionModel().getSelectedItem() == null)
 		{
-			JOptionPane.showMessageDialog(null, "Category is already added to event!");
+			JOptionPane.showMessageDialog(null, "Please select a category to add!");
 		}
+		
+		else
+		{
+			if (checkForDuplicates(eventCategories, lvCategoriesToAdd.getSelectionModel().getSelectedItem())) 
+			{
+				JOptionPane.showMessageDialog(null, "Category is already added to event!");
+			}
 
-		else if (lvCategoriesToAdd.getSelectionModel().getSelectedItem().equals(selectedEvent.getEventCategory())) 
-		{
-			JOptionPane.showMessageDialog(null, "Category is already added to event!");
-		}
+			else if (lvCategoriesToAdd.getSelectionModel().getSelectedItem().equals(selectedEvent.getEventCategory())) 
+			{
+				JOptionPane.showMessageDialog(null, "Category is already added to event!");
+			}
 
-		else 
-		{
-			eventCategories.add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
-			
-			lvCategoriesAddedToEvent.getItems().add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
-			viaOms.addCategoriesToEvent(eventCategories, selectedEvent.getEventTitle());
-		}
+			else 
+			{
+				eventCategories.add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
+				
+				lvCategoriesAddedToEvent.getItems().add(lvCategoriesToAdd.getSelectionModel().getSelectedItem());
+				viaOms.addCategoriesToEvent(eventCategories, selectedEvent.getEventTitle());
+			}
+		}		
 	}
 
 	@FXML
