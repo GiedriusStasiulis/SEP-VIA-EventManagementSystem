@@ -156,7 +156,7 @@
                               </ScrollPane>
                         </content>
                       </TitledPane>
-                        <TitledPane animated="false" text="Add other lecturers to an event">
+                        <TitledPane fx:id="tpAddLecturer" animated="false" text="Add other lecturers to an event">
                           <content>
                               <ScrollPane prefViewportHeight="704.0" prefViewportWidth="293.0">
                                  <content>

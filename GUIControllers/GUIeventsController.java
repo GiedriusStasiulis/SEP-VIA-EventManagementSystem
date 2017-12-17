@@ -127,7 +127,7 @@ public class GUIeventsController implements Initializable
 
 	@FXML
 	private TitledPane tpShowEventsPane, tpShowSearchEventsPane, tpShowCreateEventPane, tpAddEventCategory,
-			tpAddMembersToEvent, tpAddNonMembersToEvent;
+			tpAddMembersToEvent, tpAddNonMembersToEvent, tpAddLecturer;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -139,6 +139,7 @@ public class GUIeventsController implements Initializable
 		dpEventStartDate.setEditable(false);
 		dpEventEndDate.setEditable(false);		
 		tpShowEventsPane.setDisable(true);
+		tpAddLecturer.setDisable(true);
 		tpAddEventCategory.setDisable(true);
 		tpAddMembersToEvent.setDisable(true);
 		tpAddNonMembersToEvent.setDisable(true);
@@ -251,6 +252,7 @@ public class GUIeventsController implements Initializable
 						btnEditEvent.setDisable(false);
 						btnDeleteEvent.setDisable(false);
 						tpShowEventsPane.setDisable(false);
+						tpAddLecturer.setDisable(false);
 						tfMainEventLecturer.setText(selectedEvent.getEventLecturer());
 						lvMembersAddedToEvent.setItems(getMembersAdded());
 						lvNonMembersAddedToEvent.setItems(getNonMembersAdded());
