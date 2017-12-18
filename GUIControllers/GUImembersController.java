@@ -47,8 +47,6 @@ public class GUImembersController implements Initializable
 {
 	private VIAoms viaOms = new VIAoms();
 	
-	private Member selectedMember;
-
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","Address","Phone number","E-mail");
 	private ObservableList<String> emailList = FXCollections.observableArrayList();	
@@ -131,26 +129,60 @@ public class GUImembersController implements Initializable
 			e.printStackTrace();
 		}
 		
-		memberTable.setOnMouseClicked((MouseEvent event) -> {
-		    if (event.getClickCount() == 1) {
-		    	showMemberDetailsFromTable();
-		    	btnEditMember.setDisable(false);
-				btnDeleteMember.setDisable(false);
+		memberTable.setOnMouseClicked((MouseEvent event) -> 
+		{
+		    if (event.getClickCount() == 1) 
+		    {
+		    	if(memberTable.getSelectionModel().getSelectedItem() != null)
+		    	{
+			    	showMemberDetailsFromTable();
+			    	btnEditMember.setDisable(false);
+					btnDeleteMember.setDisable(false);
+		    	}
+		    	
+		    	else if(memberTable.getSelectionModel().getSelectedItem() == null)
+		    	{
+		    		btnEditMember.setDisable(true);
+					btnDeleteMember.setDisable(true);
+		    	}
 		    }
 		});
 
-		lvMemberSearchResults.setOnMouseClicked((MouseEvent event) -> {
-		    if (event.getClickCount() == 1) {
-		    	showMemberDetailsFromListView();
-		    	btnEditMember.setDisable(false);
-				btnDeleteMember.setDisable(false);
+		lvMemberSearchResults.setOnMouseClicked((MouseEvent event) -> 
+		{
+		    if (event.getClickCount() == 1) 
+		    {
+		    	if(lvMemberSearchResults.getSelectionModel().getSelectedItem() != null)
+		    	{		    		
+		    		try {
+		    			memberTable.requestFocus();
+						memberTable.getSelectionModel().select(viaOms.getMemberList().getMemberIndex(lvMemberSearchResults.getSelectionModel().getSelectedItem()));
+						MouseEvent.fireEvent(memberTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+				                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+				                true, true, true, true, true, true, null));
+		    		} 
+		    		catch (FileNotFoundException | ParseException e) 
+		    		{
+						e.printStackTrace();
+					}		    		
+			    	btnEditMember.setDisable(false);
+					btnDeleteMember.setDisable(false);
+		    	}
+		    	
+		    	else if(lvMemberSearchResults.getSelectionModel().getSelectedItem() == null)
+		    	{
+		    		btnEditMember.setDisable(true);
+					btnDeleteMember.setDisable(true);
+		    	}
 		    }
 		});	
 		
-		try {
+		try 
+		{
 			lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
-		} catch (FileNotFoundException | ParseException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (FileNotFoundException | ParseException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -158,44 +190,32 @@ public class GUImembersController implements Initializable
 	public void showMemberDetailsFromTable() 
 	{
 	    if (memberTable.getSelectionModel().getSelectedItem() != null) {
-	        selectedMember = memberTable.getSelectionModel().getSelectedItem();
-	        tfShowMemberName.setText(selectedMember.getName());
-	        tfShowMemberAddress.setText(selectedMember.getAddress());
-	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
-	        tfShowMemberEmail.setText(selectedMember.getEmail());
-	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
-	        if (selectedMember.getMembershipStatus().equals("2017"))
+	        
+	    	//selectedMember = memberTable.getSelectionModel().getSelectedItem();
+	        
+	        tfShowMemberName.setText(viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getName());
+	        tfShowMemberAddress.setText(viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getAddress());
+	        tfShowMemberPhone.setText(viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getPhoneNumber());
+	        tfShowMemberEmail.setText(viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getEmail());
+	        dpShowMemberSince.setValue(viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getMemberSince());
+	        
+	        if (viaOms.getMember(memberTable.getSelectionModel().getSelectedItem()).getMembershipStatus().equals("2017"))
 	        {
 	        	cbShowMembershipStatus.setSelected(true);
 	        }
 	        else
 	        {
 	        	cbShowMembershipStatus.setSelected(false);
-	        }
-	        
+	        }	        
 	    }
 	}
 	
-	public void showMemberDetailsFromListView() 
+	public static final LocalDate LOCAL_DATE (String dateString)
 	{
-	    if (lvMemberSearchResults.getSelectionModel().getSelectedItem() != null) {
-	        selectedMember = lvMemberSearchResults.getSelectionModel().getSelectedItem();
-	        tfShowMemberName.setText(selectedMember.getName());
-	        tfShowMemberAddress.setText(selectedMember.getAddress());
-	        tfShowMemberPhone.setText(selectedMember.getPhoneNumber());
-	        tfShowMemberEmail.setText(selectedMember.getEmail());
-	        dpShowMemberSince.setValue(selectedMember.getMemberSince());
-	        
-	        if (selectedMember.getMembershipStatus().equals("2017"))
-	        {
-	        	cbShowMembershipStatus.setSelected(true);
-	        }
-	        else
-	        {
-	        	cbShowMembershipStatus.setSelected(false);
-	        }
-	    }
-	}	
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDate = LocalDate.parse(dateString, formatter);
+	    return localDate;
+	}
 	
 	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
 	{
@@ -206,12 +226,6 @@ public class GUImembersController implements Initializable
 
 		return members;
 	}
-	
-	public static final LocalDate LOCAL_DATE (String dateString){
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    LocalDate localDate = LocalDate.parse(dateString, formatter);
-	    return localDate;
-	}	
 
 	@FXML
 	void addMember(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
@@ -434,7 +448,7 @@ public class GUImembersController implements Initializable
 	@FXML
 	void saveEditMemberChanges(ActionEvent event) throws FileNotFoundException, ParseException 
 	{
-			int index = viaOms.getMemberList().getMemberIndex(selectedMember);  
+			int index = viaOms.getMemberList().getMemberIndex(memberTable.getSelectionModel().getSelectedItem());  
 	    	
 	    	String newMemberName = tfShowMemberName.getText();
 	    	String newMemberAddress = tfShowMemberAddress.getText();
@@ -502,16 +516,17 @@ public class GUImembersController implements Initializable
 				
 				else
 				{
-					selectedMember.setName(newMemberName);
-					selectedMember.setAddress(newMemberAddress);
-					selectedMember.setPhoneNumber(newMemberPhoneNumber);
-			    	selectedMember.setEmail(newMemberEmail);
-			    	selectedMember.setMemberSince(newMemberSince);
-			    	selectedMember.setMembershipStatus(newMembershipStatus);
+					memberTable.getSelectionModel().getSelectedItem().setName(newMemberName);
+					memberTable.getSelectionModel().getSelectedItem().setAddress(newMemberAddress);
+					memberTable.getSelectionModel().getSelectedItem().setPhoneNumber(newMemberPhoneNumber);
+					memberTable.getSelectionModel().getSelectedItem().setEmail(newMemberEmail);
+					memberTable.getSelectionModel().getSelectedItem().setMemberSince(newMemberSince);
+					memberTable.getSelectionModel().getSelectedItem().setMembershipStatus(newMembershipStatus);
 
-			    	viaOms.editMember(index, selectedMember);
+			    	viaOms.editMember(index, memberTable.getSelectionModel().getSelectedItem());
 
-			    	memberTable.getItems().set(index, selectedMember);
+			    	memberTable.getItems().set(index, memberTable.getSelectionModel().getSelectedItem());
+			    	lvMemberSearchResults.getItems().clear();
 
 			    	hboxMemberEditOptions.setVisible(false);
 			    	tfShowMemberName.setEditable(false);
@@ -528,6 +543,9 @@ public class GUImembersController implements Initializable
 			    	dpShowMemberSince.setDisable(true);
 			    	dpShowMemberSince.getEditor().clear();
 			    	dpShowMemberSince.setValue(null);
+			    	
+			    	tfShowMemberAddress.setEditable(false);
+			    	tfShowMemberPhone.setEditable(false);
 			    	
 			    	btnEditMember.setDisable(true);
 					btnDeleteMember.setDisable(true);
@@ -601,39 +619,45 @@ public class GUImembersController implements Initializable
     		{
 	    		try 
 	    		{
-	    	    	String[] options = {"Delete","Cancel"}; 
-	    	    	int n = JOptionPane.showOptionDialog(null,
-	    	                "Are you sure you want to delete member:\n" + selectedMember + " ?",
-	    	                "Delete member",
-	    	                JOptionPane.YES_NO_OPTION,
-	    	                JOptionPane.QUESTION_MESSAGE,
-	    	                null,
-	    	                options,
-	    	                options[0]);	    			
-	    			
-	    			if (n == JOptionPane.YES_OPTION) 
+	    			if(memberTable.getSelectionModel().getSelectedItem() != null)
 	    			{
-	    				int index = viaOms.getMemberList().getMemberIndex(selectedMember);
-
-				    	viaOms.deleteMember(index);				    
-				    	
-				    	memberTable.getItems().remove(index);
-				    	
-				    	tfShowMemberName.setText("");
-				    	tfShowMemberEmail.setText("");	
-				    	tfShowMemberAddress.setText("");
-				    	tfShowMemberPhone.setText("");
-				    	
-				    	dpShowMemberSince.getEditor().clear();
-				    	dpShowMemberSince.setEditable(false);
-				    	
-				    	btnEditMember.setDisable(true);
-						btnDeleteMember.setDisable(true);
-						
-						cbShowMembershipStatus.setSelected(false);
-				    	
-				    	lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
-	    			} 	    	
+		    	    	String[] options = {"Delete","Cancel"}; 
+		    	    	int n = JOptionPane.showOptionDialog(null,
+		    	                "Are you sure you want to delete member:\n" + memberTable.getSelectionModel().getSelectedItem() + " ?",
+		    	                "Delete member",
+		    	                JOptionPane.YES_NO_OPTION,
+		    	                JOptionPane.QUESTION_MESSAGE,
+		    	                null,
+		    	                options,
+		    	                options[0]);	    			
+		    			
+		    			if (n == JOptionPane.YES_OPTION) 
+		    			{
+		    				int index = viaOms.getMemberList().getMemberIndex(memberTable.getSelectionModel().getSelectedItem());
+	
+					    	viaOms.deleteMember(index);					    	
+					    	memberTable.getItems().remove(index);
+					    	lvMemberSearchResults.getItems().clear();
+					    	
+					    	tfShowMemberName.setText("");
+					    	tfShowMemberEmail.setText("");	
+					    	tfShowMemberAddress.setText("");
+					    	tfShowMemberPhone.setText("");
+					    	
+					    	tfShowMemberAddress.setEditable(false);
+					    	tfShowMemberPhone.setEditable(false);
+					    	
+					    	dpShowMemberSince.getEditor().clear();
+					    	dpShowMemberSince.setEditable(false);
+					    	
+					    	btnEditMember.setDisable(true);
+							btnDeleteMember.setDisable(true);
+							
+							cbShowMembershipStatus.setSelected(false);
+					    	
+					    	lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
+		    			} 
+	    			}
 	    		}
 	    		catch(ArrayIndexOutOfBoundsException e)
 	    		{

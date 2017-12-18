@@ -165,6 +165,26 @@ public class VIAoms
 		memberFile.writeMemberTextFile(memberList);
 	}	
 	
+	public Event getEvent(Event event)
+	{
+		return event;
+	}
+	
+	public Sponsor getSponsor(Sponsor sponsor)
+	{
+		return sponsor;
+	}
+	
+	public Lecturer getLecturer(Lecturer lecturer)
+	{
+		return lecturer;
+	}
+	
+	public Member getMember(Member member)
+	{
+		return member;
+	}
+	
 	public EventList getEventList() throws ParseException, IOException
 	{
 		eventList.clearEventList();

@@ -1,8 +1,12 @@
-Krishna Ghosh Della Santina,Astrology,kgds@yahoo.com,52448569
-Richard Gombrich,Reincarnation,rickgom@gmail.com,56968545
-Jim Morrison,Healing,bbbb@123,123456
-Norman Fische,Healing,aaaa@,789456
-Pema Chodron,Healing,hjk@aaaa,78456123
-aaaa,Healing,aa@,aaa
-rrrr,Healing,rrr@,123456
-addddd,Dream Interpretation,aaa@,12456
+aaaaaaa,Dream Interpretation,aaaaaa@,123456789
+bbbbbb,Dream Interpretation,aaaa@,123456
+CCCccc,Healing,bbb@eeef,78456123
+ggggg,Dream Interpretation,gggg@,123456
+bbbb,Dream Interpretation,bbbb@,123456
+gggjjjj,Dream Interpretation,jjj@,456132
+uuuuu,Dream Interpretation,uuuu@,123456
+ttttt,Dream Interpretation,tttt@,789456
+hhhhjjjj,Dream Interpretation,aaa@,empty
+ooo,Dream Interpretation,oo@,123456
+WWW,Dream Interpretation,ww@,123
+iiii,Dream Interpretation,iii@,1123456

@@ -28,8 +28,6 @@ import javafx.scene.layout.HBox;
 public class GUIlecturersController implements Initializable 
 {
 	private VIAoms viaOms = new VIAoms();
-	
-	private Lecturer selectedLecturer;
 
 	private ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "Category",
@@ -92,9 +90,7 @@ public class GUIlecturersController implements Initializable
 
 		btnEditLecturer.setDisable(true);
 		btnDeleteLecturer.setDisable(true);
-		
-		//spLecturersTableScrollPane.setStyle("-fx-font-size: 13px;");
-		
+
 		try 
 		{
 			lecturerTable.setItems(getList());
@@ -108,26 +104,60 @@ public class GUIlecturersController implements Initializable
 			e.printStackTrace();
 		}
 
-		lecturerTable.setOnMouseClicked((MouseEvent event) -> {
-			if (event.getClickCount() == 1) {
-				showLecturerDetailsFromTable();
-				btnEditLecturer.setDisable(false);
-				btnDeleteLecturer.setDisable(false);
+		lecturerTable.setOnMouseClicked((MouseEvent event) -> 
+		{
+			if (event.getClickCount() == 1) 
+			{
+				if(lecturerTable.getSelectionModel().getSelectedItem() != null)
+				{
+					showLecturerDetailsFromTable();
+					btnEditLecturer.setDisable(false);
+					btnDeleteLecturer.setDisable(false);
+				}
+				else if(lecturerTable.getSelectionModel().getSelectedItem() == null)
+				{
+					btnEditLecturer.setDisable(true);
+					btnDeleteLecturer.setDisable(true);
+				}
 			}
 		});
 
-		lvLecturerSearchResults.setOnMouseClicked((MouseEvent event) -> {
-			if (event.getClickCount() == 1) {
-				showLecturerDetailsFromListView();
-				btnEditLecturer.setDisable(false);
-				btnDeleteLecturer.setDisable(false);
+		lvLecturerSearchResults.setOnMouseClicked((MouseEvent event) -> 
+		{
+			if (event.getClickCount() == 1) 
+			{
+				if(lvLecturerSearchResults.getSelectionModel().getSelectedItem() != null)
+				{					
+					try 
+					{
+						lecturerTable.requestFocus();
+						lecturerTable.getSelectionModel().select(viaOms.getLecturerList().getLecturerIndex(lvLecturerSearchResults.getSelectionModel().getSelectedItem()));
+						MouseEvent.fireEvent(lecturerTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+				                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+				                true, true, true, true, true, true, null));
+					} 
+					catch (FileNotFoundException | ParseException e) 
+					{
+						e.printStackTrace();
+					}
+					btnEditLecturer.setDisable(false);
+					btnDeleteLecturer.setDisable(false);				
+				}		
+				
+				else if(lvLecturerSearchResults.getSelectionModel().getSelectedItem() == null)
+				{
+					btnEditLecturer.setDisable(true);
+					btnDeleteLecturer.setDisable(true);
+				}
 			}
 		});
 
-		try {
+		try 
+		{
 			lblLecturerCount.setText(String.format("Lecturer count: %d", viaOms.getLecturerList().size()));
-		} catch (FileNotFoundException | ParseException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (FileNotFoundException | ParseException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -136,48 +166,13 @@ public class GUIlecturersController implements Initializable
 	{
 		if (lecturerTable.getSelectionModel().getSelectedItem() != null) 
 		{
-			selectedLecturer = lecturerTable.getSelectionModel().getSelectedItem();
-			tfShowLecturerName.setText(selectedLecturer.getLecturerName());
-			tfShowLecturerEmail.setText(selectedLecturer.getLecturerEmail());
-			tfShowLecturerPhoneNumber.setText(selectedLecturer.getLecturerPhoneNumber());
-
-			int tempIndex = 0;
-
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Dream Interpretation")) {
-				tempIndex = 0;
-			}
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Healing")) {
-				tempIndex = 1;
-			}
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Astrology")) {
-				tempIndex = 2;
-			}
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Reincarnation")) {
-				tempIndex = 3;
-			}
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Karma")) {
-				tempIndex = 4;
-			}
-			if (selectedLecturer.getLecturerCategory().equalsIgnoreCase("Alternative Health-Care")) {
-				tempIndex = 5;
-			}
-
-			cbShowLecturerCategory.getSelectionModel().clearAndSelect(tempIndex);
+			tfShowLecturerName.setText(viaOms.getLecturer(lecturerTable.getSelectionModel().getSelectedItem()).getLecturerName());
+			tfShowLecturerEmail.setText(viaOms.getLecturer(lecturerTable.getSelectionModel().getSelectedItem()).getLecturerEmail());
+			tfShowLecturerPhoneNumber.setText(viaOms.getLecturer(lecturerTable.getSelectionModel().getSelectedItem()).getLecturerPhoneNumber());
+			cbShowLecturerCategory.setValue(viaOms.getLecturer(lecturerTable.getSelectionModel().getSelectedItem()).getLecturerCategory());
 		}
 	}
 
-	public void showLecturerDetailsFromListView() 
-	{
-		if (lvLecturerSearchResults.getSelectionModel().getSelectedItem() != null) 
-		{
-			selectedLecturer = lvLecturerSearchResults.getSelectionModel().getSelectedItem();
-			System.out.println(selectedLecturer);
-			tfShowLecturerName.setText(selectedLecturer.getLecturerName());
-			tfShowLecturerEmail.setText(selectedLecturer.getLecturerEmail());
-			tfShowLecturerPhoneNumber.setText(selectedLecturer.getLecturerPhoneNumber());
-		}
-	}
-	
 	public ObservableList<Lecturer> getList() throws FileNotFoundException, ParseException 
 	{
 		for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
@@ -377,7 +372,7 @@ public class GUIlecturersController implements Initializable
 	@FXML
 	void saveEditLecturerChanges(ActionEvent event) throws FileNotFoundException, ParseException 
 	{
-		int index = viaOms.getLecturerList().getLecturerIndex(selectedLecturer); 
+		int index = viaOms.getLecturerList().getLecturerIndex(lecturerTable.getSelectionModel().getSelectedItem()); 
 
 		String newLecturerName = tfShowLecturerName.getText();
 		String newLecturerCategory = cbShowLecturerCategory.getSelectionModel().getSelectedItem();
@@ -430,15 +425,15 @@ public class GUIlecturersController implements Initializable
 
 			else 
 			{
-				selectedLecturer.setLecturerName(newLecturerName);
-				selectedLecturer.setLecturerCategory(newLecturerCategory);
-				selectedLecturer.setLecturerEmail(newLecturerEmail);
-				selectedLecturer.setLecturerPhoneNumber(newLecturerPhone);
+				lecturerTable.getSelectionModel().getSelectedItem().setLecturerName(newLecturerName);
+				lecturerTable.getSelectionModel().getSelectedItem().setLecturerCategory(newLecturerCategory);
+				lecturerTable.getSelectionModel().getSelectedItem().setLecturerEmail(newLecturerEmail);
+				lecturerTable.getSelectionModel().getSelectedItem().setLecturerPhoneNumber(newLecturerPhone);
 		
-				viaOms.editLecturer(index, selectedLecturer);
-						
-				lecturerTable.getItems().set(index, selectedLecturer);
-		
+				viaOms.editLecturer(index, lecturerTable.getSelectionModel().getSelectedItem());						
+				lecturerTable.getItems().set(index, lecturerTable.getSelectionModel().getSelectedItem());
+				lvLecturerSearchResults.getItems().clear();
+				
 				hboxLecturerEditOptions.setVisible(false);
 				
 				cbShowLecturerCategory.setDisable(true);
@@ -508,28 +503,30 @@ public class GUIlecturersController implements Initializable
 			{
 				try 
 				{
-					String[] options = { "Delete", "Cancel" };
-					int n = JOptionPane.showOptionDialog(null,
-							"Are you sure you want to delete lecturer:\n" + selectedLecturer + " ?",
-							"Delete lecturer", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-							options[0]);
-
-					if (n == JOptionPane.YES_OPTION) 
+					if(lecturerTable.getSelectionModel().getSelectedItem() != null)
 					{
-						int index = viaOms.getLecturerList().getLecturerIndex(selectedLecturer);
-
-						viaOms.deleteLecturer(index);
-						
-						lecturerTable.getItems().remove(index);
+						String[] options = { "Delete", "Cancel" };
+						int n = JOptionPane.showOptionDialog(null,
+								"Are you sure you want to delete lecturer:\n" + lecturerTable.getSelectionModel().getSelectedItem() + " ?",
+								"Delete lecturer", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
 	
-						tfShowLecturerName.setText("");
-						tfShowLecturerEmail.setText("");
-						tfShowLecturerPhoneNumber.setText(""); 
-						
-						btnEditLecturer.setDisable(true);
-						btnDeleteLecturer.setDisable(true);
-
-						lblLecturerCount.setText(String.format("lecturer count: %d", viaOms.getLecturerList().size()));
+						if (n == JOptionPane.YES_OPTION) 
+						{
+							int index = viaOms.getLecturerList().getLecturerIndex(lecturerTable.getSelectionModel().getSelectedItem());
+	
+							viaOms.deleteLecturer(index);							
+							lecturerTable.getItems().remove(index);
+							lvLecturerSearchResults.getItems().clear();
+							tfShowLecturerName.setText("");
+							tfShowLecturerEmail.setText("");
+							tfShowLecturerPhoneNumber.setText(""); 
+							
+							btnEditLecturer.setDisable(true);
+							btnDeleteLecturer.setDisable(true);
+	
+							lblLecturerCount.setText(String.format("lecturer count: %d", viaOms.getLecturerList().size()));
+						}
 					}
 				} 
 				

@@ -29,8 +29,6 @@ public class GUIsponsorsController implements Initializable
 {
 	private VIAoms viaOms = new VIAoms();
 
-	private Sponsor selectedSponsor;
-
 	private ObservableList<Sponsor> sponsors = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail", "Phone");
 
@@ -67,7 +65,8 @@ public class GUIsponsorsController implements Initializable
 	private ScrollPane spSponsorsTableScrollPane;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) 
+	{
 		sponsorPage.setMaxHeight(Double.MAX_VALUE);
 		sponsorPage.setMaxWidth(Double.MAX_VALUE);
 
@@ -91,59 +90,91 @@ public class GUIsponsorsController implements Initializable
 		tfShowSponsorEmail.setEditable(false);
 		tfShowSponsorPhoneNumber.setEditable(false);
 
-		try {
+		try 
+		{
 			sponsorTable.setItems(getList());
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) 
+		{
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} 
+		catch (ParseException e) 
+		{
 			e.printStackTrace();
 		}
 
-		sponsorTable.setOnMouseClicked((MouseEvent event) -> {
-			if (event.getClickCount() == 1) {
-				showSponsorDetailsFromTable();
-				btnEditSponsor.setDisable(false);
-				btnDeleteSponsor.setDisable(false);
+		sponsorTable.setOnMouseClicked((MouseEvent event) -> 
+		{
+			if (event.getClickCount() == 1) 
+			{
+				if(sponsorTable.getSelectionModel().getSelectedItem() != null)
+				{
+					showSponsorDetailsFromTable();
+					btnEditSponsor.setDisable(false);
+					btnDeleteSponsor.setDisable(false);
+				}
+				
+				else if(sponsorTable.getSelectionModel().getSelectedItem() == null)
+				{
+					btnEditSponsor.setDisable(true);
+					btnDeleteSponsor.setDisable(true);
+				}
 			}
 		});
 
-		lvSponsorSearchResults.setOnMouseClicked((MouseEvent event) -> {
-			if (event.getClickCount() == 1) {
-				showSponsorDetailsFromListView();
-				btnEditSponsor.setDisable(false);
-				btnDeleteSponsor.setDisable(false);
+		lvSponsorSearchResults.setOnMouseClicked((MouseEvent event) -> 
+		{
+			if (event.getClickCount() == 1) 
+			{		
+				if(lvSponsorSearchResults.getSelectionModel().getSelectedItem() != null)
+				{
+					try {
+						sponsorTable.requestFocus();
+						sponsorTable.getSelectionModel().select(viaOms.getSponsorList().getSponsorIndex(lvSponsorSearchResults.getSelectionModel().getSelectedItem()));
+						MouseEvent.fireEvent(sponsorTable, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+				                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+				                true, true, true, true, true, true, null));
+					} 
+					catch (FileNotFoundException | ParseException e) 
+					{
+						e.printStackTrace();
+					}
+					btnEditSponsor.setDisable(false);
+					btnDeleteSponsor.setDisable(false);
+				}
+				
+				else if(lvSponsorSearchResults.getSelectionModel().getSelectedItem() == null)
+				{
+					btnEditSponsor.setDisable(true);
+					btnDeleteSponsor.setDisable(true);
+				}			
 			}
 		});
 
-		try {
+		try 
+		{
 			lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
-		} catch (FileNotFoundException | ParseException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (FileNotFoundException | ParseException e) 
+		{
 			e.printStackTrace();
 		}
 	}
 
-	public void showSponsorDetailsFromTable() {
-		if (sponsorTable.getSelectionModel().getSelectedItem() != null) {
-			selectedSponsor = sponsorTable.getSelectionModel().getSelectedItem();
-			tfShowSponsorName.setText(selectedSponsor.getName());
-			tfShowSponsorEmail.setText(selectedSponsor.getEmail());
-			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhoneNumber());
+	public void showSponsorDetailsFromTable() 
+	{
+		if (sponsorTable.getSelectionModel().getSelectedItem() != null) 
+		{
+			tfShowSponsorName.setText(viaOms.getSponsor(sponsorTable.getSelectionModel().getSelectedItem()).getName());
+			tfShowSponsorEmail.setText(viaOms.getSponsor(sponsorTable.getSelectionModel().getSelectedItem()).getEmail());
+			tfShowSponsorPhoneNumber.setText(viaOms.getSponsor(sponsorTable.getSelectionModel().getSelectedItem()).getPhoneNumber());
 		}
 	}
 
-	public void showSponsorDetailsFromListView() {
-		if (lvSponsorSearchResults.getSelectionModel().getSelectedItem() != null) {
-			selectedSponsor = lvSponsorSearchResults.getSelectionModel().getSelectedItem();
-			tfShowSponsorName.setText(selectedSponsor.getName());
-			tfShowSponsorEmail.setText(selectedSponsor.getEmail());
-			tfShowSponsorPhoneNumber.setText(selectedSponsor.getPhoneNumber());
-		}
-	}
-
-	public ObservableList<Sponsor> getList() throws FileNotFoundException, ParseException {
-		
-		for (int i = 0; i < viaOms.getSponsorList().size(); i++) {
+	public ObservableList<Sponsor> getList() throws FileNotFoundException, ParseException 
+	{		
+		for (int i = 0; i < viaOms.getSponsorList().size(); i++) 
+		{
 			sponsors.add(new Sponsor(viaOms.getSponsorList().getSponsor(i).getName(), viaOms.getSponsorList().getSponsor(i).getEmail(),
 					viaOms.getSponsorList().getSponsor(i).getPhoneNumber()));
 		}
@@ -151,39 +182,47 @@ public class GUIsponsorsController implements Initializable
 	}
 
 	@FXML
-	void addSponsor(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException {
+	void addSponsor(ActionEvent event) throws ParseException, CloneNotSupportedException, IOException 
+	{
 		String sponsorName = tfEnterSponsorName.getText();
 		String sponsorEmail = tfEnterSponsorEmail.getText();
 		String sponsorPhone = tfEnterSponsorPhoneNumber.getText();
 
 		if (tfEnterSponsorName.getText().isEmpty() && tfEnterSponsorEmail.getText().isEmpty()
-				&& tfEnterSponsorPhoneNumber.getText().isEmpty()) {
+				&& tfEnterSponsorPhoneNumber.getText().isEmpty()) 
+		{
 			sponsorName = String.format("empty%d", viaOms.getSponsorList().size() + 1);
 			sponsorEmail = "empty@";
 			sponsorPhone = "empty";
 		}
 
-		else if (tfEnterSponsorName.getText().isEmpty()) {
+		else if (tfEnterSponsorName.getText().isEmpty()) 
+		{
 			sponsorName = String.format("empty%d", viaOms.getSponsorList().size() + 1);
 		}
 
-		else if (tfEnterSponsorEmail.getText().isEmpty()) {
+		else if (tfEnterSponsorEmail.getText().isEmpty()) 
+		{
 			sponsorEmail = "empty@";
 		}
 
-		else if (tfEnterSponsorPhoneNumber.getText().isEmpty()) {
+		else if (tfEnterSponsorPhoneNumber.getText().isEmpty()) 
+		{
 			sponsorPhone = "empty";
 		}
 
-		if (sponsorEmail.contains("@")) {
+		if (sponsorEmail.contains("@")) 
+		{
 			Sponsor sponsor = new Sponsor(sponsorName, sponsorEmail, sponsorPhone);
 
-			if (viaOms.checkForSponsorDuplicates(sponsor)) {
+			if (viaOms.checkForSponsorDuplicates(sponsor)) 
+			{
 				JOptionPane.showMessageDialog(null, "Sponsor already exists in the system!");
 				clearAddSponsorTextFields(event);
 			}
 
-			else {
+			else 
+			{
 				viaOms.addSponsor(sponsorName, sponsorEmail, sponsorPhone);
 
 				sponsorTable.getItems().add(sponsor);
@@ -193,20 +232,23 @@ public class GUIsponsorsController implements Initializable
 			}
 		}
 
-		else {
+		else 
+		{
 			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
 		}
 	}
 
 	@FXML
-	void clearAddSponsorTextFields(ActionEvent event) {
+	void clearAddSponsorTextFields(ActionEvent event) 
+	{
 		tfEnterSponsorName.setText("");
 		tfEnterSponsorEmail.setText("");
 		tfEnterSponsorPhoneNumber.setText("");
 	}
 
 	@FXML
-	void searchSponsors(ActionEvent event) {
+	void searchSponsors(ActionEvent event) 
+	{
 		ObservableList<Sponsor> searchResults = FXCollections.observableArrayList();
 		int searchCriteriaComboBoxSelection = cbSponsorSearchCriteria.getSelectionModel().getSelectedIndex();
 		String searchKeyword = tfEnterSponsorSearchKeywords.getText();
@@ -224,16 +266,20 @@ public class GUIsponsorsController implements Initializable
 
 			searchResults.clear();
 
-			switch (searchCriteriaComboBoxSelection) {
+			switch (searchCriteriaComboBoxSelection) 
+			{
 			case 0:
 
-				for (int i = 0; i < sponsors.size(); i++) {
-					if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase())) {
+				for (int i = 0; i < sponsors.size(); i++) 
+				{
+					if (sponsors.get(i).getName().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
 						searchResults.add(sponsors.get(i));
 					}
 				}
 
-				if (searchResults.isEmpty()) {
+				if (searchResults.isEmpty()) 
+				{
 					JOptionPane.showMessageDialog(null,
 							"No sponsors found with the given search keyword: \n" + searchKeyword);
 				}
@@ -242,13 +288,16 @@ public class GUIsponsorsController implements Initializable
 
 			case 1:
 
-				for (int i = 0; i < sponsors.size(); i++) {
-					if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase())) {
+				for (int i = 0; i < sponsors.size(); i++) 
+				{
+					if (sponsors.get(i).getEmail().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
 						searchResults.add(sponsors.get(i));
 					}
 				}
 
-				if (searchResults.isEmpty()) {
+				if (searchResults.isEmpty()) 
+				{
 					JOptionPane.showMessageDialog(null,
 							"No sponsors found with the given search keyword: " + searchKeyword);
 				}
@@ -258,12 +307,14 @@ public class GUIsponsorsController implements Initializable
 			case 2:
 
 				for (int i = 0; i < sponsors.size(); i++) {
-					if (sponsors.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) {
+					if (sponsors.get(i).getPhoneNumber().toLowerCase().contains(searchKeyword.toLowerCase())) 
+					{
 						searchResults.add(sponsors.get(i));
 					}
 				}
 
-				if (searchResults.isEmpty()) {
+				if (searchResults.isEmpty()) 
+				{
 					JOptionPane.showMessageDialog(null,
 							"No sponsors found with the given search keyword: \n" + searchKeyword);
 				}
@@ -279,7 +330,8 @@ public class GUIsponsorsController implements Initializable
 	}
 
 	@FXML
-	void editSponsor(ActionEvent event) {
+	void editSponsor(ActionEvent event) 
+	{
 		if (sponsorTable.getSelectionModel() != null) 
 		{
 			hboxSponsorEditOptions.setVisible(true);
@@ -297,29 +349,35 @@ public class GUIsponsorsController implements Initializable
 	}
 
 	@FXML
-	void saveEditSponsorChanges(ActionEvent event) throws FileNotFoundException, ParseException {
-		int index = viaOms.getSponsorList().getSponsorIndex(selectedSponsor);
+	void saveEditSponsorChanges(ActionEvent event) throws FileNotFoundException, ParseException 
+	{
+		int index = viaOms.getSponsorList().getSponsorIndex(sponsorTable.getSelectionModel().getSelectedItem());
 
 		String newSponsorName = tfShowSponsorName.getText();
 		String newSponsorEmail = tfShowSponsorEmail.getText();
 		String newSponsorPhone = tfShowSponsorPhoneNumber.getText();
 
-		if (tfShowSponsorName.getText().isEmpty()) {
+		if (tfShowSponsorName.getText().isEmpty()) 
+		{
 			newSponsorName = String.format("empty%d", viaOms.getSponsorList().size());
 		}
 
-		if (tfShowSponsorEmail.getText().isEmpty()) {
+		if (tfShowSponsorEmail.getText().isEmpty()) 
+		{
 			newSponsorEmail = "empty";
 		}
 
-		if (tfShowSponsorPhoneNumber.getText().isEmpty()) {
+		if (tfShowSponsorPhoneNumber.getText().isEmpty()) 
+		{
 			newSponsorPhone = "empty";
 		}
 
-		if (newSponsorEmail.contains("@")) {
+		if (newSponsorEmail.contains("@")) 
+		{
 			Sponsor tempSponsor = new Sponsor(newSponsorName, newSponsorEmail, newSponsorPhone);
 
-			if (viaOms.checkForSponsorDuplicates(tempSponsor)) {
+			if (viaOms.checkForSponsorDuplicates(tempSponsor)) 
+			{
 				JOptionPane.showMessageDialog(null, "Sponsor already exists in the system!");
 
 				hboxSponsorEditOptions.setVisible(false);
@@ -340,14 +398,16 @@ public class GUIsponsorsController implements Initializable
 				btnDeleteSponsor.setDisable(true);
 			}
 
-			else {
-				selectedSponsor.setName(newSponsorName);
-				selectedSponsor.setEmail(newSponsorEmail);
-				selectedSponsor.setPhoneNumber(newSponsorPhone);
+			else 
+			{
+				sponsorTable.getSelectionModel().getSelectedItem().setName(newSponsorName);
+				sponsorTable.getSelectionModel().getSelectedItem().setEmail(newSponsorEmail);
+				sponsorTable.getSelectionModel().getSelectedItem().setPhoneNumber(newSponsorPhone);
 
-				viaOms.editSponsor(index, selectedSponsor);
-				sponsorTable.getItems().set(index, selectedSponsor);
-
+				viaOms.editSponsor(index, sponsorTable.getSelectionModel().getSelectedItem());
+				sponsorTable.getItems().set(index, sponsorTable.getSelectionModel().getSelectedItem());
+				lvSponsorSearchResults.getItems().clear();
+				
 				hboxSponsorEditOptions.setVisible(false);
 				tfShowSponsorName.setEditable(false);
 				tfShowSponsorEmail.setEditable(false);
@@ -370,20 +430,23 @@ public class GUIsponsorsController implements Initializable
 			}
 		}
 
-		else {
+		else 
+		{
 			JOptionPane.showMessageDialog(null, "Invalid e-mail format entered!\nFormat: example@gmail.com");
 		}
 	}
 
 	@FXML
-	void clearEditSponsorTextFields(ActionEvent event) {
+	void clearEditSponsorTextFields(ActionEvent event) 
+	{
 		tfShowSponsorName.setText("");
 		tfShowSponsorEmail.setText("");
 		tfShowSponsorPhoneNumber.setText("");
 	}
 
 	@FXML
-	void cancelEditSponsor(ActionEvent event) {
+	void cancelEditSponsor(ActionEvent event) 
+	{
 		hboxSponsorEditOptions.setVisible(false);
 
 		tfShowSponsorName.setEditable(false);
@@ -399,40 +462,53 @@ public class GUIsponsorsController implements Initializable
 	}
 
 	@FXML
-	void deleteSponsor(ActionEvent event) throws FileNotFoundException, ParseException, ArrayIndexOutOfBoundsException {
-		if (sponsorTable.getSelectionModel() != null) {
-			if (viaOms.getSponsorList().size() > 0) {
-				try {
-					String[] options = { "Delete", "Cancel" };
-					int n = JOptionPane.showOptionDialog(null,
-							"Are you sure you want to delete sponsor:\n" + selectedSponsor + " ?", "Delete sponsor",
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+	void deleteSponsor(ActionEvent event) throws FileNotFoundException, ParseException, ArrayIndexOutOfBoundsException 
+	{
+		int index = 0;
+		
+			if (sponsorTable.getSelectionModel() != null) 
+			{
+				if (viaOms.getSponsorList().size() > 0) 
+				{
+					try 
+					{				
+						if(sponsorTable.getSelectionModel().getSelectedItem() != null)
+						{
+							String[] options = { "Delete sponsor", "Cancel" };
+							int n = JOptionPane.showOptionDialog(null,
+									"Are you sure you want to delete sponsor:\n" + sponsorTable.getSelectionModel().getSelectedItem() + " ?", "Delete sponsor",
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+							if (n == JOptionPane.YES_OPTION) 
+							{							
+								index = viaOms.getSponsorList().getSponsorIndex(sponsorTable.getSelectionModel().getSelectedItem());
+								
+								viaOms.deleteSponsor(index);
+								lvSponsorSearchResults.getItems().clear();
+								sponsorTable.getItems().remove(index);
+								tfShowSponsorName.setText("");
+								tfShowSponsorEmail.setText("");
+								tfShowSponsorPhoneNumber.setText("");
 
-					if (n == JOptionPane.YES_OPTION) {
-						
-						int index = viaOms.getSponsorList().getSponsorIndex(selectedSponsor);
+								btnEditSponsor.setDisable(true);
+								btnDeleteSponsor.setDisable(true);
 
-						viaOms.deleteSponsor(index);
-						// sponsorFile.writeSponsorTextFile(sponsorList);
-						sponsorTable.getItems().remove(index);
-
-						tfShowSponsorName.setText("");
-						tfShowSponsorEmail.setText("");
-						tfShowSponsorPhoneNumber.setText("");
-
-						btnEditSponsor.setDisable(true);
-						btnDeleteSponsor.setDisable(true);
-
-						lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
+								lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
+							}
+						}						
+					} 
+					catch (ArrayIndexOutOfBoundsException e) 
+					{
+						JOptionPane.showMessageDialog(null, "Please select a sponsor from the table to delete");
 					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					JOptionPane.showMessageDialog(null, "Please select a sponsor from the table to delete");
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "No more sponsors left to delete");
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Please select a sponsor from the table to delete");
-		}
+				} 
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "No more sponsors left to delete");
+				}				
+			} 		
+			else 
+			{
+				JOptionPane.showMessageDialog(null, "Please select a sponsor from the table to delete");
+			}	
 	}
 }

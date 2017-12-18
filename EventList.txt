@@ -1,1 +1,1 @@
-yyyyyyy,Lecture,Dream Interpretation,addddd,2017-12-15,Not specified,2017-12-15,Not specified,50,49,0.0,0.0,1,Finalized
+bbbbb,Lecture,Dream Interpretation,aaaaaaa,2001-01-01,Not specified,2001-01-01,Not specified,0,0,0.0,0.0,1,Not finalized
