@@ -29,11 +29,7 @@ public class GUIsponsorsController implements Initializable
 {
 	private VIAoms viaOms = new VIAoms();
 
-	private Sponsor sponsor;
 	private Sponsor selectedSponsor;
-	private SponsorList sponsorList = new SponsorList();
-	private static final String FILENAME = "SponsorList.txt";
-	private FileReaderWriter sponsorFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Sponsor> sponsors = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "E-mail", "Phone");
@@ -119,7 +115,12 @@ public class GUIsponsorsController implements Initializable
 			}
 		});
 
-		lblSponsorCount.setText(String.format("Sponsor count: %d", sponsorList.size()));
+		try {
+			lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
+		} catch (FileNotFoundException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void showSponsorDetailsFromTable() {
@@ -142,11 +143,9 @@ public class GUIsponsorsController implements Initializable
 
 	public ObservableList<Sponsor> getList() throws FileNotFoundException, ParseException {
 		
-		sponsorList = viaOms.getSponsorList();
-
-		for (int i = 0; i < sponsorList.size(); i++) {
-			sponsors.add(new Sponsor(sponsorList.getSponsor(i).getName(), sponsorList.getSponsor(i).getEmail(),
-					sponsorList.getSponsor(i).getPhoneNumber()));
+		for (int i = 0; i < viaOms.getSponsorList().size(); i++) {
+			sponsors.add(new Sponsor(viaOms.getSponsorList().getSponsor(i).getName(), viaOms.getSponsorList().getSponsor(i).getEmail(),
+					viaOms.getSponsorList().getSponsor(i).getPhoneNumber()));
 		}
 		return sponsors;
 	}
@@ -159,25 +158,25 @@ public class GUIsponsorsController implements Initializable
 
 		if (tfEnterSponsorName.getText().isEmpty() && tfEnterSponsorEmail.getText().isEmpty()
 				&& tfEnterSponsorPhoneNumber.getText().isEmpty()) {
-			sponsorName = String.format("empty%d", sponsorList.size() + 1);
-			sponsorEmail = String.format("empty@empty%d", sponsorList.size() + 1);
-			sponsorPhone = String.format("empty%d", sponsorList.size() + 1);
+			sponsorName = String.format("empty%d", viaOms.getSponsorList().size() + 1);
+			sponsorEmail = "empty@";
+			sponsorPhone = "empty";
 		}
 
 		else if (tfEnterSponsorName.getText().isEmpty()) {
-			sponsorName = String.format("empty%d", sponsorList.size() + 1);
+			sponsorName = String.format("empty%d", viaOms.getSponsorList().size() + 1);
 		}
 
 		else if (tfEnterSponsorEmail.getText().isEmpty()) {
-			sponsorEmail = String.format("empty@empty%d", sponsorList.size() + 1);
+			sponsorEmail = "empty@";
 		}
 
 		else if (tfEnterSponsorPhoneNumber.getText().isEmpty()) {
-			sponsorPhone = String.format("empty%d", sponsorList.size() + 1);
+			sponsorPhone = "empty";
 		}
 
 		if (sponsorEmail.contains("@")) {
-			sponsor = new Sponsor(sponsorName, sponsorEmail, sponsorPhone);
+			Sponsor sponsor = new Sponsor(sponsorName, sponsorEmail, sponsorPhone);
 
 			if (viaOms.checkForSponsorDuplicates(sponsor)) {
 				JOptionPane.showMessageDialog(null, "Sponsor already exists in the system!");
@@ -190,7 +189,7 @@ public class GUIsponsorsController implements Initializable
 				sponsorTable.getItems().add(sponsor);
 				clearAddSponsorTextFields(event);
 
-				lblSponsorCount.setText(String.format("Sponsor count: %d", sponsorList.size()));
+				lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
 			}
 		}
 
@@ -306,7 +305,7 @@ public class GUIsponsorsController implements Initializable
 		String newSponsorPhone = tfShowSponsorPhoneNumber.getText();
 
 		if (tfShowSponsorName.getText().isEmpty()) {
-			newSponsorName = "empty";
+			newSponsorName = String.format("empty%d", viaOms.getSponsorList().size());
 		}
 
 		if (tfShowSponsorEmail.getText().isEmpty()) {
@@ -424,7 +423,7 @@ public class GUIsponsorsController implements Initializable
 						btnEditSponsor.setDisable(true);
 						btnDeleteSponsor.setDisable(true);
 
-						lblSponsorCount.setText(String.format("Sponsor count: %d", sponsorList.size()));
+						lblSponsorCount.setText(String.format("Sponsor count: %d", viaOms.getSponsorList().size()));
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Please select a sponsor from the table to delete");

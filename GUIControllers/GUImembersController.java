@@ -6,9 +6,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,11 +47,7 @@ public class GUImembersController implements Initializable
 {
 	private VIAoms viaOms = new VIAoms();
 	
-	private Member member;
 	private Member selectedMember;
-	private MemberList memberList = new MemberList();
-	private static final String FILENAME = "MemberList.txt";
-	private FileReaderWriter memberFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Member> members = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name","Address","Phone number","E-mail");
@@ -153,7 +147,12 @@ public class GUImembersController implements Initializable
 		    }
 		});	
 		
-		lblMemberCount.setText(String.format("Member count: %d", memberList.size()));
+		try {
+			lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
+		} catch (FileNotFoundException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void showMemberDetailsFromTable() 
@@ -200,11 +199,9 @@ public class GUImembersController implements Initializable
 	
 	public ObservableList<Member> getList() throws FileNotFoundException, ParseException 
 	{
-		memberList = viaOms.getMemberList();
-		
-		for (int i = 0; i < memberList.size(); i++) 
+		for (int i = 0; i < viaOms.getMemberList().size(); i++) 
 		{
-			members.add(new Member(memberList.getMember(i).getName(),memberList.getMember(i).getAddress(),memberList.getMember(i).getPhoneNumber(),memberList.getMember(i).getEmail(),memberList.getMember(i).getMemberSince(),memberList.getMember(i).getMembershipStatus()));
+			members.add(new Member(viaOms.getMemberList().getMember(i).getName(),viaOms.getMemberList().getMember(i).getAddress(),viaOms.getMemberList().getMember(i).getPhoneNumber(),viaOms.getMemberList().getMember(i).getEmail(),viaOms.getMemberList().getMember(i).getMemberSince(),viaOms.getMemberList().getMember(i).getMembershipStatus()));
 		}
 
 		return members;
@@ -274,12 +271,11 @@ public class GUImembersController implements Initializable
 				
 		if(memberEmail.contains("@"))
 		{					
-			member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);	
+			Member member = new Member(memberName, memberAddress, memberPhoneNumber, memberEmail, memberSince, membershipStatus);	
 			
 			if(viaOms.checkForMemberDuplicates(member))
 			{
 				JOptionPane.showMessageDialog(null, "Member already exists in the system!");
-				//clearAddMemberTextFields(event);
 				cbSetMembershipPaid.setSelected(false);
 			}
 			
@@ -449,7 +445,7 @@ public class GUImembersController implements Initializable
 	    	
 	    	if(tfShowMemberName.getText().isEmpty())
 			{
-	    		newMemberName = "empty";
+	    		newMemberName = "empty" + viaOms.getMemberList().size();
 			}
 			
 			if(tfShowMemberEmail.getText().isEmpty())
@@ -625,9 +621,16 @@ public class GUImembersController implements Initializable
 				    	
 				    	tfShowMemberName.setText("");
 				    	tfShowMemberEmail.setText("");	
+				    	tfShowMemberAddress.setText("");
+				    	tfShowMemberPhone.setText("");
+				    	
+				    	dpShowMemberSince.getEditor().clear();
+				    	dpShowMemberSince.setEditable(false);
 				    	
 				    	btnEditMember.setDisable(true);
 						btnDeleteMember.setDisable(true);
+						
+						cbShowMembershipStatus.setSelected(false);
 				    	
 				    	lblMemberCount.setText(String.format("Member count: %d", viaOms.getMemberList().size()));
 	    			} 	    	

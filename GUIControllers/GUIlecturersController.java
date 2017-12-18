@@ -30,9 +30,6 @@ public class GUIlecturersController implements Initializable
 	private VIAoms viaOms = new VIAoms();
 	
 	private Lecturer selectedLecturer;
-	private LecturerList lecturerList = new LecturerList();
-	private static final String FILENAME = "LecturerList.txt";
-	private FileReaderWriter lecturerFile = new FileReaderWriter(FILENAME);
 
 	private ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
 	private ObservableList<String> searchCriteria = FXCollections.observableArrayList("Name", "Category",
@@ -127,7 +124,12 @@ public class GUIlecturersController implements Initializable
 			}
 		});
 
-		lblLecturerCount.setText(String.format("Lecturer count: %d", lecturerList.size()));
+		try {
+			lblLecturerCount.setText(String.format("Lecturer count: %d", viaOms.getLecturerList().size()));
+		} catch (FileNotFoundException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void showLecturerDetailsFromTable() 
@@ -178,12 +180,10 @@ public class GUIlecturersController implements Initializable
 	
 	public ObservableList<Lecturer> getList() throws FileNotFoundException, ParseException 
 	{
-		lecturerList = lecturerFile.readLecturerTextFile();
+		for (int i = 0; i < viaOms.getLecturerList().size(); i++) {
 
-		for (int i = 0; i < lecturerList.size(); i++) {
-
-			lecturers.add(new Lecturer(lecturerList.getLecturer(i).getLecturerName(), lecturerList.getLecturer(i).getLecturerCategory(),
-					lecturerList.getLecturer(i).getLecturerEmail(),lecturerList.getLecturer(i).getLecturerPhoneNumber()));
+			lecturers.add(new Lecturer(viaOms.getLecturerList().getLecturer(i).getLecturerName(), viaOms.getLecturerList().getLecturer(i).getLecturerCategory(),
+					viaOms.getLecturerList().getLecturer(i).getLecturerEmail(),viaOms.getLecturerList().getLecturer(i).getLecturerPhoneNumber()));
 		}
 		return lecturers;
 	}
@@ -198,25 +198,25 @@ public class GUIlecturersController implements Initializable
 
 		if (tfEnterLecturerName.getText().isEmpty() && tfEnterLecturerPhoneNumber.getText().isEmpty()
 				&& tfEnterLecturerEmail.getText().isEmpty()) {
-			lecturerName = String.format("empty%d", lecturerList.size() + 1);
+			lecturerName = String.format("Not specified%d", viaOms.getLecturerList().size() + 1);
 			
-			lecturerEmail = String.format("empty@empty%d", lecturerList.size() + 1);
-			lecturerPhoneNumber = String.format("empty%d", lecturerList.size() + 1);
+			lecturerEmail = "empty@empty";
+			lecturerPhoneNumber = "empty";
 		}
 
 		else if (tfEnterLecturerName.getText().isEmpty()) 
 		{
-			lecturerName = String.format("empty%d", lecturerList.size() + 1);
+			lecturerName = "empty";
 		}
 
 		else if (tfEnterLecturerPhoneNumber.getText().isEmpty()) 
 		{
-			lecturerPhoneNumber = String.format("empty@%d", lecturerList.size() + 1);
+			lecturerPhoneNumber = "empty";
 		}
 
 		else if (tfEnterLecturerEmail.getText().isEmpty()) 
 		{
-			lecturerEmail = String.format("empty@empty%d", lecturerList.size() + 1);
+			lecturerEmail = "empty@empty";
 		}
 
 		if (lecturerEmail.contains("@")) 
@@ -504,7 +504,7 @@ public class GUIlecturersController implements Initializable
 	{
 		if (lecturerTable.getSelectionModel() != null) 
 		{
-			if (lecturerList.size() > 0) 
+			if (viaOms.getLecturerList().size() > 0) 
 			{
 				try 
 				{

@@ -67,7 +67,6 @@ public class GUIeventsController implements Initializable
 	private ObservableList<String> categoriesAdded = FXCollections.observableArrayList();
 	private ObservableList<String> lecturersAdded = FXCollections.observableArrayList();
 
-
 	@FXML
 	private BorderPane eventsPage = new BorderPane();
 
@@ -128,9 +127,7 @@ public class GUIeventsController implements Initializable
 	private TitledPane tpShowEventsPane, tpShowSearchEventsPane, tpShowCreateEventPane, tpAddEventCategory,
 			tpAddMembersToEvent, tpAddNonMembersToEvent, tpAddLecturer;
 	
-	@FXML private ScrollPane spCreateEvent;
-	
-	
+	@FXML private ScrollPane spCreateEvent;	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -420,9 +417,7 @@ public class GUIeventsController implements Initializable
 				btnEditEvent.setDisable(false);
 				btnDeleteEvent.setDisable(false);
 			}
-		});
-		
-		
+		});		
 		
 		cbShowEventType.setOnAction((ActionEvent event) -> 
 		{
