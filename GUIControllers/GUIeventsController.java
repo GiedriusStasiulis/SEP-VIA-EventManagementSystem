@@ -220,7 +220,6 @@ public class GUIeventsController implements Initializable
 		try 
 		{
 			eventsTable.setItems(getList());
-			//eventsTable.getSelectionModel().select(0);
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -408,17 +407,34 @@ public class GUIeventsController implements Initializable
 			}
 		});		
 		
+		
+		lvMembersToAdd.setOnMouseClicked((MouseEvent event) -> 
+		{
+			if (event.getClickCount() == 2) 
+			{
+				try {
+					generateAllMemberNameList();
+				} catch (FileNotFoundException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		lvLecturersToAdd.setOnMouseClicked((MouseEvent event) -> 
 		{
-			String category = cbShowEventCategory.getValue();
-			lecturerNames.clear();
-			
-			try {
-				lecturerNames.addAll(viaOms.getLecturerListByCategory(category));
-
-				lvLecturersToAdd.setItems(lecturerNames);
-			} catch (FileNotFoundException | ParseException e) {
-				e.printStackTrace();
+			if (event.getClickCount() == 2) 
+			{
+				String category = cbShowEventCategory.getValue(); 
+				lecturerNames.clear();
+				
+				try {
+					lecturerNames.addAll(viaOms.getLecturerListByCategory(category));
+	
+					lvLecturersToAdd.setItems(lecturerNames);
+				} catch (FileNotFoundException | ParseException e) {
+					e.printStackTrace();
+				}
 			}
 		});	
 		
@@ -474,10 +490,7 @@ public class GUIeventsController implements Initializable
 					
 					break;
 			}		
-		});			
-		
-				
-		
+		});		
 
 		try 
 		{
@@ -507,7 +520,7 @@ public class GUIeventsController implements Initializable
 			tfShowEventDiscount.setText(Double.toString(viaOms.getEvent(eventsTable.getSelectionModel().getSelectedItem()).getEventDiscount()));
 			tfSelectedEventNonMember.setText(viaOms.getEvent(eventsTable.getSelectionModel().getSelectedItem()).getEventTitle());			
 
-			if (viaOms.getEvent(eventsTable.getSelectionModel().getSelectedItem()).getEventStatus().equals("2017"))
+			if (viaOms.getEvent(eventsTable.getSelectionModel().getSelectedItem()).getEventStatus().equals("Finalized"))
 			{
 				cbShowEventStatus.setSelected(true);
 			}

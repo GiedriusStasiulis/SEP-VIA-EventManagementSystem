@@ -167,13 +167,14 @@
                                           <Label layoutX="10.0" layoutY="60.0" text="Selected event category:" />
                                           <TextField fx:id="tfSelectedEventCategory2" editable="false" layoutX="10.0" layoutY="80.0" prefWidth="260.0" />
                                           <Label layoutX="10.0" layoutY="170.0" text="Select other lecturer to add:" />
-                                          <ListView fx:id="lvLecturersToAdd" layoutX="10.0" layoutY="190.0" prefHeight="200.0" prefWidth="260.0" />
-                                          <Button fx:id="btnAddLecturerToEvent" layoutX="80.0" layoutY="400.0" mnemonicParsing="false" onAction="#addLecturerToEvent" prefWidth="125.0" text="Add" />
-                                          <Label fx:id="lblLecturersAdded" layoutX="10.0" layoutY="435.0" text="Lecturers already added:" />
-                                          <ListView fx:id="lvLecturersAlreadyAdded" layoutX="10.0" layoutY="455.0" prefHeight="200.0" prefWidth="260.0" />
+                                          <ListView fx:id="lvLecturersToAdd" layoutX="10.0" layoutY="210.0" prefHeight="200.0" prefWidth="260.0" />
+                                          <Button fx:id="btnAddLecturerToEvent" layoutX="80.0" layoutY="420.0" mnemonicParsing="false" onAction="#addLecturerToEvent" prefWidth="125.0" text="Add" />
+                                          <Label fx:id="lblLecturersAdded" layoutX="10.0" layoutY="455.0" text="Lecturers already added:" />
+                                          <ListView fx:id="lvLecturersAlreadyAdded" layoutX="10.0" layoutY="475.0" prefHeight="180.0" prefWidth="260.0" />
                                           <Button fx:id="btnRemoveLecturerFromEvent" layoutX="80.0" layoutY="665.0" mnemonicParsing="false" onAction="#removeLecturerFromEvent" prefWidth="125.0" text="Remove" />
                                           <Label layoutX="10.0" layoutY="110.0" text="Selected event lecturer:" />
                                           <TextField fx:id="tfMainEventLecturer" editable="false" layoutX="10.0" layoutY="130.0" prefWidth="260.0" />
+                                          <Label layoutX="10.0" layoutY="188.0" text="(Double-click on list to refresh available lecturers)" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -218,22 +219,23 @@
                         <content>
                               <ScrollPane prefViewportHeight="753.0" prefViewportWidth="293.0">
                                  <content>
-                                <AnchorPane maxHeight="1500.0" minHeight="0.0" minWidth="0.0" prefHeight="724.0" prefWidth="277.0">
+                                <AnchorPane maxHeight="1500.0" minHeight="0.0" minWidth="0.0" prefHeight="703.0" prefWidth="277.0">
                                        <children>
                                           <VBox prefHeight="753.0" prefWidth="280.0">
                                              <children>
                                                 <Label text="Selected event:" translateX="10.0" translateY="10.0" />
                                                 <TextField fx:id="tfSelectedEvent2" editable="false" maxWidth="260.0" prefWidth="260.0" translateX="10.0" translateY="15.0" />
                                                 <Label text="Select member to add:" translateX="10.0" translateY="20.0" />
-                                                <ListView fx:id="lvMembersToAdd" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
+                                                <Label text="(Double-click on list to refresh available members)" translateX="10.0" translateY="20.0" />
+                                                <ListView fx:id="lvMembersToAdd" maxWidth="260.0" prefHeight="240.0" prefWidth="200.0" translateX="10.0" translateY="25.0" />
                                                 <HBox prefHeight="25.0" prefWidth="200.0" translateY="35.0">
                                                    <children>
                                                       <Button fx:id="btnAddMemberToEvent" mnemonicParsing="false" onAction="#addMemberToEvent" prefWidth="125.0" text="Add" translateX="75.0" />
                                                    </children>
                                                 </HBox>
-                                                <Label fx:id="lblMembersAdded" text="Members already added:" translateX="10.0" translateY="45.0" />
-                                                <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="265.0" prefWidth="200.0" translateX="10.0" translateY="50.0" />
-                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="60.0">
+                                                <Label fx:id="lblMembersAdded" text="Members already added:" translateX="10.0" translateY="55.0" />
+                                                <ListView fx:id="lvMembersAddedToEvent" maxWidth="260.0" prefHeight="240.0" prefWidth="200.0" translateX="10.0" translateY="60.0" />
+                                                <HBox prefHeight="25.0" prefWidth="200.0" translateY="70.0">
                                                    <children>
                                                       <Button fx:id="btnRemoveMemberFromEvent" mnemonicParsing="false" onAction="#removeMemberFromEvent" prefWidth="125.0" text="Remove" translateX="75.0" />
                                                    </children>
